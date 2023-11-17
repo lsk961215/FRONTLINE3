@@ -35,7 +35,7 @@
 		<a href="goAdminPlayNew">
 			<h3>愁芭府 殿废</h3>
 		</a>
-		<a href="admin_play_management.jsp">
+		<a href="playView">
 			<h3>愁芭府 包府</h3>
 		</a>
 		<a href="admin_popup.jsp">

@@ -15,4 +15,12 @@ public interface MainDAO {
 	void deleteUser(List list);
 	//놀거리 등록
 	void insertPlay(BoardDTO boardDTO);
+	//놀거리 조회
+	List getPlayList();
+	//놀거리 선택
+	BoardDTO playcorr(BoardDTO boardDTO);
+	//놀거리 수정
+	void updatePlay(BoardDTO boardDTO);
+	//놀거리삭제
+	int deletePlay(BoardDTO boardDTO);
 }

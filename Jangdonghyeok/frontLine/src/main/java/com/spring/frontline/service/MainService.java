@@ -15,4 +15,14 @@ public interface MainService {
 	void deleteUser(List list);
 	//놀거리 등록
 	void insertPlay(BoardDTO boardDTO);
+	//놀거리 리스트
+	List getPlayList();
+	//놀거리 선택
+	BoardDTO getPlaycorr(BoardDTO boardDTO);
+	//놀거리 수정
+	void updatePlay(BoardDTO boardDTO);
+	//놀거리 삭제
+	int deletePlay(BoardDTO boardDTO);
 }
+
+

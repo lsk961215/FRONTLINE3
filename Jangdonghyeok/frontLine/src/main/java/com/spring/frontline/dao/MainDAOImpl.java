@@ -51,6 +51,32 @@ public class MainDAOImpl implements MainDAO{
 	public void insertPlay(BoardDTO boardDTO) {
 		sqlSession.insert("board.insertBoard", boardDTO);
 	}
+	//놀거리 리스트 조회
+	@Override
+	public List getPlayList() {
+		List PlayList = sqlSession.selectList("board.selectBoardPlay");
+		
+		return PlayList;
+	}
+	// 놀거리 선택
+	@Override
+	public BoardDTO playcorr(BoardDTO boardDTO) {
+		System.out.println("baordDAO" + boardDTO.getBoardSeq());
+		BoardDTO PlayOne = sqlSession.selectOne("board.selectPlayOne", boardDTO);
+		System.out.println("DAOimpl : " +PlayOne);
+		return PlayOne;
+	}
+	//놀거리 수정
+		@Override
+		public void updatePlay(BoardDTO boardDTO) {
+			sqlSession.update("board.updatePlay",boardDTO);
+		}
+		//놀거리 삭제
+		@Override
+		public int deletePlay(BoardDTO boardDTO) {
+			int delete = sqlSession.update("board.playDelete",boardDTO);
+			return delete;
+		}
 	
 
 }

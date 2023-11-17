@@ -2,41 +2,83 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
-	<mapper namespace="board">
+
+<mapper namespace="board">
 
 
-	<resultMap id="boardMap" type="com.spring.frontline.dto.BoardDTO">
-	  <result column="board_seq" property="boardSeq"/>
-	  <result column="user_seq" property="userSeq"/>
-	  <result column="region_seq" property="regionSeq"/>
-	  <result column="type_seq" property="typeSeq"/>
-	  <result column="board_Title" property="boardTitle"/>
-	  <result column="board_Address" property="boardAddress"/>
-	  <result column="board_Open" property="boardOpen"/>
-	  <result column="board_Detail" property="boardDetail"/>
-	  <result column="board_Break" property="boardBreak"/>
-	  <result column="board_Phone" property="boardPhone"/>
-	  <result column="board_RegDate" property="boardRegDate"/>
+	<resultMap id="boardMap"
+		type="com.spring.frontline.dto.BoardDTO">
+		<result column="board_seq" property="boardSeq" />
+		<result column="user_seq" property="userSeq" />
+		<result column="region_seq" property="regionSeq" />
+		<result column="type_seq" property="typeSeq" />
+		<result column="board_Title" property="boardTitle" />
+		<result column="board_Address" property="boardAddress" />
+		<result column="board_Open" property="boardOpen" />
+		<result column="board_Detail" property="boardDetail" />
+		<result column="board_Break" property="boardBreak" />
+		<result column="board_Phone" property="boardPhone" />
+		<result column="board_RegDate" property="boardRegDate" />
 	</resultMap>
-	
+
 	<!-- 보드 등록 -->
-	<insert id="insertBoard" parameterType="com.spring.frontline.dto.BoardDTO">
-		INSERT 
-			INTO 
-			BOARD_INFO 
-		VALUES ( 
+	<insert id="insertBoard"
+		parameterType="com.spring.frontline.dto.BoardDTO">
+		INSERT
+		INTO
+		BOARD_INFO
+		VALUES (
 		board_seq.nextval,
-		 #{userSeq},
-		  #{regionSeq},
-		   #{typeSeq},
-		    #{boardTitle},
-		     #{boardAddress},
-		      #{boardOpen},
-		       #{boardDetail},
-		         TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
-		          #{boardBreak},
-		          #{boardPhone})
+		#{userSeq},
+		#{regionSeq},
+		#{typeSeq},
+		#{boardTitle},
+		#{boardAddress},
+		#{boardOpen},
+		#{boardDetail},
+		TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
+		#{boardBreak},
+		#{boardPhone})
 	</insert>
+	<!-- 놀거리 목록 불러오기 -->
+	<select id="selectBoardPlay" resultMap="boardMap">
+		SELECT *
+		FROM
+		BOARD_INFO
+		WHERE type_seq = 1
+		ORDER BY board_seq DESC
+	</select>
+	<!-- 놀거리 선택 -->
+<!-- 	<select id="selectPlayOne" resultType="com.spring.frontline.dto.BoardDTO" parameterType="com.spring.frontline.dto.BoardDTO"> -->
+<!-- resultType은 resultMap써야함 -->
+	<select id="selectPlayOne" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+	SELECT *
+	FROM
+	board_info
+	WHERE 
+	board_seq = ${boardSeq}
+	</select>
+	<!-- 놀거리 수정 -->
+	<update id="updatePlay" parameterType="com.spring.frontline.dto.BoardDTO">
+	update
+	board_info
+	set
+	region_seq = #{regionSeq},
+	board_title = #{boardTitle},
+	board_address = #{boardAddress},
+	board_phone = #{boardPhone},
+	board_open = #{boardOpen},
+	board_break = #{boardBreak},
+	board_detail = #{boardDetail}
+	where
+	board_seq = ${boardSeq}
+	</update>
+
+	<!-- 놀거리 삭제 -->
+	<delete id="playDelete" parameterType="com.spring.frontline.dto.BoardDTO">
+		delete
+		from board_info
+		where board_seq = ${boardSeq}
+	</delete>
 	
 </mapper>

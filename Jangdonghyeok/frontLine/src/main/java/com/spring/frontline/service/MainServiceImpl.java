@@ -51,5 +51,29 @@ public class MainServiceImpl implements MainService {
 	public void insertPlay(BoardDTO boardDTO) {
 		mainDAO.insertPlay(boardDTO);
 	}
+	//놀거리 리스트
+	@Override
+	public List getPlayList() {
+		List playList = mainDAO.getPlayList();
+		return playList;
+	}
+	// 놀거리 선택
+	@Override
+	public BoardDTO getPlaycorr(BoardDTO boardDTO) {
+		BoardDTO playOne = mainDAO.playcorr(boardDTO);
+		
+		return playOne;
+	}
+	//놀거리 수정
+	@Override
+	public void updatePlay(BoardDTO boardDTO) {
+		mainDAO.updatePlay(boardDTO);
+	}
+	//놀거리 삭제
+		@Override
+		public int deletePlay(BoardDTO boardDTO) {
+			int delete = mainDAO.deletePlay(boardDTO);
+			return delete;
+		}
 	
 }

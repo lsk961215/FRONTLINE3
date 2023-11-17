@@ -32,7 +32,13 @@ table {
 	border-collapse: collapse;
 	border: 0;
 	margin: auto;
-	width: 80%;
+	width: 50%;
+	height: 50px;
+	
+}
+
+input{
+	width:150px;
 }
 
 th, td {
@@ -71,6 +77,7 @@ thead th, tbody th {
 		<section>
 			<div class="members">
 			<div class="table">
+			<form action="playUpdate" method="post">
 				<table id="tb">
 					<thead>
 						<tr>
@@ -88,43 +95,32 @@ thead th, tbody th {
 						</tr>
 					</thead>
 					<tbody>
-
-						<c:forEach var="play" items="${list}">
 							<tr>
 								<td>${play.boardSeq}</td>
 								<td>${play.userSeq}</td>
-								<td>${play.regionSeq}</td>
-								<td><a href ="playCorrection?boardSeq=${play.boardSeq}"> ${play.boardTitle}</a></td>
-								<td>${play.boardAddress}</td>
-								<td>${play.boardPhone}</td>
-								<td>${play.boardOpen}</td>
-								<td>${play.boardBreak}</td>
-								<td>${play.boardDetail}</td>
+								<td><input name="regionSeq" value="${play.regionSeq}"></td>
+								<td><input name="boardTitle" value="${play.boardTitle}"></td>
+								<td><input name="boardAddress" value="${play.boardAddress}"></td>
+								<td><input name="boardPhone" value="${play.boardPhone}"></td>
+								<td><input name="boardOpen" value="${play.boardOpen}"></td>
+								<td><input name="boardBreak" value="${play.boardBreak}"></td>
+								<td><input name="boardDetail" value="${play.boardDetail}"></td>
 								<td>${play.boardRegDate}</td>
 							
 							</tr>
-
-						</c:forEach>
 					</tbody>
-
 				</table>
-			</div>
+			
 			<br>
-			<div class="page_wrap">
-				<a class="arrow prev" href="#"><button>
-						<img
-							src="https://github.com/Jominsang1/FrontLine_Project/blob/main/images/Group%202187.png?raw=true">
-					</button></a>
-				<div class="page_nation">
-					<a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
-					<a href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">7</a>
-					<a href="#">8</a> <a href="#">9</a> <a href="#">10</a>
-				</div>
-				<a class="arrow next" href="#"><button>
-						<img
-							src="https://github.com/Jominsang1/FrontLine_Project/blob/main/images/Group%202188.png?raw=true">
-					</button></a>
+			<input type="hidden" name="boardSeq" value="${play.boardSeq}">
+			<input type="submit" value="수정하기">
+			</form>
+			
 			</div>
+			<form action="playDelete">
+			<input type="hidden" name="boardSeq" value="${play.boardSeq}">
+			<input type="submit" value="삭제하기">
+			</form>
 		</div>
 		</section>
 	</main>
