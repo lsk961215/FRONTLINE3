@@ -73,4 +73,37 @@ public class MainDAOImpl implements MainDAO{
 		return sqlSession.selectOne("user.findPw", userDTO);
 	}
 
+	@Override
+	public boolean checkId(Map map) {
+		UserDTO userDTO = sqlSession.selectOne("user.checkId", map);
+		
+		if(userDTO == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkEmail(Map map) {
+		UserDTO userDTO = sqlSession.selectOne("user.checkEmail", map);
+		
+		if(userDTO == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkPhone(Map map) {
+		UserDTO userDTO = sqlSession.selectOne("user.checkPhone", map);
+		
+		if(userDTO == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

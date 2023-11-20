@@ -66,4 +66,16 @@
 		select * from user_info where user_id = #{userId}
 	</select>
 	
+	<select id="checkId" parameterType="java.util.HashMap" resultMap="userMap">
+		select * from user_info where user_id = #{joinDTO.userId}
+	</select>
+	
+	<select id="checkEmail" parameterType="java.util.HashMap" resultMap="userMap">
+		select * from user_info where user_id = #{joinDTO.userEmail}
+	</select>
+	
+	<select id="checkPhone" parameterType="java.util.HashMap" resultMap="userMap">
+		select * from user_info where user_id = #{joinDTO.userPhone}
+	</select>
+	
 </mapper>

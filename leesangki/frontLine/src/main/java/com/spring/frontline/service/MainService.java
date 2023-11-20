@@ -16,4 +16,5 @@ public interface MainService {
 	void insertDummy(int loop);
 	UserDTO findId(UserDTO userDTO);
 	UserDTO findPw(UserDTO userDTO);
+	boolean checkJoin(Map map);
 }

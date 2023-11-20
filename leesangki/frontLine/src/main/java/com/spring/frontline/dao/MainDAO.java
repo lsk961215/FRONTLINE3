@@ -17,4 +17,7 @@ public interface MainDAO {
 	void insertDummy(UserDTO userDTO);
 	UserDTO findId(UserDTO userDTO);
 	UserDTO findPw(UserDTO userDTO);
+	boolean checkId(Map map);
+	boolean checkEmail(Map map);
+	boolean checkPhone(Map map);
 }

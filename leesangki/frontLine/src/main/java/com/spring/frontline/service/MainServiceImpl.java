@@ -91,7 +91,7 @@ public class MainServiceImpl implements MainService {
 		UserDTO dto = new UserDTO();
 		
 		for(int i = 0; i<loop; i++) {
-			dto.setUserName("테스트" + i);
+			dto.setUserName("test" + i);
 			dto.setGenderSeq(0);
 			dto.setGradeSeq(0);
 			dto.setUserBirth("12345678");
@@ -112,5 +112,16 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public UserDTO findPw(UserDTO userDTO) {
 		return mainDAO.findPw(userDTO);
+	}
+
+	@Override
+	public boolean checkJoin(Map map) {
+		if("checkId".equals(map.get("target"))) {
+			return mainDAO.checkId(map);
+		} else if("checkEmail".equals(map.get("target"))) {
+			return mainDAO.checkEmail(map);
+		} else {
+			return mainDAO.checkPhone(map);
+		}
 	}
 }

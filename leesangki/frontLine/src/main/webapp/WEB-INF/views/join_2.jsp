@@ -105,17 +105,20 @@
     	// 중복체크시 숨겨진 폼에 아이디값 집어넣기
     	$(".checkId").click(function(){
     		$(".main_form").attr("action", "checkJoin");
+    		$("input[name=checkTarget]").val("checkId");
     		$(".button2").click()
     	})
     	
     	$(".checkEmail").click(function(){
-    		$("input[name=checkEmail]").val($(this).parent().find(".input_text").val())
-    		$(".checkEmailSubmit").click()
+    		$(".main_form").attr("action", "checkJoin");
+    		$("input[name=checkTarget]").val("checkEmail");
+    		$(".button2").click()
     	})
     	
     	$(".checkPhone").click(function(){
-    		$("input[name=checkPhone]").val($(this).parent().find(".input_text").val())
-    		$(".checkPhoneSubmit").click()
+    		$(".main_form").attr("action", "checkJoin");
+    		$("input[name=checkTarget]").val("checkPhone");
+    		$(".button2").click()
     	})
     })
     </script>
@@ -247,6 +250,7 @@
                 		</select>
                 	</div>
             	</div>
+            	<input type="hidden" name="checkTarget">
             	<div class="button1">가입하기</div>
             	<input type="submit" class="button2" value="가입하기">
             </form>

@@ -307,8 +307,20 @@ public class MainController {
 	
 	
 	@RequestMapping("/checkJoin")
-	public String checkJoin(HttpServletRequest request, Model model) {
-		System.out.println("checkJoin");
+	public String checkJoin(HttpServletRequest request, Model model, UserDTO joinDTO) {
+		String target = request.getParameter("checkTarget");
+		
+		System.out.println(target);
+		System.out.println(joinDTO);
+		
+		Map map = new HashMap();
+		
+		map.put("target", target);
+		map.put("joinDTO", joinDTO);
+		
+		System.out.println(target+mainService.checkJoin(map));
+		
+		model.addAllAttributes(map);
 		return "";
 	}
 	
