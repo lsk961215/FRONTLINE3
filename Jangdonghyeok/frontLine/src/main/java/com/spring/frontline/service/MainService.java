@@ -23,6 +23,8 @@ public interface MainService {
 	void updatePlay(BoardDTO boardDTO);
 	//≥Ó∞≈∏Æ ªË¡¶
 	int deletePlay(BoardDTO boardDTO);
+	
+	Map getPage(int pageNum, int countPerPage);
 }
 
 

@@ -151,8 +151,8 @@ button {
 		<section>
 			<div class="playReset">
 				<div id="hright">
-				<div> <h1>놀거리 등록 페이지 입니다.</h1></div><br>
-					<form method="POST" action="playNew">
+				<div> <h1>놀거리 등록 페이지 입니다. </h1></div><br>
+					<form action="playNew">
 						<select class="local" name="regionSeq">
 							<option value="0" selected="selected">천안</option>
 							<option value="1">아산</option>
@@ -195,7 +195,7 @@ button {
 						</div>
 						
 						<input type="hidden" name="typeSeq" value="1">
-						<input type="hidden" name="userSeq" value="22">
+						<input type="hidden" name="userSeq" value="${userDTO.getUserSeq()}">
 						<div>
 						<input class="sbtn" type="submit" value="등록">
 						</div> 

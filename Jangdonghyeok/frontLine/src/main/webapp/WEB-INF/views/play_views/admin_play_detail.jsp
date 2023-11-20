@@ -32,13 +32,13 @@ table {
 	border-collapse: collapse;
 	border: 0;
 	margin: auto;
-	width: 50%;
+	width: 80%;
 	height: 50px;
 	
 }
 
 input{
-	width:150px;
+	width:100px;
 }
 
 th, td {
@@ -77,7 +77,7 @@ thead th, tbody th {
 		<section>
 			<div class="members">
 			<div class="table">
-			<form action="playUpdate" method="post">
+			<form action="playUpdate">
 				<table id="tb">
 					<thead>
 						<tr>

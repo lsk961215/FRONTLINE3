@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import com.spring.frontline.service.MainService;
 
 @Controller
 public class MainController {
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
 	MainService mainService;
@@ -215,7 +218,7 @@ public class MainController {
 		return "play_views/admin_play_new";
 	}
 	// 놀거리 등록
-	@RequestMapping(value = "/playNew", method = RequestMethod.POST)
+	@RequestMapping(value = "/playNew")
 	public String insertPlay(@ModelAttribute BoardDTO boardDTO) {
 
 		mainService.insertPlay(boardDTO);
@@ -224,17 +227,7 @@ public class MainController {
 		return "redirect:/playView";
 	}
 
-	// 놀거리 목록
-	@RequestMapping("/playView")
-	public String PlayList(Model model) {
-		// db에 boardInfo type_seq 1번 목록조회
-		List list = mainService.getPlayList();
-		// 모델에 담아서
-		model.addAttribute("list", list);
-		// jsp로 이동(forward)
-		
-		return "play_views/admin_play_management";
-	}
+	
 	//놀거리 선택
 	@RequestMapping("/playCorrection")
 	public String palyCorrection(Model model, @ModelAttribute BoardDTO boardDTO) {
@@ -267,6 +260,52 @@ public class MainController {
 				
 		
 		return "redirect:/playView";
+	}
+	
+	//놀거리 목록 및 페이징
+	@RequestMapping("/playView")
+	public String playPaging(Model model, HttpServletRequest request) {
+		
+
+		//안넘어왔을때 0을 사용할수없으니깐 초기값 지정
+		int pageNum = 1; //현재 페이지
+		int countPerPage = 10; // 한페이지에 몇개 보여줄지
+		
+		String tmp_pageNum = request.getParameter("pageNum");
+		//키값이 들어오지않았다면
+		if(tmp_pageNum != null) {
+			try {
+				pageNum = Integer.parseInt(tmp_pageNum);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		String tmp_countPerPage = request.getParameter("countPerPage");
+		//키값이 들어오지않았다면
+		if(tmp_countPerPage != null) {
+			try {
+				countPerPage = Integer.parseInt(tmp_countPerPage);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//db에서 emp2 목록 전체 조회
+//		List list = empService.getEmp2Page(pageNum,countPerPage);
+		Map map = mainService.getPage(pageNum,countPerPage);
+		
+		map.put("pageNum", pageNum);
+		map.put("countPerPage", countPerPage);
+		
+		logger.info("pageNum" + pageNum);
+		logger.error("countPerPage" + countPerPage);
+		
+		//model에 담아서
+		model.addAttribute("data", map);
+		//jsp로 이동(forward)
+		return "play_views/admin_play_management";
+		
 	}
 	
 	

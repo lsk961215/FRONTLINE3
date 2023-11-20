@@ -23,4 +23,8 @@ public interface MainDAO {
 	void updatePlay(BoardDTO boardDTO);
 	//愁芭府昏力
 	int deletePlay(BoardDTO boardDTO);
+	//愁芭府 其捞隆
+	List Paging(BoardDTO boardDTO);
+	//其捞瘤 配呕
+	int pageTotal();
 }

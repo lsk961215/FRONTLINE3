@@ -81,4 +81,25 @@
 		where board_seq = ${boardSeq}
 	</delete>
 	
+	<!-- 놀거리 페이징 -->
+	<select id="playPage" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+	select *
+	from(
+		select rownum as rnum, tmp.*
+		from(
+			select board_info.*
+			from board_info
+			where type_seq = 1
+			order by board_regdate desc
+		) tmp
+	)
+	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
+	</select>
+	
+	<select id="boardTotal" resultType="int">
+		select count(*)
+		from board_info
+		where type_seq = 1
+	</select>
+		
 </mapper>
