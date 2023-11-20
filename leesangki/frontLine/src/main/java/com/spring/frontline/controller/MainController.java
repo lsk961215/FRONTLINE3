@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
@@ -59,6 +60,16 @@ public class MainController {
 		return "admin";
 	}
 	
+	@RequestMapping("/goFindId")
+	public String goFindId() {
+		return "find_id";
+	}
+	
+	@RequestMapping("/goFindPw")
+	public String goFindPw() {
+		return "find_pw";
+	}
+	
 	@RequestMapping("/goAdminUser")
 	public String goAdminUser() {
 		return "redirect:/getUser";
@@ -78,12 +89,40 @@ public class MainController {
 	public String getUser(HttpServletRequest request, Model model, UserDTO userDTO) {
 		HttpSession session = request.getSession();
 		
+		//userSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
 		if(userDTO.getUserSeq() == -1) {
-			List list = mainService.getUserList();
 			
-			model.addAttribute("userList", list);
+			int pageNum = 1;
+			int countPerPage = 5;
+			
+			String tmp_pageNum = request.getParameter("pageNum");
+			
+			if(tmp_pageNum != null) {
+				try { 
+					pageNum = Integer.parseInt(tmp_pageNum);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			String tmp_countPerPage = (String)session.getAttribute("countPerPage");
+			
+			if(tmp_countPerPage != null) {
+				try { 
+					countPerPage = Integer.parseInt(tmp_countPerPage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			Map map = mainService.getUserPage(pageNum, countPerPage);
+			
+			model.addAttribute("map", map);
 			
 			return "admin_user";
+			
 		} else {
 			userDTO = mainService.getUser(userDTO);
 			
@@ -128,9 +167,6 @@ public class MainController {
 	@RequestMapping("/updateAdminUser")
 	public String updateAdminUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-
-		
-		System.out.println("213"+request.getParameter("userName"));
 		
 		UserDTO updateUserDTO = (UserDTO)session.getAttribute("updateUserDTO");
 		
@@ -210,5 +246,54 @@ public class MainController {
 		return "redirect:/getUser";
 	}
 	
+	@RequestMapping("/makeDummy")
+	@ResponseBody
+	public String makeDummy() {
+		mainService.insertDummy(50);
+		return "완료";
+	}
 	
+	@RequestMapping("/setPerPage")
+	public String setPerPage(HttpServletRequest request, String countPerPage) {
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("countPerPage", countPerPage);
+		
+		return "redirect:/getUser";
+	}
+	
+	@RequestMapping("/findId")
+	public String findId(HttpServletRequest request, Model model , UserDTO userDTO) {
+		
+		System.out.println(userDTO);
+		
+		UserDTO findUserDTO = mainService.findId(userDTO);
+		
+		System.out.println(findUserDTO);
+		
+		model.addAttribute("findUserDTO", findUserDTO);
+		
+		return "find_id_result";
+	}
+	
+	@RequestMapping("/findPw")
+	public String findPw(HttpServletRequest request, Model model , UserDTO userDTO) {
+		
+		System.out.println("findPw : "+userDTO);
+		UserDTO findUserDTO = mainService.findPw(userDTO);
+		
+		System.out.println(findUserDTO);
+		
+		
+		if(userDTO.getUserBirth().equals(findUserDTO.getUserBirth())) {
+			model.addAttribute("findUserDTO", findUserDTO);
+			
+			return "find_pw_result";
+		} else {
+			model.addAttribute("msg", "정보가 일치하지 않습니다.");
+			model.addAttribute("url", "/frontline");
+			
+			return "alert";
+		}
+	}
 }

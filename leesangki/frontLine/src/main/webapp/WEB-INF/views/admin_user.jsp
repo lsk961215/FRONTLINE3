@@ -41,9 +41,31 @@
 		$("input[id=nextPage]").click(function(){
 			$("input[id=pageNumber]").val(${pageNumber}+1);
 		})
+		
+		// 페이지보기 셀렉트 클릭
+		$("select[name=countPerPage]").change(function(){
+			$("#setPerPageSubmit").click()
+		})
 	})
 </script>
 <style>
+	.getUser {
+		display:none;
+	}
+	
+	#setPerPageSubmit {
+		display:none;
+	}
+	
+	.section_select {
+		display:flex;
+		
+		width:85%;
+		
+		padding: 1%;
+		
+		justify-content: space-between
+	}
 </style>
 </head>
 <body>
@@ -55,13 +77,32 @@
 				<h1>회원 목록</h1>
 			</div>
 			
+			<div class="section_select">
+				<form action="setPerPage">
+					<select name="countPerPage">
+					<c:choose>
+						<c:when test="${countPerPage == 5}">
+							<option value="5" selected="true">5개씩 보기</option>
+							<option value="10">10개씩 보기</option>
+						</c:when>
+						<c:when test="${countPerPage == 10}">
+							<option value="5">5개씩 보기</option>
+							<option value="10" selected="true">10개씩 보기</option>
+						</c:when>
+					</c:choose>		
+					</select>
+					<input id="setPerPageSubmit" type="submit">
+				</form>
+			</div>
+			
 			<form action="deleteUser">
 			
 			<table border=1>
+			
 				<thead>
 					<tr>
 						<th>선택</th>
-						<th>번호</th>
+						<th>사용자번호</th>
 						<th>아이디</th>
 						<th>비밀번호</th>
 						<th>이름</th>
@@ -71,15 +112,14 @@
 						<th>이메일</th>
 						<th>전화번호</th>
 						<th>가입일</th>
-						<th>사용자번호</th>
 						<th>수정</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="item" items="${userList}" varStatus="i">
+					<c:forEach var="item" items="${map.get('list')}" varStatus="i">
 						<tr>
 							<td><input type="checkbox" name="${item.userSeq}"></td>
-							<td>${i.count}</td>
+							<td>${item.userSeq}</td>
 							<td>${item.userId}</td>
 							<td>${item.userPw}</td>
 							<td>${item.userName}</td>
@@ -100,7 +140,6 @@
 							<td>${item.userEmail}</td>
 							<td>${item.userPhone}</td>
 							<td>${item.userRegDate}</td>
-							<td>${item.userSeq}</td>
 							<td><input type="button" value="수정" class="editButton">
 						</tr>
 					</c:forEach>
@@ -108,8 +147,22 @@
 			</table>
 			<input type="submit" value="삭제">
 			</form>
+			
+			<div>
+			<c:if test = "${map.get('beginPaging') != 1}">
+				<a href="getUser?pageNum=${map.get('beginPaging')-1}">이전</a>
+			</c:if>
+			
+			<c:forEach var="page" begin="${map.get('beginPaging')}" end="${map.get('endPaging')}">
+				<a href="getUser?pageNum=${page}">${page}</a>
+			</c:forEach>
+			
+			<c:if test = "${map.get('endPaging') != map.get('totalPaging')}">
+				<a href="getUser?pageNum=${map.get('endPaging')+1}">다음</a>
+			</c:if>
+			</div>
 				
-			<form action="getUser">
+			<form action="getUser" class="getUser">
 				<input type="text" name="userSeq">
 				<input type="submit" id="getUser">
 			</form>

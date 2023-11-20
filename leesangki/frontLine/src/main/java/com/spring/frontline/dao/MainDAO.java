@@ -12,4 +12,9 @@ public interface MainDAO {
 	UserDTO loginUser(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
+	int selectUserTotal();
+	List selectUserPage(Map map);
+	void insertDummy(UserDTO userDTO);
+	UserDTO findId(UserDTO userDTO);
+	UserDTO findPw(UserDTO userDTO);
 }

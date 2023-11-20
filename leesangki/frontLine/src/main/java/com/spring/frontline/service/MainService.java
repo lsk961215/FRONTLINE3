@@ -12,4 +12,8 @@ public interface MainService {
 	UserDTO doLogin(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
+	Map getUserPage(int pageNum, int countPerPage);
+	void insertDummy(int loop);
+	UserDTO findId(UserDTO userDTO);
+	UserDTO findPw(UserDTO userDTO);
 }

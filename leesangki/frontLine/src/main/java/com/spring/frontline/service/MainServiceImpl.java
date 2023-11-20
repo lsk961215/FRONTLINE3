@@ -1,5 +1,6 @@
 package com.spring.frontline.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +46,71 @@ public class MainServiceImpl implements MainService {
 		mainDAO.deleteUser(list);
 	}
 
+	@Override
+	public Map getUserPage(int pageNum, int countPerPage) {
+		
+		Map selectMap = new HashMap();
+		
+		int startNum = 0;
+		int endNum = 0;
+		
+		startNum = (pageNum-1)*countPerPage+1;
+		endNum = pageNum*countPerPage;
+		
+		selectMap.put("startNum", startNum);
+		selectMap.put("endNum", endNum);
+		
+		List list = mainDAO.selectUserPage(selectMap);
+		int total = mainDAO.selectUserTotal();
+		
+		int groupCount = 5;
+		
+		int totalPaging = (int) Math.ceil((double)total / countPerPage);
+		
+		int position = (int) Math.ceil((double)pageNum / groupCount);
+		
+		int beginPaging = (position-1) * groupCount + 1;
+		int endPaging = position * groupCount;
+		
+		if(endPaging > totalPaging) {
+			endPaging = totalPaging;
+		}
+		
+		Map pageMap = new HashMap();
+		
+		pageMap.put("beginPaging", beginPaging);
+		pageMap.put("endPaging", endPaging);
+		pageMap.put("totalPaging", totalPaging);
+		pageMap.put("list", list);
+		
+		return pageMap;
+	}
+
+	@Override
+	public void insertDummy(int loop) {
+		UserDTO dto = new UserDTO();
+		
+		for(int i = 0; i<loop; i++) {
+			dto.setUserName("테스트" + i);
+			dto.setGenderSeq(0);
+			dto.setGradeSeq(0);
+			dto.setUserBirth("12345678");
+			dto.setUserEmail("test" + i + "@frontline.com");
+			dto.setUserId("test" + i);
+			dto.setUserPhone("01012345678"+i);
+			dto.setUserPw("1234");
+			
+			mainDAO.insertDummy(dto);
+		}
+	}
 	
+	@Override
+	public UserDTO findId(UserDTO userDTO) {
+		return mainDAO.findId(userDTO);
+	}
+	
+	@Override
+	public UserDTO findPw(UserDTO userDTO) {
+		return mainDAO.findPw(userDTO);
+	}
 }

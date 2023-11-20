@@ -45,6 +45,32 @@ public class MainDAOImpl implements MainDAO{
 		sqlSession.delete("user.deleteUser", list);
 	}
 
+	@Override
+	public int selectUserTotal() {
+		return sqlSession.selectOne("user.userTotal");
+	}
+
+	@Override
+	public List selectUserPage(Map map) {
+		
+		List userList = sqlSession.selectList("user.userPage", map);
+		
+		return userList;
+	}
+
+	@Override
+	public void insertDummy(UserDTO userDTO) {
+		sqlSession.insert("user.insertDummy", userDTO);
+	}
+
+	@Override
+	public UserDTO findId(UserDTO userDTO) {
+		return sqlSession.selectOne("user.findId", userDTO);
+	}
 	
+	@Override
+	public UserDTO findPw(UserDTO userDTO) {
+		return sqlSession.selectOne("user.findPw", userDTO);
+	}
 
 }

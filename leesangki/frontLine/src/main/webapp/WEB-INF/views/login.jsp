@@ -349,8 +349,8 @@
                     	<div class="input_password"><img src="resources/images/icon_password_before.png"><input type="password" placeholder="비밀번호" name="userPw"><img class="input_password_x" src="resources/images/x.png"></div>
                 	</div>
                 	<div class="find">
-                    	<div><a href="./find_id.html">아이디 찾기</a></div>
-                    	<div><a href="./find_password.html">비밀번호 찾기</a></div>
+                    	<div><a href="goFindId">아이디 찾기</a></div>
+                    	<div><a href="goFindPw">비밀번호 찾기</a></div>
                 	</div>
                 	<input class="main_login" type="submit" value="로그인">
                 </form>
