@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.frontline.dao.MainDAO;
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Service
@@ -43,6 +44,17 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void deleteUser(List list) {
 		mainDAO.deleteUser(list);
+	}
+
+	@Override
+	public List travelList() {
+		return mainDAO.travelList();
+		
+	}
+
+	@Override
+	public void travelNew(BoardDTO dto) {
+		 mainDAO.travelNew(dto);
 	}
 
 	

@@ -1,13 +1,10 @@
 package com.spring.frontline.controller;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.frontline.dto.BoardDTO;
@@ -68,7 +66,7 @@ public class MainController {
 	public String doJoin(HttpServletRequest request, Model model, @ModelAttribute UserDTO userDTO) {
 		mainService.insertUser(userDTO);
 		
-		model.addAttribute("msg", "회원가입 되었습니다.");
+		model.addAttribute("msg", "�쉶�썝媛��엯 �릺�뿀�뒿�땲�떎.");
 		model.addAttribute("url", "/frontline");
 		
 		return "alert";
@@ -107,7 +105,7 @@ public class MainController {
 		
 		session.setAttribute("userDTO", dto);
 		
-		model.addAttribute("msg", dto.getUserName()+"�떂 �솚�쁺�빀�땲�떎.");
+		model.addAttribute("msg", dto.getUserName()+"占쎈뻷 占쎌넎占쎌겫占쎈�占쎈빍占쎈뼄.");
 		model.addAttribute("url", "/frontline");
 		
 		return "alert";
@@ -119,7 +117,7 @@ public class MainController {
 		
 		session.removeAttribute("userDTO");
 		
-		model.addAttribute("msg", "로그아웃 하였습니다.");
+		model.addAttribute("msg", "濡쒓렇�븘�썐 �븯���뒿�땲�떎.");
 		model.addAttribute("url", "/frontline");
 		
 		return "alert";
@@ -172,7 +170,7 @@ public class MainController {
 		
 		Enumeration params = request.getParameterNames();
 		
-		// �뙆�씪誘명꽣 �꽕�엫�쓣 媛��졇���꽌 �씪移섑븯硫� 媛곴컖 �룞�옉
+		// 占쎈솁占쎌뵬沃섎챸苑� 占쎄퐬占쎌뿫占쎌뱽 揶쏉옙占쎌죬占쏙옙占쎄퐣 占쎌뵬燁살꼹釉�筌롳옙 揶쏄낫而� 占쎈짗占쎌삂
 		while (params.hasMoreElements()){
 		    String name = (String)params.nextElement();
 		    
@@ -210,5 +208,41 @@ public class MainController {
 		return "redirect:/getUser";
 	}
 	
+//최현아
+	@RequestMapping("/admin_travel_mgm")
+	public String admin_travel_mgm() {
+		return "travel/admin_travel_management";
+	}
+	@RequestMapping("/admin_travel_new")
+	public String admin_travel_new() {
+		return "travel/admin_travel_new";
+	}
+	
+	@RequestMapping("/travelList")
+	public String travelList(Model model) {
+		List travelList = mainService.travelList();
+		model.addAttribute("travelList", travelList);
+		
+		return "/travel/admin_travel_management";
+	}
+	
+	@RequestMapping(value="/travelNew", method=RequestMethod.POST)
+	public String travelNew(Model model ,@ModelAttribute BoardDTO dto) {
+		System.out.println("dto.boardTitle : " + dto.getBoardTitle());
+		dto.setUserSeq(24);
+		dto.setTypeSeq(0);
+		mainService.travelNew(dto);
+		
+		
+		
+		
+		List travelList = mainService.travelList();
+		
+		model.addAttribute("travelList", travelList);
+		
+		
+		
+		return "/travel/admin_travel_management";
+	}
 	
 }

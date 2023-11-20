@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Repository
@@ -43,6 +44,17 @@ public class MainDAOImpl implements MainDAO{
 	@Override
 	public void deleteUser(List list) {
 		sqlSession.delete("user.deleteUser", list);
+	}
+
+	@Override
+	public List travelList() {
+		return sqlSession.selectList("user.travelList");
+	}
+
+	@Override
+	public void travelNew(BoardDTO dto) {
+		sqlSession.insert("user.travelNew", dto);
+		
 	}
 
 	

@@ -3,6 +3,7 @@ package com.spring.frontline.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 public interface MainService {
@@ -12,4 +13,6 @@ public interface MainService {
 	UserDTO doLogin(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
+	List travelList();
+	void travelNew(BoardDTO dto);
 }
