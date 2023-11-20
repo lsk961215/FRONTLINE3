@@ -15,4 +15,7 @@ public interface MainDAO {
 	void deleteUser(List list);
 	List travelList();
 	void travelNew(BoardDTO dto);
+	void travelDelete(String[] boardDelete);
+	BoardDTO travelUpdate(BoardDTO dto);
+	void setBoard(BoardDTO dto);
 }

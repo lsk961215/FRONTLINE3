@@ -57,5 +57,20 @@ public class MainServiceImpl implements MainService {
 		 mainDAO.travelNew(dto);
 	}
 
+	@Override
+	public void travelDelete(String[] boardDelete) {
+		mainDAO.travelDelete(boardDelete);
+	}
+
+	@Override
+	public BoardDTO travelUpdate(BoardDTO dto) {
+		return mainDAO.travelUpdate(dto);
+	}
+
+	@Override
+	public void setBoard(BoardDTO dto) {
+		mainDAO.setBoard(dto);		
+	}
+
 	
 }

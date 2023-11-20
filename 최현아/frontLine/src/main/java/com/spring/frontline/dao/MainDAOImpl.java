@@ -57,6 +57,22 @@ public class MainDAOImpl implements MainDAO{
 		
 	}
 
+	@Override
+	public void travelDelete(String[] boardDelete) {
+		sqlSession.delete("user.travelDelete", boardDelete);
+	}
+
+	@Override
+	public BoardDTO travelUpdate(BoardDTO dto) {
+		return sqlSession.selectOne("user.travelUpdate", dto);
+	}
+
+	@Override
+	public void setBoard(BoardDTO dto) {
+		sqlSession.update("user.setBoard", dto);
+		
+	}
+
 	
 
 }

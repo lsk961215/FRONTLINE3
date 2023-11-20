@@ -20,10 +20,10 @@
 		<a href="admin_eat_management.jsp">
 			<h3>맛집 관리</h3>
 		</a>
-		<a href="admin_travel_new.jsp">
+		<a href="admin_travel_new">
 			<h3>여행지 등록</h3>
 		</a>
-		<a href="admin_travel_management.jsp">
+		<a href="travelList">
 			<h3>여행지 관리</h3>
 		</a>
 		<a href="admin_room_new.jsp">

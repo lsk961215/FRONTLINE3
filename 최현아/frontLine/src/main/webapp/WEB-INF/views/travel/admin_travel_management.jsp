@@ -133,6 +133,7 @@ textarea {
 						</form>
 					</div>
 				<br>
+			<form action="travelDelete">
 				<div class="table">
 					<table id="tb" border="1">
 						<thead>
@@ -157,24 +158,26 @@ textarea {
 <!-- 									<td><input type="checkbox"></td> -->
 							<c:forEach var="dto" items="${travelList}" varStatus="status"> 
 								<tr>
-									<td>${dto.boardSeq}</td>
+									<td><input type="checkbox" name="boardDelete" value="${dto.boardSeq}" ></td>
 									<td>${dto.boardSeq}</td>
 									<td>${dto.typeSeq}</td>
 									<td>${dto.regionSeq  }</td>
-									<td>${dto.boardOpen }</td>
 									<td>${dto.boardTitle}</td>
 									<td>${dto.boardAddress}</td>
-									<td>${dto.boardOpen}</td>
+									<td>${dto.boardOpen }</td>
 									<td>${dto.boardDetail}</td>
 									<td>${dto.boardRegDate}</td>
 									<td>${dto.boardBreak}</td>
 									<td>${dto.boardPhone}</td>
-									<td><img class="travel_image" src="${board.image}"></td>
+									<td>${dto.userSeq}</td>
+									<td><a href="travelUpdate?boardSeq=${dto.boardSeq}"	><input type="button" value="수정" name="${dto.boardSeq}"></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<input type="submit" value="삭제">
 				</div>
+			</form>
 				<br>
 				<div class="page_wrap">
 					<a class="arrow prev" href="#"><button>

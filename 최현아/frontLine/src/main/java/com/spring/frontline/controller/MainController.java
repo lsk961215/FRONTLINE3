@@ -220,6 +220,7 @@ public class MainController {
 	
 	@RequestMapping("/travelList")
 	public String travelList(Model model) {
+		System.out.println("/travelList");
 		List travelList = mainService.travelList();
 		model.addAttribute("travelList", travelList);
 		
@@ -233,16 +234,42 @@ public class MainController {
 		dto.setTypeSeq(0);
 		mainService.travelNew(dto);
 		
-		
-		
-		
 		List travelList = mainService.travelList();
 		
 		model.addAttribute("travelList", travelList);
 		
-		
-		
 		return "/travel/admin_travel_management";
 	}
+	
+	@RequestMapping("/travelDelete")
+	public String travelDelete(HttpServletRequest request, Model model) {
+		String[] boardDelete = request.getParameterValues("boardDelete");
+		for(int i=0; i<boardDelete.length; i++) {
+			System.out.println("boardDelete[" + i + "] : " + boardDelete[i]);
+		}
+//		int checkOne = Integer.parseInt()
+		
+		mainService.travelDelete(boardDelete);
+		List travelList = mainService.travelList();
+		model.addAttribute("travelList", travelList);
+		return "/travel/admin_travel_management";
+	}
+	
+	@RequestMapping("/travelUpdate")
+	public String travelUpdate(BoardDTO dto, Model model) {
+		System.out.println("/travelUpdate");
+		
+		BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+		model.addAttribute("beforeUpdate", beforeUpdate);
+		return "/travel/admin_travel_update";
+	}
+	@RequestMapping("/travelBoardUpdate")
+	public String travelBoardUpdate(BoardDTO dto, Model model) {
+		System.out.println("/travelBoardUpdate");
+		mainService.setBoard(dto);
+		
+		return "admin_travel_update";
+	}
+	
 	
 }

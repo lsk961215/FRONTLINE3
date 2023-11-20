@@ -18,7 +18,7 @@
   src="https://code.jquery.com/jquery-3.7.1.js"
   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
-<script>
+ <script>
 	$("document").ready(function(){
 		// 수정버튼
 		$("input[value=수정]").click(function(){
@@ -38,7 +38,7 @@
 			$("#updateText").text("")
 		})
 	})
-</script>
+</script>  
 <style>
 	.popup {
 		position: absolute;

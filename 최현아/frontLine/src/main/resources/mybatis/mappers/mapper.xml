@@ -54,6 +54,7 @@
 			#{item}
 		</foreach>
 	</delete>
+	<!-- 최현아 -->
 	<select id="travelList" resultMap="boardMap">
 		select * from board_info where type_seq = 0
 	</select>
@@ -63,10 +64,25 @@
 			#{boardTitle}, #{boardAddress}, #{boardOpen},
 			#{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
 			#{boardBreak}, #{boardPhone}
-			
 		)
 	</insert>
-
+	<delete id="travelDelete" parameterType="hashmap">
+		delete 
+			from board_info
+		where board_seq in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<select id="travelUpdate" resultMap="boardMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select * from board_info where board_seq = #{boardSeq}
+	</select>
+	<update id="setBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		update board_info set board_title = #{boardTitle}, board_address = #{boardAddress}, board_open = #{boardOpen},
+		board_detail = #{boardDetail}, board_break = #{boardBreak}, board_phone = #{boardPhnoe}
+		where board_seq = #{boardSeq}
+	</update>
+	
 
 
 	
