@@ -345,8 +345,8 @@
                 <h3>놀아유에 오신걸 환영합니다</h3>
                 <form class= "main_form" method="post" onsubmit="return false;" action="doLogin">
                 	<div class="main_input">
-                    	<div class="input_id"><img src="resources/images/icon_id_before.png"><input type="text" placeholder="아이디" name="userId"><img class="input_id_x" src="resources/images/x.png"></div>
-                    	<div class="input_password"><img src="resources/images/icon_password_before.png"><input type="password" placeholder="비밀번호" name="userPw"><img class="input_password_x" src="resources/images/x.png"></div>
+                    	<div class="input_id"><img src="resources/images/icon_id_before.png"><input type="text" placeholder="아이디" name="userId" maxlength="20"><img class="input_id_x" src="resources/images/x.png"></div>
+                    	<div class="input_password"><img src="resources/images/icon_password_before.png"><input type="password" placeholder="비밀번호" name="userPw" maxlength="16"><img class="input_password_x" src="resources/images/x.png"></div>
                 	</div>
                 	<div class="find">
                     	<div><a href="goFindId">아이디 찾기</a></div>

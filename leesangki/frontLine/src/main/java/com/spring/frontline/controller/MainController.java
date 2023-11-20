@@ -142,14 +142,22 @@ public class MainController {
 		map.put("id", userId);
 		map.put("pw", userPw);
 		
-		UserDTO dto = mainService.doLogin(map);
+		try {
+			UserDTO dto = mainService.doLogin(map);
+			
+			session.setAttribute("userDTO", dto);
+			
+			model.addAttribute("msg", dto.getUserName()+"님 환영합니다.");
+			model.addAttribute("url", "/frontline");
+			
+			return "alert";
+		} catch (NullPointerException e) {
+			model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			model.addAttribute("url", "goLogin");
+			
+			return "alert";
+		}
 		
-		session.setAttribute("userDTO", dto);
-		
-		model.addAttribute("msg", dto.getUserName()+"�떂 �솚�쁺�빀�땲�떎.");
-		model.addAttribute("url", "/frontline");
-		
-		return "alert";
 	}
 	
 	@RequestMapping("/doLogout")
@@ -291,9 +299,17 @@ public class MainController {
 			return "find_pw_result";
 		} else {
 			model.addAttribute("msg", "정보가 일치하지 않습니다.");
-			model.addAttribute("url", "/frontline");
+			model.addAttribute("url", "goFindPw");
 			
 			return "alert";
 		}
 	}
+	
+	
+	@RequestMapping("/checkJoin")
+	public String checkJoin(HttpServletRequest request, Model model) {
+		System.out.println("checkJoin");
+		return "";
+	}
+	
 }
