@@ -117,10 +117,13 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public boolean checkJoin(Map map) {
 		if("checkId".equals(map.get("target"))) {
+			System.out.println("service id 실행");
 			return mainDAO.checkId(map);
 		} else if("checkEmail".equals(map.get("target"))) {
+			System.out.println("service email 실행");
 			return mainDAO.checkEmail(map);
 		} else {
+			System.out.println("service phone 실행");
 			return mainDAO.checkPhone(map);
 		}
 	}

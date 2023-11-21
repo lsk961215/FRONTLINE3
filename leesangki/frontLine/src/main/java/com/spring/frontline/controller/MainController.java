@@ -41,7 +41,11 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goJoin_2")
-	public String goJoin_2() {
+	public String goJoin_2(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("joinMap");
+		
 		return "join_2";
 	}
 	
@@ -308,20 +312,39 @@ public class MainController {
 	
 	@RequestMapping("/checkJoin")
 	public String checkJoin(HttpServletRequest request, Model model, UserDTO joinDTO) {
+		
+		HttpSession session = request.getSession();
+		
 		String target = request.getParameter("checkTarget");
 		
 		System.out.println(target);
-		System.out.println(joinDTO);
 		
-		Map map = new HashMap();
+		Map map = (HashMap)session.getAttribute("joinMap");
+		
+		if(map == null) {
+			map = new HashMap();
+		}
 		
 		map.put("target", target);
 		map.put("joinDTO", joinDTO);
 		
-		System.out.println(target+mainService.checkJoin(map));
+		if("checkId".equals(map.get("target"))) {
+			System.out.println("controller id 실행");
+			boolean checkId = mainService.checkJoin(map);
+			map.put("checkId", checkId);
+		} else if("checkEmail".equals(map.get("target"))) {
+			System.out.println("controller email 실행");
+			boolean checkEmail = mainService.checkJoin(map);
+			map.put("checkEmail", checkEmail);
+		} else {
+			System.out.println("controller phone 실행");
+			boolean checkPhone = mainService.checkJoin(map);
+			map.put("checkPhone", checkPhone);
+		}
 		
-		model.addAllAttributes(map);
-		return "";
+		session.setAttribute("joinMap", map);
+		
+		return "join_2";
 	}
 	
 }

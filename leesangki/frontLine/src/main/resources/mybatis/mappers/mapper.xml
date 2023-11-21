@@ -71,11 +71,11 @@
 	</select>
 	
 	<select id="checkEmail" parameterType="java.util.HashMap" resultMap="userMap">
-		select * from user_info where user_id = #{joinDTO.userEmail}
+		select * from user_info where user_email = #{joinDTO.userEmail}
 	</select>
 	
 	<select id="checkPhone" parameterType="java.util.HashMap" resultMap="userMap">
-		select * from user_info where user_id = #{joinDTO.userPhone}
+		select * from user_info where user_phone = #{joinDTO.userPhone}
 	</select>
 	
 </mapper>
