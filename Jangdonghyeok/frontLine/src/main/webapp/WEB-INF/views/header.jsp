@@ -3,7 +3,7 @@
 <%@ page import="com.spring.frontline.dto.UserDTO" %>
 	<header>
 		<div class="header_logo">
-			<a href="/frontline"><img src="resources/images/logo_main.png"></a>
+			<a href="/"><img src="resources/images/logo_main.png"></a>
 		</div>
 		<div class ="header_input">
 			<ul class = "input_wrap">

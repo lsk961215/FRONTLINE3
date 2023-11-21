@@ -77,7 +77,7 @@ thead th, tbody th {
 		<section>
 			<div class="members">
 			<div class="table">
-			<form action="playUpdate">
+			<form action="playUpdate" method="post">
 				<table id="tb">
 					<thead>
 						<tr>

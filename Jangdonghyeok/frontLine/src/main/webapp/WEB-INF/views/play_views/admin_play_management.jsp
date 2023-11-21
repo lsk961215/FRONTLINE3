@@ -93,11 +93,59 @@ thead th, tbody th {
 						</thead>
 						<tbody>
 
-							<c:forEach var="play" items="${data.list}">
+							<c:forEach var="play" items="${data.list}" varStatus="status">
+						
 								<tr>
 									<td>${play.boardSeq}</td>
 									<td>${play.userSeq}</td>
-									<td>${play.regionSeq}</td>
+									<td><c:choose>
+                			<c:when test="${play.regionSeq == 0}">
+               					천안
+            				</c:when>
+            		<c:when test="${play.regionSeq == 1}">
+                				아산
+            				</c:when>
+            		<c:when test="${play.regionSeq == 2}">
+              					 태안
+            				</c:when>
+            		<c:when test="${play.regionSeq == 3}">
+              					  서산
+            				</c:when>
+            		<c:when test="${play.regionSeq == 4}">
+              					 당진
+            				</c:when>
+            		<c:when test="${play.regionSeq == 5}">
+              					 예산
+            				</c:when>
+            		<c:when test="${play.regionSeq == 6}">
+              					 홍성
+            				</c:when>
+            		<c:when test="${play.regionSeq == 7}">
+              					 청양
+            				</c:when>
+            		<c:when test="${play.regionSeq == 8}">
+              					 보령
+            				</c:when>
+            		<c:when test="${play.regionSeq == 9}">
+              					 부여
+            				</c:when>
+            		<c:when test="${play.regionSeq == 10}">
+              					 서천
+            				</c:when>
+            		<c:when test="${play.regionSeq == 11}">
+              					 공주
+            				</c:when>
+            		<c:when test="${play.regionSeq == 12}">
+              					 논산
+            				</c:when>
+            		<c:when test="${play.regionSeq == 13}">
+              					 계룡
+            				</c:when>
+            		<c:when test="${play.regionSeq == 14}">
+              					 금산
+            				</c:when>
+            		
+        			</c:choose></td>
 									<td><a href="playCorrection?boardSeq=${play.boardSeq}">
 											${play.boardTitle}</a></td>
 									<td>${play.boardAddress}</td>

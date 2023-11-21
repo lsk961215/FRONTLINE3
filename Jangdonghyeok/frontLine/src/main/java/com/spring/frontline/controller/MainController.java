@@ -308,5 +308,16 @@ public class MainController {
 		
 	}
 	
+	//놀거리 상세페이지
+	@RequestMapping("/playPage")
+	public String playPage (Model model, @ModelAttribute BoardDTO boardDTO) {
+		
+		BoardDTO board = mainService.getPlaycorr(boardDTO);
+		
+		model.addAttribute("play", board);
+		
+		return "play_views/play_page";
+	}
+	
 	
 }
