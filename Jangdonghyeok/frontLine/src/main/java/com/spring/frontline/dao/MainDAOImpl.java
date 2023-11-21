@@ -82,7 +82,7 @@ public class MainDAOImpl implements MainDAO {
 		return delete;
 	}
 
-	// 愁芭府 其捞隆
+	// 愁芭府 包府 其捞隆
 	@Override
 	public List Paging(BoardDTO boardDTO) {
 		List playList = sqlSession.selectList("board.playPage",boardDTO );
@@ -98,5 +98,13 @@ public class MainDAOImpl implements MainDAO {
 
 		return total;
 	}
+	// 愁芭府 歹焊扁 其捞隆
+		
+	@Override
+		public List morePaging(BoardDTO boardDTO) {
+			List playList = sqlSession.selectList("board.playMorePage",boardDTO );
 
+			return playList;
+		}
+	
 }

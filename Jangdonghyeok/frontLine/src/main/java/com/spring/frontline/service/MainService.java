@@ -23,8 +23,10 @@ public interface MainService {
 	void updatePlay(BoardDTO boardDTO);
 	//愁芭府 昏力
 	int deletePlay(BoardDTO boardDTO);
-	
+	//愁芭府 包府 其捞隆
 	Map getPage(int pageNum, int countPerPage);
+	//愁芭府 歹焊扁 其捞隆
+	Map getMorePage(int pageNum, int countPerPage);
 }
 
 

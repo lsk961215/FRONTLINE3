@@ -319,5 +319,49 @@ public class MainController {
 		return "play_views/play_page";
 	}
 	
-	
+	// 놀거리 더보기 목록 및 페이징
+	@RequestMapping("/playMoreView")
+	public String playMoreView( Model model, HttpServletRequest request) {
+		
+			
+		//안넘어왔을때 0을 사용할수없으니깐 초기값 지정
+				int pageNum = 1; //현재 페이지
+				int countPerPage = 10; // 한페이지에 몇개 보여줄지
+				
+				String tmp_pageNum = request.getParameter("pageNum");
+				//키값이 들어오지않았다면
+				if(tmp_pageNum != null) {
+					try {
+						pageNum = Integer.parseInt(tmp_pageNum);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				String tmp_countPerPage = request.getParameter("countPerPage");
+				//키값이 들어오지않았다면
+				if(tmp_countPerPage != null) {
+					try {
+						countPerPage = Integer.parseInt(tmp_countPerPage);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				//db에서 emp2 목록 전체 조회
+//				List list = empService.getEmp2Page(pageNum,countPerPage);
+				Map map = mainService.getMorePage(pageNum,countPerPage);
+				
+				map.put("pageNum", pageNum);
+				map.put("countPerPage", countPerPage);
+				
+				logger.info("pageNum" + pageNum);
+				logger.error("countPerPage" + countPerPage);
+				
+				//model에 담아서
+				model.addAttribute("data", map);
+				//jsp로 이동(forward)
+		
+		return "play_views/page_more";
+	}
 }

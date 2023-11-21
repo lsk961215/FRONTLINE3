@@ -76,7 +76,7 @@ public class MainServiceImpl implements MainService {
 			int delete = mainDAO.deletePlay(boardDTO);
 			return delete;
 		}
-	//놀거리 페이징
+	//놀거리 관리 페이징
 		@Override
 		public Map getPage(int pageNum, int countPerPage) {
 			
@@ -104,4 +104,32 @@ public class MainServiceImpl implements MainService {
 			return map;
 			
 		}
+		
+		//놀거리 더보기 페이징
+		@Override
+		public Map getMorePage(int pageNum, int countPerPage) {
+			
+			int startNum = 0, endNum = 0;
+			
+			// 이전 페이지의 마지막 숫자 +1
+			startNum = ((pageNum-1)* countPerPage) +1;
+			endNum = pageNum * countPerPage;
+			//9를 더하는 방식
+//			endNum = startNum * countPerPage - 1;
+			
+			BoardDTO dto = new BoardDTO();
+			dto.setStartNum(startNum);
+			dto.setEndNum(endNum);
+		
+			//보여줄 리스트만 쑥 뽑았음
+			List list = mainDAO.morePaging(dto);
+			
+			Map map = new HashMap();
+			map.put("list", list);
+		
+			
+			return map;
+			
+		}
+		
 }

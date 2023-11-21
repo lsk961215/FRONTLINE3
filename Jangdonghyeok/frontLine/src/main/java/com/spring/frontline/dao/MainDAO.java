@@ -27,4 +27,6 @@ public interface MainDAO {
 	List Paging(BoardDTO boardDTO);
 	//페이지 토탈
 	int pageTotal();
+	//놀거리 더보기 페이징
+	List morePaging(BoardDTO boardDTO);
 }
