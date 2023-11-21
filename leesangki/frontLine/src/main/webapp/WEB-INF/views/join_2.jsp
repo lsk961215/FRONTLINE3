@@ -282,10 +282,12 @@
         
         .checkPass {
         	color: green;
+        	font-size: 12px;
         }
         
         .checkError {
         	color: red;
+        	font-size: 12px;
         }
     </style>
 

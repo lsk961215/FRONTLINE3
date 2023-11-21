@@ -89,6 +89,10 @@
 							<option value="5">5개씩 보기</option>
 							<option value="10" selected="true">10개씩 보기</option>
 						</c:when>
+						<c:otherwise>
+							<option value="5" selected="true">5개씩 보기</option>
+							<option value="10">10개씩 보기</option>
+						</c:otherwise>
 					</c:choose>		
 					</select>
 					<input id="setPerPageSubmit" type="submit">

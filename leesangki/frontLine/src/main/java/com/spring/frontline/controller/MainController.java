@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -81,12 +82,30 @@ public class MainController {
 	
 	@RequestMapping("/doJoin")
 	public String doJoin(HttpServletRequest request, Model model, @ModelAttribute UserDTO userDTO) {
-		mainService.insertUser(userDTO);
+		HttpSession session = request.getSession();
 		
-		model.addAttribute("msg", "회원가입 되었습니다.");
-		model.addAttribute("url", "/frontline");
+		Map map = (HashMap)session.getAttribute("joinMap");
 		
-		return "alert";
+		boolean id = (Boolean)map.get("checkId");
+		boolean email = (Boolean)map.get("checkEmail");
+		boolean phone = (Boolean)map.get("checkPhone");
+		
+		System.out.println("id : " + id);
+		System.out.println("email : " + email);
+		System.out.println("phone : " + phone);
+		
+		if(id == true && email == true && phone == true) {
+			mainService.insertUser(userDTO);
+			model.addAttribute("msg", "회원가입 되었습니다.");
+			model.addAttribute("url", "/frontline");
+			
+			return "alert";
+		} else {
+			model.addAttribute("msg", "입력된 값이 회원가입 형식에 맞지 않습니다.");
+			model.addAttribute("url", "/goJoin_2");
+			
+			return "alert";
+		}
 	}
 	
 	@RequestMapping("/getUser")
@@ -168,7 +187,7 @@ public class MainController {
 	public String doLogout(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("userDTO");
+		session.invalidate();
 		
 		model.addAttribute("msg", "로그아웃 하였습니다.");
 		model.addAttribute("url", "/frontline");
@@ -214,9 +233,9 @@ public class MainController {
 	}
 	
 	@RequestMapping("/updateUser")
-	public String updateUser(HttpServletRequest request) {
+	public String updateUser(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		UserDTO userDTO = (UserDTO)session.getAttribute("userDTO");
+		UserDTO updateDTO = (UserDTO)session.getAttribute("userDTO");
 		
 		Enumeration params = request.getParameterNames();
 		
@@ -225,17 +244,25 @@ public class MainController {
 		    String name = (String)params.nextElement();
 		    
 		    if(name.equals("userName")) {
-		    	userDTO.setUserName(request.getParameter(name));
+		    	updateDTO.setUserName(request.getParameter(name));
 		    } else if(name.equals("userPw")) {
-		    	userDTO.setUserPw(request.getParameter(name));
+		    	updateDTO.setUserPw(request.getParameter(name));
 		    } else if(name.equals("userEmail")) {
-		    	userDTO.setUserEmail(request.getParameter(name));
+		    	updateDTO.setUserEmail(request.getParameter(name));
 		    } else if(name.equals("userPhone")) {
-		    	userDTO.setUserPhone(request.getParameter(name));
+		    	updateDTO.setUserPhone(request.getParameter(name));
 		    }
 		}
 		
-		mainService.updateUser(userDTO);
+		try {
+			mainService.updateUser(updateDTO);
+		} catch (DataIntegrityViolationException e) {
+			model.addAttribute("msg", "다른 회원이 이미 사용중입니다.");
+			model.addAttribute("url", "goInfo");
+			
+			return "alert";
+		}
+		
 		
 		return "info";
 	}
