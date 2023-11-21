@@ -78,12 +78,96 @@
 		select * from board_info where board_seq = #{boardSeq}
 	</select>
 	<update id="setBoard" parameterType="com.spring.frontline.dto.BoardDTO">
-		update board_info set board_title = #{boardTitle}, board_address = #{boardAddress}, board_open = #{boardOpen},
-		board_detail = #{boardDetail}, board_break = #{boardBreak}, board_phone = #{boardPhnoe}
-		where board_seq = #{boardSeq}
+		update 
+			board_info 
+		set 
+			board_title = #{boardTitle}, 
+			board_address = #{boardAddress}, 
+			board_open = #{boardOpen},
+			board_detail = #{boardDetail}, 
+			board_break = #{boardBreak}, 
+			board_phone = #{boardPhone}
+		where 
+			board_seq = #{boardSeq}
 	</update>
-	
+<!-- 	<select id="" parameterType=""> -->
+<!-- 		select * from -->
+<!-- 			board_info -->
+<!-- 		where board_seq = #{boardSeq} -->
+<!-- 	</select> -->
+<!-- 	<select id="" parameterType=""> -->
+<!-- 		select * from  -->
+<!-- 			board_info, board_region -->
+<!-- 		where -->
+<!-- 			board_infor.region_seq = board_region.region_seq -->
+<!-- 		and  -->
+<!-- 			board_region.region_seq = #{regionSeq} -->
+<!-- 	</select> -->
+<!-- 	<select id="" parameterType=""> -->
+<!-- 		select  -->
+<!-- 			*  -->
+<!-- 		from -->
+<!-- 			board_info -->
+<!-- 		where  -->
+<!-- 			board_title = #{boardTitle} -->
+<!-- 	</select> -->
+<!-- 	<select id="" parameterType=""> -->
+<!-- 		select * from -->
+<!-- 			board_info, user_info -->
+<!-- 		where -->
+<!-- 			board_info.user_seq = user_info.user_seq -->
+<!-- 		and -->
+<!-- 			user_info.user_name = #{userSeq} -->
+<!-- 	</select> -->
 
+	<select id="boardPick1" resultMap="boardMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select 
+			* 
+		from
+			board_info
+		where
+			board_seq = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick2" resultMap="boardMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select 
+			* 
+		from
+			board_info, board_region
+		where
+			board_info.region_seq = board_region.region_seq
+		and
+			board_region.region_name = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick3" resultMap="boardMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select
+			*
+		from
+			board_info
+		where
+			board_title = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick4" resultMap="boardMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select
+			*
+		from
+			board_info, user_info
+		where
+			board_info.user_seq = user_info.user_seq
+		and
+			user_info.user_seq = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<insert id="insertDummy" parameterType="com.spring.frontline.dto.UserDTO">
+		insert into board_info()
+		values()
+	</insert>
 
 	
 </mapper>

@@ -117,18 +117,18 @@ textarea {
 				</div>
 				===================================================================== -->
 <!-- 				<div class="head"> -->
+			<h1>여행지 관리</h1>
 					<div id="hright">
-						<select class="sb" name="ss">
-							<option value="all" selected="selected">전체</option>
-							<option value="num">글번호</option>
-							<option value="date">지역</option>
-							<option value="date">상호명</option>
-							<option value="date">작성일</option>
-							<option value="id">사용자번호</option>
-						</select>
-
-						<form id="search" method="GET" action="">
-							<input class="sinput" type="text" placeholder="검색어를 입력해주세요">
+						<form id="search" method="GET" action="boardPick">
+							<select class="sb" name="boardPick">
+								<option value="-1" selected="selected">전체</option>
+								<option value="0">글번호</option>
+								<option value="1">지역</option>
+								<option value="2">상호명</option>
+								<option value="3">사용자번호</option>
+							</select>
+							<input type="hidden" name="typeSeq" value="0">
+							<input class="sinput" type="text" name="boardSearch" placeholder="검색어를 입력해주세요">
 							<input class="sbtn" type="submit" value="검색">
 						</form>
 					</div>

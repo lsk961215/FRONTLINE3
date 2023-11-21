@@ -12,6 +12,8 @@ public class BoardDTO {
 	private String boardRegDate;
 	private String boardBreak;
 	private String boardPhone;
+	private int boardPick;
+	private String boardSearch;
 	
 	public String getBoardBreak() {
 		return boardBreak;
@@ -81,13 +83,25 @@ public class BoardDTO {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
 				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + ", boardBreak=" + boardBreak
-				+ ", boardPhone=" + boardPhone + "]";
+				+ ", boardPhone=" + boardPhone + ", boardPick=" + boardPick + ", boardSearch=" + boardSearch + "]";
 	}
 	public String getBoardPhone() {
 		return boardPhone;
 	}
 	public void setBoardPhone(String boardPhone) {
 		this.boardPhone = boardPhone;
+	}
+	public int getBoardPick() {
+		return boardPick;
+	}
+	public void setBoardPick(int boardPick) {
+		this.boardPick = boardPick;
+	}
+	public String getBoardSearch() {
+		return boardSearch;
+	}
+	public void setBoardSearch(String boardSearch) {
+		this.boardSearch = boardSearch;
 	}
 	
 }

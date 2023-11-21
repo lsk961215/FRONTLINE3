@@ -73,6 +73,32 @@ public class MainDAOImpl implements MainDAO{
 		
 	}
 
+	@Override
+	public List boardPick1(BoardDTO dto) {
+		System.out.println("boardPick1()에서dto.getSearch : " + dto.getBoardSearch());
+		return sqlSession.selectList("user.boardPick1",dto);
+	}
+
+	@Override
+	public List boardPick2(BoardDTO dto) {
+		System.out.println("boardPick2()에서dto.getSearch : " + dto.getBoardSearch());
+		return sqlSession.selectList("user.boardPick2",dto);
+		
+	}
+
+	@Override
+	public List boardPick3(BoardDTO dto) {
+		System.out.println("boardPick3()에서dto.getSearch : " + dto.getBoardSearch());
+		return sqlSession.selectList("user.boardPick3",dto);
+	}
+
+	@Override
+	public List boardPick4(BoardDTO dto) {
+		System.out.println("boardPick4()에서dto.getSearch : " + dto.getBoardSearch());
+		return sqlSession.selectList("user.boardPick4",dto);
+	}
+
+
 	
 
 }

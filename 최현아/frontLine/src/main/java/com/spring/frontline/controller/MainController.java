@@ -266,10 +266,40 @@ public class MainController {
 	@RequestMapping("/travelBoardUpdate")
 	public String travelBoardUpdate(BoardDTO dto, Model model) {
 		System.out.println("/travelBoardUpdate");
+		System.out.println("dto : " + dto);
 		mainService.setBoard(dto);
 		
-		return "admin_travel_update";
+		BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+		model.addAttribute("beforeUpdate", beforeUpdate);
+		
+		return "/travel/admin_travel_update";
 	}
+	@RequestMapping("/boardPick")
+	public String boardPick(BoardDTO dto, Model model) {
+		System.out.println("/boardPick 실행");
+		System.out.println("boardPick() --> dto 실행 : " + dto);
+		List boardPick = null;
+		if(dto.getBoardSearch() != null && dto.getTypeSeq() == 0) {
+			if(dto.getBoardPick() == 0) {
+				boardPick = mainService.boardPick1(dto);
+				System.out.println("검색셀렉트 출력 : " + boardPick);
+			}else if(dto.getBoardPick() == 1) {
+				boardPick = mainService.boardPick2(dto);
+				System.out.println("검색셀렉트 출력 : " + boardPick);
+			}else if(dto.getBoardPick() == 2) {
+				boardPick = mainService.boardPick3(dto);
+				System.out.println("검색셀렉트 출력 : " + boardPick);
+			}else if(dto.getBoardPick() == 3) {
+				boardPick = mainService.boardPick4(dto);
+				System.out.println("검색셀렉트 출력 : " + boardPick);
+			}else {
+				boardPick = mainService.travelList();
+			}
+		}
+		
+		model.addAttribute("travelList", boardPick);
+		
+		return "/travel/admin_travel_management";
 	
-	
+	}
 }

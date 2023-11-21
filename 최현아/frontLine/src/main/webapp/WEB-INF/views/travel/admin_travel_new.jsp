@@ -31,7 +31,7 @@
 						<form id="search" method="POST" action="/frontLine/travelNew">
 							<select class="sb" name="regionSeq">
 								<option value="" disabled="disabled" selected="selected">지역선택</option>
-								<option value="0">천안시</option>
+								<option value="0">천안</option>
 								<option value="1">아산</option>
 								<option value="2">당진</option>
 								<option value="3">서산</option>

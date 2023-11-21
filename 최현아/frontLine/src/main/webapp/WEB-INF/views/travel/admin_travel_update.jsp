@@ -71,7 +71,7 @@
 			<div class="section_title">
 				<h1>게시글 정보</h1>
 			</div>
-			<p>글번호 : ${beforeUpdate.boardSeq}<input type="hidden" name="boardSeq"> <!--  <input type="button" value="수정" id="userId"></p>-->
+			<p>글번호 : ${beforeUpdate.boardSeq}<input type="hidden" name="boardSeq" value="${beforeUpdate.boardSeq }"> <!--  <input type="button" value="수정" id="userId"></p>-->
 			<p>카테고리 : ${beforeUpdate.regionSeq} <!-- <input type="button" value="수정" id="userPw"></p> -->
 			<p>지역 : ${beforeUpdate.typeSeq} <!-- <input type="button" value="수정" id="userName"></p> -->
 			<p>상호명 : <input type="text" name="boardTitle" value="${beforeUpdate.boardTitle }"></p><!--  <input type="button" value="수정" id="gradeSeq">-->

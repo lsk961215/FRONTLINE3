@@ -72,5 +72,29 @@ public class MainServiceImpl implements MainService {
 		mainDAO.setBoard(dto);		
 	}
 
+	@Override
+	public List boardPick1(BoardDTO dto) {
+		return mainDAO.boardPick1(dto);
+		
+	}
+
+	@Override
+	public List boardPick2(BoardDTO dto) {
+		return mainDAO.boardPick2(dto);
+		
+	}
+
+	@Override
+	public List boardPick3(BoardDTO dto) {
+		return mainDAO.boardPick3(dto);
+		
+	}
+
+	@Override
+	public List boardPick4(BoardDTO dto) {
+		return mainDAO.boardPick4(dto);
+		
+	}
+
 	
 }
