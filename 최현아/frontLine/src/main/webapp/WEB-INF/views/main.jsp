@@ -376,27 +376,27 @@
         </main>
     <jsp:include page="footer.jsp"></jsp:include>
     
-   	<%
-   		int popup1_count = 0;
-   		int popup2_count = 0;
+<%--    	<% --%>
+<!-- //    		int popup1_count = 0; -->
+<!-- //    		int popup2_count = 0; -->
    		
-   		Cookie[] cookies = request.getCookies();
+<!-- //    		Cookie[] cookies = request.getCookies(); -->
    		
-   		if(cookies != null){
-   			for(Cookie c : cookies){
-   	   			if(c.getName().equals("popup1") && c.getValue().equals("no")){
-   	   				popup1_count = 1;
-   	   			}
-   	   			if(c.getName().equals("popup2") && c.getValue().equals("no")){
-   	   				popup2_count = 1;
-   	   			}
-   	   		}
+<!-- //    		if(cookies != null){ -->
+<!-- //    			for(Cookie c : cookies){ -->
+<!-- //    	   			if(c.getName().equals("popup1") && c.getValue().equals("no")){ -->
+<!-- //    	   				popup1_count = 1; -->
+<!-- //    	   			} -->
+<!-- //    	   			if(c.getName().equals("popup2") && c.getValue().equals("no")){ -->
+<!-- //    	   				popup2_count = 1; -->
+<!-- //    	   			} -->
+<!-- //    	   		} -->
    	   		
-   	   		if(popup1_count == 0){
-   	   			%>
+<!-- //    	   		if(popup1_count == 0){ -->
+<%--    	   			%> --%>
    	   			<div class="popup_1" id="popup_1">
    	    			<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(0).getPopupImage()}">
-   	    			<form class="popup_1_form" action="/frontLine/Popup">
+   	    			<form class="popup_1_form" action="/frontline/popup1">
    	    				<div class="popup_1_main">
    	    					<div>
    	    						<input id="popup_1_checkbox" type="checkbox" name="popup1"> 10초동안 보지않기
@@ -406,14 +406,14 @@
    	    				</div>
    	    			</form>
    	    		</div>
-   	   			<%
-   	   		}
+<%--    	   			<% --%>
+<!--    	   		} -->
    	   		
-   	   		if(popup2_count == 0){
-   	   			%>
+<!--    	   		if(popup2_count == 0){ -->
+<!--    	   			%> -->
    	   			<div class="popup_2" id="popup_2">
    	   	    		<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(1).getPopupImage()}">
-   	   	    		<form class="popup_2_form" action="/frontLine/Popup">
+   	   	    		<form class="popup_2_form" action="/frontline/popup2">
    	   	    			<div class="popup_2_main">
    	   	    				<div>
    	   	    					<input id="popup_2_checkbox" type="checkbox" name="popup2"> 10초동안 보지않기
@@ -423,10 +423,10 @@
    	   	    			</div>
    	   	    		</form>
    	   	    	</div>
-   	   	    	<%
+<%--    	   	    	<% --%>
    	   		}
    		}
    		
-   	%>
+<!--    	%> -->
 </body>
 </html>

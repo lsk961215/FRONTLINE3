@@ -27,6 +27,9 @@
       <result column="board_Open" property="boardOpen"/>
       <result column="board_Detail" property="boardDetail"/>
       <result column="board_RegDate" property="boardRegDate"/>
+      <result column="board_break" property="boardBreak"/>
+      <result column="board_phone" property="boardPhone"/>
+      <result column="board_image" property="boardImage"/>
     </resultMap>
 	<select id="selectUserList" resultMap="userMap">
 		select * from user_info order by user_seq
@@ -63,7 +66,7 @@
 			board_seq.nextval, #{userSeq}, #{regionSeq}, #{typeSeq}, 
 			#{boardTitle}, #{boardAddress}, #{boardOpen},
 			#{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
-			#{boardBreak}, #{boardPhone}
+			#{boardBreak}, #{boardPhone}, #{boardImage}
 		)
 	</insert>
 	<delete id="travelDelete" parameterType="hashmap">
@@ -86,7 +89,8 @@
 			board_open = #{boardOpen},
 			board_detail = #{boardDetail}, 
 			board_break = #{boardBreak}, 
-			board_phone = #{boardPhone}
+			board_phone = #{boardPhone},
+			board_image = #{boardImage}
 		where 
 			board_seq = #{boardSeq}
 	</update>
@@ -164,10 +168,20 @@
 		and 
 			type_seq = #{typeSeq}
 	</select>
+	<!-- 페이징 재료 -->
 	<insert id="insertDummy" parameterType="com.spring.frontline.dto.UserDTO">
-		insert into board_info()
-		values()
+		insert into board_info values(
+			board_seq.nextval, #{userSeq}, #{regionSeq}, #{typeSeq}, 
+			#{boardTitle}, #{boardAddress}, #{boardOpen},
+			#{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
+			#{boardBreak}, #{boardPhone}
+		)
 	</insert>
-
+<!-- 메인 ·상세페이지 --> 
+<!-- 	<select id="chMain2" resultMap="boardMap"> -->
+<!-- 		select * from board_info  -->
+<!-- 	</select> -->
+	<select id="popup" >
+	</select>
 	
 </mapper>

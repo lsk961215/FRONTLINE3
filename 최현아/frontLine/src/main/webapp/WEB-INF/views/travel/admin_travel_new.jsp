@@ -28,7 +28,7 @@
 						<div class="travelReg">
 							<h2>여행지 등록 페이지</h2>
 						</div>
-						<form id="search" method="POST" action="/frontLine/travelNew">
+						<form id="search" method="POST" action="/frontline/travelNew">
 							<select class="sb" name="regionSeq">
 								<option value="" disabled="disabled" selected="selected">지역선택</option>
 								<option value="0">천안</option>
@@ -55,11 +55,14 @@
 								<div>오픈시간</div>
 								<input class="sinput" type="text" name="boardOpen">
 								<div>상세글</div>
-								<input class="sinput" type="text" name="boardDetail">
+								<input class="sinput" type="textarea" name="boardDetail">
 								<div>브레이크</div>
 								<input class="sinput" type="text" name="boardBreak">
 								<div>전화번호</div>
 								<input class="sinput" type="text" name="boardPhone">
+								<div>이미지</div>
+								<input class="sinput" type="textarea" name="boardImage">
+								<input type="hidden" name="userSeq" value="${userDTO.userSeq}">
 							</div>
 							<input class="sbtn" type="submit" value="등록">
 						</form>

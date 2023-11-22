@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
@@ -27,36 +29,37 @@ public class MainController {
 	@Autowired
 	MainService mainService;
 	
+	// 메인페이지
 	@RequestMapping("/")
 	public String goMain() {
 		return "main";
 	}
-	
+	// 회원가입 이용약관동의 페이지
 	@RequestMapping("/goJoin_1")
 	public String goJoin_1() {
 		return "join_1";
 	}
-	
+	//회원가입 input페이지
 	@RequestMapping("/goJoin_2")
 	public String goJoin_2() {
 		return "join_2";
 	}
-	
+	// 로그인페이지
 	@RequestMapping("/goLogin")
 	public String goLogin() {
 		return "login";
 	}
-	
+	// 내정보페이지
 	@RequestMapping("/goInfo")
 	public String goInfo() {
 		return "info";
 	}
-	
+	// 관리자 페이지
 	@RequestMapping("/goAdmin")
 	public String goAdmin() {
 		return "admin";
 	}
-	
+	// 관리자-회원페이지-회원관리 페이지
 	@RequestMapping("/goAdminUser")
 	public String goAdminUser() {
 		return "redirect:/getUser";
@@ -72,6 +75,7 @@ public class MainController {
 		return "alert";
 	}
 	
+	// 관리자-회원페이지-회원관리 페이지
 	@RequestMapping("/getUser")
 	public String getUser(HttpServletRequest request, Model model, UserDTO userDTO) {
 		HttpSession session = request.getSession();
@@ -163,6 +167,7 @@ public class MainController {
 		return "redirect:/goAdminUser";
 	}
 	
+	// 내정보 페이지
 	@RequestMapping("/updateUser")
 	public String updateUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -209,15 +214,20 @@ public class MainController {
 	}
 	
 //최현아
+///////// 관리자 여행지 //////////
+	
+	// 관리자-여행지관리 페이지, 그냥 접속용 
 	@RequestMapping("/admin_travel_mgm")
 	public String admin_travel_mgm() {
 		return "travel/admin_travel_management";
 	}
+	// 관리자-여행지등록 페이지
 	@RequestMapping("/admin_travel_new")
 	public String admin_travel_new() {
 		return "travel/admin_travel_new";
 	}
 	
+	// 관리자-여행지관리 페이지(전체조회)
 	@RequestMapping("/travelList")
 	public String travelList(Model model) {
 		System.out.println("/travelList");
@@ -227,11 +237,13 @@ public class MainController {
 		return "/travel/admin_travel_management";
 	}
 	
+	// 관리자-여행지등록 페이지(제출 후)
 	@RequestMapping(value="/travelNew", method=RequestMethod.POST)
 	public String travelNew(Model model ,@ModelAttribute BoardDTO dto) {
-		System.out.println("dto.boardTitle : " + dto.getBoardTitle());
-		dto.setUserSeq(24);
+		System.out.println("dto : " + dto);
+//		dto.setUserSeq(24);
 		dto.setTypeSeq(0);
+	
 		mainService.travelNew(dto);
 		
 		List travelList = mainService.travelList();
@@ -240,21 +252,19 @@ public class MainController {
 		
 		return "/travel/admin_travel_management";
 	}
-	
+	// 관리자-여행지관리 페이지(삭제)
 	@RequestMapping("/travelDelete")
 	public String travelDelete(HttpServletRequest request, Model model) {
 		String[] boardDelete = request.getParameterValues("boardDelete");
 		for(int i=0; i<boardDelete.length; i++) {
 			System.out.println("boardDelete[" + i + "] : " + boardDelete[i]);
 		}
-//		int checkOne = Integer.parseInt()
-		
 		mainService.travelDelete(boardDelete);
 		List travelList = mainService.travelList();
 		model.addAttribute("travelList", travelList);
 		return "/travel/admin_travel_management";
 	}
-	
+	// 관리자-여행지관리 페이지(수정전 리스트조회)
 	@RequestMapping("/travelUpdate")
 	public String travelUpdate(BoardDTO dto, Model model) {
 		System.out.println("/travelUpdate");
@@ -263,6 +273,7 @@ public class MainController {
 		model.addAttribute("beforeUpdate", beforeUpdate);
 		return "/travel/admin_travel_update";
 	}
+	// 관리자-여행지관리 페이지(수정)
 	@RequestMapping("/travelBoardUpdate")
 	public String travelBoardUpdate(BoardDTO dto, Model model) {
 		System.out.println("/travelBoardUpdate");
@@ -274,6 +285,7 @@ public class MainController {
 		
 		return "/travel/admin_travel_update";
 	}
+	// 관리자-여행지관리 페이지(검색)
 	@RequestMapping("/boardPick")
 	public String boardPick(BoardDTO dto, Model model) {
 		System.out.println("/boardPick 실행");
@@ -302,4 +314,43 @@ public class MainController {
 		return "/travel/admin_travel_management";
 	
 	}
+	
+	// 페이징 재료(게시물 인서트)
+	@RequestMapping("/makeDummy")
+	@ResponseBody
+	public String makeDummy() {
+		mainService.insertDummy(20);
+		
+		return "완료";
+	}
+	
+//////// 여행지 상세 페이지 /////////
+	
+	
+	@RequestMapping("/chMain")
+	public String chMain() {
+		return "/detail/ch_main";
+	}
+	@RequestMapping("/chMain2")
+	public String chMain2() {
+		return "/detail/ch_main_2";
+	}
+	@RequestMapping("/travelPage")
+	public String travelPage() {
+		return "/detail/travel_page";
+	}
+//	@RequestMapping("/BoardList")
+//	public String getBoardList() {
+//		return "/detail/ch_main";
+//	}
+	@RequestMapping("/popup1")
+	public String popup1() {
+		return "/detail/main";
+	}
+	@RequestMapping("/popup2")
+	public String popup2() {
+		return "/detail/main";
+	}
+	
+	
 }
