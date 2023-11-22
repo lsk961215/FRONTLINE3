@@ -96,5 +96,27 @@ public class MainServiceImpl implements MainService {
 		
 	}
 
+	@Override
+	public void insertDummy(int loop) {
+		for(int i = 0; i<loop; i++) {
+			// dto를 반복문 밖에서 생성하면 기존게 남아있을 수 있어서 for문 안에다 생성
+			BoardDTO dto = new BoardDTO();
+			dto.setBoardTitle("testTitle" + i);
+			dto.setBoardAddress("testAddress" + i);
+			dto.setBoardDetail("testDetail" + i);
+			dto.setBoardPhone("testPhone" + i);
+			dto.setRegionSeq(i/15);
+			dto.setUserSeq(i);
+			dto.setTypeSeq(0);
+			dto.setBoardOpen("x");
+			dto.setBoardBreak("x");
+			System.out.println(dto.getBoardTitle());
+			
+			mainDAO.insertDummy(dto);
+		}
+		
+		
+	}
+
 	
 }

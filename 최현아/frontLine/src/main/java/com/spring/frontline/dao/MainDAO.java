@@ -13,6 +13,8 @@ public interface MainDAO {
 	UserDTO loginUser(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
+	
+	// 관리자 - 여행지
 	List travelList();
 	void travelNew(BoardDTO dto);
 	void travelDelete(String[] boardDelete);
@@ -22,5 +24,8 @@ public interface MainDAO {
 	List boardPick2(BoardDTO dto);
 	List boardPick3(BoardDTO dto);
 	List boardPick4(BoardDTO dto);
+	
+	// 페이징
+	int insertDummy(BoardDTO dto);
 	
 }

@@ -22,4 +22,6 @@ public interface MainService {
 	List boardPick2(BoardDTO dto);
 	List boardPick3(BoardDTO dto);
 	List boardPick4(BoardDTO dto);
+	// 페이징 재료
+	void insertDummy(int loop);
 }

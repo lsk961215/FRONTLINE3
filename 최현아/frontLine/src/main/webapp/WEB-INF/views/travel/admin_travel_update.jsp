@@ -88,10 +88,11 @@
 <%-- 				</c:choose> --%>
 			 
 			<p>오픈시간 : <input type="text" name="boardOpen" value="${beforeUpdate.boardOpen}"></p><!-- <input type="button" value="수정" id="userBirth"> -->
-			<p>상세글 : <input type="text" name="boardDetail" value="${beforeUpdate.boardDetail}"></p><!-- <input type="button" value="수정" id="userEmail"> -->
+			<p>상세글 : <input type="textarea" name="boardDetail" value="${beforeUpdate.boardDetail}"></p><!-- <input type="button" value="수정" id="userEmail"> -->
 			<p>작성일 : ${beforeUpdate.boardRegDate}<!--  <input type="button" value="수정" id="userPhone">--></p>
 			<p>브레이크 : <input type="text" name="boardBreak" value="${beforeUpdate.boardBreak}"></p><!-- <input type="button" value="수정" id="userPhone"> -->
 			<p>전화번호 : <input type="text" name="boardPhone" value="${beforeUpdate.boardPhone}"></p><!-- <input type="button" value="수정" id="userPhone"> -->
+			<p>이미지 : <input type="textarea" name="boardImage" value="${beforeUpdate.boardImage}"></p><!-- <input type="button" value="수정" id="userPhone"> -->
 			<p>사용자번호 : ${beforeUpdate.userSeq}</p>
 		</section>
 		<input type="submit" value="수정">

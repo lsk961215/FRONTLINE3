@@ -22,15 +22,16 @@
 <style>
 /*셀렉트*/
 .members {
-	padding-left: 10%;
+/* 	padding-left: 10%; */
+	display: inline-block;
 }
-.table {
-	width: 70%;
-}
+ .table { 
+ 	width: 70%; 
+ } 
 
-.table textarea {
-	width: 100px;
-}
+ .table textarea { 
+ 	width: 100px; 
+ } 
 .eat_image {
 	width: 100px;
 	height: 100px;
@@ -102,6 +103,25 @@ textarea {
 	width:100px;
 	heigth:100px;
 }
+#imageSize{
+    background-size: cover;
+    width: 95px;
+}
+.imageSize{
+	pointer-events: none;
+	
+}
+input{
+	border: none;
+	text-align: center;
+	width: 95px;
+}
+td, th{
+	border: 1px solid #aaa;
+	margin: auto;
+	width: 95px;
+}
+
 </style>
 </head>
 <body>
@@ -150,6 +170,7 @@ textarea {
 								<th>브레이크</th>
 								<th>전화번호</th>
 								<th>사용자번호</th>
+								<th>이미지</th>
 								<th>수정</th>
 							</tr>
 						</thead>
@@ -159,17 +180,18 @@ textarea {
 							<c:forEach var="dto" items="${travelList}" varStatus="status"> 
 								<tr>
 									<td><input type="checkbox" name="boardDelete" value="${dto.boardSeq}" ></td>
-									<td>${dto.boardSeq}</td>
-									<td>${dto.typeSeq}</td>
-									<td>${dto.regionSeq  }</td>
-									<td>${dto.boardTitle}</td>
-									<td>${dto.boardAddress}</td>
-									<td>${dto.boardOpen }</td>
-									<td>${dto.boardDetail}</td>
-									<td>${dto.boardRegDate}</td>
-									<td>${dto.boardBreak}</td>
-									<td>${dto.boardPhone}</td>
-									<td>${dto.userSeq}</td>
+									<td><input  class="imageSize" value="${dto.boardSeq}"></td>
+									<td><input  class="imageSize" value="${dto.typeSeq}"></td>
+									<td><input  class="imageSize" value="${dto.regionSeq  }"></td>
+									<td><input  class="imageSize" value="${dto.boardTitle}"></td>
+									<td><input  class="imageSize" value="${dto.boardAddress}"></td>
+									<td><input  class="imageSize" value="${dto.boardOpen }"></td>
+									<td><input  class="imageSize" value="${dto.boardDetail}"></td>
+									<td><input  class="imageSize" value="${dto.boardRegDate}"></td>
+									<td><input  class="imageSize" value="${dto.boardBreak}"></td>
+									<td><input  class="imageSize" value="${dto.boardPhone}"></td>
+									<td><input  class="imageSize" value="${dto.userSeq}"></td>
+									<td><img id="imageSize" src="${dto.boardImage}"></td>
 									<td><a href="travelUpdate?boardSeq=${dto.boardSeq}"	><input type="button" value="수정" name="${dto.boardSeq}"></a></td>
 								</tr>
 							</c:forEach>

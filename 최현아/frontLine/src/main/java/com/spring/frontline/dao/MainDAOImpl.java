@@ -98,6 +98,14 @@ public class MainDAOImpl implements MainDAO{
 		return sqlSession.selectList("user.boardPick4",dto);
 	}
 
+	// 페이징 하기위한 재료
+	@Override
+	public int insertDummy(BoardDTO dto) {
+		int result = sqlSession.insert("user.insertDummy", dto);
+		System.out.println("insertDummy result : " + result);
+		return result;
+	}
+
 
 	
 

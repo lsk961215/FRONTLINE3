@@ -12,6 +12,8 @@ public class BoardDTO {
 	private String boardRegDate;
 	private String boardBreak;
 	private String boardPhone;
+	private String boardImage;
+	
 	private int boardPick;
 	private String boardSearch;
 	
@@ -76,6 +78,13 @@ public class BoardDTO {
 	public void setBoardRegDate(String boardRegDate) {
 		this.boardRegDate = boardRegDate;
 	}
+	public String getBoardImage() {
+	      return boardImage;
+	}
+	public void setBoardImage(String boardImage) {
+	      this.boardImage = boardImage;
+	}
+
 	
 	
 	@Override
@@ -83,7 +92,8 @@ public class BoardDTO {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
 				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + ", boardBreak=" + boardBreak
-				+ ", boardPhone=" + boardPhone + ", boardPick=" + boardPick + ", boardSearch=" + boardSearch + "]";
+				+ ", boardPhone=" + boardPhone + ", boardImage=" + boardImage + ", boardPick=" + boardPick
+				+ ", boardSearch=" + boardSearch + "]";
 	}
 	public String getBoardPhone() {
 		return boardPhone;
