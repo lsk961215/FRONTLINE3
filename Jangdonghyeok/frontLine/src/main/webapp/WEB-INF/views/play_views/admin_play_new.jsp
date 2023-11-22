@@ -156,16 +156,16 @@ button {
 						<select class="local" name="regionSeq">
 							<option value="0" selected="selected">천안</option>
 							<option value="1">아산</option>
-							<option value="2">태안</option>
+							<option value="2">당진</option>
 							<option value="3">서산</option>
-							<option value="4">당진</option>
+							<option value="4">태안</option>
 							<option value="5">예산</option>
-							<option value="6">홍성</option>
-							<option value="7">청양</option>
+							<option value="6">공주</option>
+							<option value="7">홍성</option>
 							<option value="8">보령</option>
-							<option value="9">부여</option>
-							<option value="10">서천</option>
-							<option value="11">공주</option>
+							<option value="9">청양</option>
+							<option value="10">부여</option>
+							<option value="11">서천</option>
 							<option value="12">논산</option>							
 							<option value="13">계룡</option>							
 							<option value="14">금산</option>
@@ -192,6 +192,10 @@ button {
 						
 						<div>
 						<input name="boardBreak"class="sinput" type="text" placeholder="휴무일">
+						</div>
+						
+						<div>
+						<input name="boardImage"class="sinput" type="text" placeholder="이미지">
 						</div>
 						
 						<input type="hidden" name="typeSeq" value="1">

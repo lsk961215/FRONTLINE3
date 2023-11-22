@@ -64,34 +64,34 @@
                 				아산시
             				</c:when>
             		<c:when test="${play.regionSeq == 2}">
-              					 태안군
+              					 당진시
             				</c:when>
             		<c:when test="${play.regionSeq == 3}">
               					  서산시
             				</c:when>
             		<c:when test="${play.regionSeq == 4}">
-              					 당진시
+              					 태안군
             				</c:when>
             		<c:when test="${play.regionSeq == 5}">
               					 예산군
             				</c:when>
             		<c:when test="${play.regionSeq == 6}">
-              					 홍성군
+              					 공주시
             				</c:when>
             		<c:when test="${play.regionSeq == 7}">
-              					 청양군
+              					 홍성군
             				</c:when>
             		<c:when test="${play.regionSeq == 8}">
               					 보령시
             				</c:when>
             		<c:when test="${play.regionSeq == 9}">
-              					 부여군
+              					 청양군
             				</c:when>
             		<c:when test="${play.regionSeq == 10}">
-              					 서천군
+              					 부여군
             				</c:when>
             		<c:when test="${play.regionSeq == 11}">
-              					 공주시
+              					 서천군
             				</c:when>
             		<c:when test="${play.regionSeq == 12}">
               					 논산시
@@ -111,11 +111,11 @@
 				<h2 class="title">${play.boardTitle}</h2>
 			</div>
 			<h4 class="address">${play.boardAddress}</h4>
-			<h5>${play.boardPhone}</h5>
+			<h5>전화번호 : ${play.boardPhone}</h5>
 			<div class="best_food">
 
 				<div class="food_item">
-					<img src="임이지">
+					<img src="${play.boardImage}">
 				</div>
 
 			</div>

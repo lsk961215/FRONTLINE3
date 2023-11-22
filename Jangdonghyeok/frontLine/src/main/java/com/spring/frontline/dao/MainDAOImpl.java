@@ -106,5 +106,12 @@ public class MainDAOImpl implements MainDAO {
 
 			return playList;
 		}
+	// ³î°Å¸® ´õº¸±â ÃÑ°¹¼ö
+		@Override
+		public int moreTotal(BoardDTO boardDTO) {
+			int total = sqlSession.selectOne("board.playTotal",boardDTO);
+
+			return total;
+		}
 	
 }

@@ -324,6 +324,7 @@ public class MainController {
 	public String playMoreView( Model model, HttpServletRequest request) {
 		
 			
+				int regiSeq = Integer.parseInt(request.getParameter("regionSeq"));
 		//안넘어왔을때 0을 사용할수없으니깐 초기값 지정
 				int pageNum = 1; //현재 페이지
 				int countPerPage = 10; // 한페이지에 몇개 보여줄지
@@ -348,9 +349,9 @@ public class MainController {
 					}
 				}
 				
-				//db에서 emp2 목록 전체 조회
+				//db에서 play 목록 region에 맞춰 조회
 //				List list = empService.getEmp2Page(pageNum,countPerPage);
-				Map map = mainService.getMorePage(pageNum,countPerPage);
+				Map map = mainService.getMorePage(regiSeq, pageNum,countPerPage);
 				
 				map.put("pageNum", pageNum);
 				map.put("countPerPage", countPerPage);
@@ -362,6 +363,9 @@ public class MainController {
 				model.addAttribute("data", map);
 				//jsp로 이동(forward)
 		
-		return "play_views/page_more";
+		return "play_views/play_more";
 	}
+	
+	// 지역 메인
+//	@RequestMapping("/Boardlist")
 }

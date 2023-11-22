@@ -87,6 +87,7 @@ thead th, tbody th {
 								<th>영업시간</th>
 								<th>휴무일</th>
 								<th>상세설명</th>
+								<th>이미지</th>
 								<th>등록날짜</th>
 
 							</tr>
@@ -106,34 +107,34 @@ thead th, tbody th {
                 				아산
             				</c:when>
             		<c:when test="${play.regionSeq == 2}">
-              					 태안
+              					 당진
             				</c:when>
             		<c:when test="${play.regionSeq == 3}">
               					  서산
             				</c:when>
             		<c:when test="${play.regionSeq == 4}">
-              					 당진
+              					 태안
             				</c:when>
             		<c:when test="${play.regionSeq == 5}">
               					 예산
             				</c:when>
             		<c:when test="${play.regionSeq == 6}">
-              					 홍성
+              					 공주
             				</c:when>
             		<c:when test="${play.regionSeq == 7}">
-              					 청양
+              					 홍성
             				</c:when>
             		<c:when test="${play.regionSeq == 8}">
               					 보령
             				</c:when>
             		<c:when test="${play.regionSeq == 9}">
-              					 부여
+              					 청양
             				</c:when>
             		<c:when test="${play.regionSeq == 10}">
-              					 서천
+              					 부여
             				</c:when>
             		<c:when test="${play.regionSeq == 11}">
-              					 공주
+              					 서천
             				</c:when>
             		<c:when test="${play.regionSeq == 12}">
               					 논산
@@ -153,6 +154,7 @@ thead th, tbody th {
 									<td>${play.boardOpen}</td>
 									<td>${play.boardBreak}</td>
 									<td>${play.boardDetail}</td>
+									<td><img  style="width:200px; height:150px;" src="${play.boardImage}"></td>
 									<td>${play.boardRegDate}</td>
 
 								</tr>

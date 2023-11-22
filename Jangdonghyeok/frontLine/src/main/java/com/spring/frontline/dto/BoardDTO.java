@@ -12,23 +12,10 @@ public class BoardDTO {
 	private String boardBreak;
 	private String boardPhone;
 	private String boardRegDate;
+	private String boardImage;
 	
 	private int startNum;
 	private int endNum;
-	
-	
-	public int getStartNum() {
-		return startNum;
-	}
-	public void setStartNum(int startNum) {
-		this.startNum = startNum;
-	}
-	public int getEndNum() {
-		return endNum;
-	}
-	public void setEndNum(int endNum) {
-		this.endNum = endNum;
-	}
 	public int getBoardSeq() {
 		return boardSeq;
 	}
@@ -77,7 +64,6 @@ public class BoardDTO {
 	public void setBoardDetail(String boardDetail) {
 		this.boardDetail = boardDetail;
 	}
-	
 	public String getBoardBreak() {
 		return boardBreak;
 	}
@@ -90,20 +76,41 @@ public class BoardDTO {
 	public void setBoardPhone(String boardPhone) {
 		this.boardPhone = boardPhone;
 	}
-	
 	public String getBoardRegDate() {
 		return boardRegDate;
 	}
 	public void setBoardRegDate(String boardRegDate) {
 		this.boardRegDate = boardRegDate;
 	}
+	public String getBoardImage() {
+		return boardImage;
+	}
+	public void setBoardImage(String boardImage) {
+		this.boardImage = boardImage;
+	}
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getEndNum() {
+		return endNum;
+	}
+	public void setEndNum(int endNum) {
+		this.endNum = endNum;
+	}
+	
 	@Override
 	public String toString() {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
 				+ ", boardDetail=" + boardDetail + ", boardBreak=" + boardBreak + ", boardPhone=" + boardPhone
-				+ ", boardRegDate=" + boardRegDate + "]";
+				+ ", boardRegDate=" + boardRegDate + ", boardImage=" + boardImage + ", startNum=" + startNum
+				+ ", endNum=" + endNum + "]";
 	}
+	
+	
 	
 	
 	

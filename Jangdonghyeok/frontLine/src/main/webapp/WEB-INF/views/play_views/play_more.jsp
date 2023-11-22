@@ -25,12 +25,13 @@
 </script>
 <body>
 	<jsp:include page="../header.jsp"/>
+	<div class="play_more">
 	<div class="best_play">
 		<div id="play_img">
-			<c:forEach var="play" items="${list}">
+			<c:forEach var="play" items="${data.list}">
 				<div class="play">
 					<a href="playPage?boardSeq=${play.boardSeq}">
-					<img src=" play.img ">
+					<img src="${play.boardImage}">
 						</a>
 					<div class="playTitle">
 						<p>${play.boardTitle}<p>
@@ -51,7 +52,6 @@
 					// model에 넣은 "data" 가져오기
 					Map data = (Map) request.getAttribute("data");
 					int total = (Integer) data.get("total");
-					
 					int pageNum = (Integer) data.get("pageNum");
 					//한번에 보여줄 글의 개수
 					int countPerPage = (Integer) data.get("countPerPage");
@@ -76,28 +76,29 @@
 
 					if (beginPaging == 1) {
 						out.println("[이 전]");
-					} else {
-						out.println("<a href='playMoreView?pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
+					} else {				//out.println("<a href='playView?pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
+						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
 					}
 
 					for (int i = beginPaging; i <= endPaging; i++) {
 						if (i == pageNum) {
-							out.println("<a href='playMoreView?pageNum=" + i + "'><strong>[" + i + "]</strong></a>");
+							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + i + "'><strong>[" + i + "]</strong></a>");
 						} else {
-							out.println("<a href='playMoreView?pageNum=" + i + "'>[" + i + "]</a>");
+							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + i + "'>[" + i + "]</a>");
 						}
 					}
 
 					if (endPaging == totalPaging) {
 						out.println("[다 음]");
 					} else {
-						out.println("<a href='playMoreView?pageNum=" + (endPaging + 1) + "'>[다 음]</a>");
+						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + (endPaging + 1) + "'>[다 음]</a>");
 					}
 					%>
 
 				</div>
 	</div>
-
+	
+	
+</div>
 </body>
-	<jsp:include page="../footer.jsp" />
 </html>

@@ -26,7 +26,8 @@ public interface MainService {
 	//³î°Å¸® °ü¸® ÆäÀÌÂ¡
 	Map getPage(int pageNum, int countPerPage);
 	//³î°Å¸® ´õº¸±â ÆäÀÌÂ¡
-	Map getMorePage(int pageNum, int countPerPage);
+	Map getMorePage(int regiSeq ,int pageNum, int countPerPage);
+
 }
 
 

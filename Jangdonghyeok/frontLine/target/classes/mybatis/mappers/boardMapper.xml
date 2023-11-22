@@ -19,6 +19,7 @@
 		<result column="board_Break" property="boardBreak" />
 		<result column="board_Phone" property="boardPhone" />
 		<result column="board_RegDate" property="boardRegDate" />
+		<result column="board_image" property="boardImage" />
 	</resultMap>
 
 	<!-- 보드 등록 -->
@@ -38,7 +39,8 @@
 		#{boardDetail},
 		TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
 		#{boardBreak},
-		#{boardPhone})
+		#{boardPhone},
+		#{boardImage})
 	</insert>
 	<!-- 놀거리 목록 불러오기 -->
 	<select id="selectBoardPlay" resultMap="boardMap">
@@ -70,6 +72,7 @@
 	board_open = #{boardOpen},
 	board_break = #{boardBreak},
 	board_detail = #{boardDetail}
+	board_image = #{boardImage}
 	where
 	board_seq = ${boardSeq}
 	</update>
@@ -95,7 +98,7 @@
 	)
 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
 	</select>
-	
+	<!-- 놀거리 개수 토탈 -->
 	<select id="boardTotal" resultType="int">
 		select count(*)
 		from board_info
@@ -115,6 +118,13 @@
 		) tmp
 	)
 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
+	</select>
+		
+	<!-- 놀거리 더보기 개수 토탈 -->
+	<select id="playTotal" resultType="int" parameterType="com.spring.frontline.dto.BoardDTO">
+		select count(*)
+		from board_info
+		where type_seq = 1 and region_seq = ${regionSeq}
 	</select>
 		
 </mapper>
