@@ -29,6 +29,7 @@
       <result column="board_RegDate" property="boardRegDate"/>
       <result column="board_Break" property="boardBreak"/>
       <result column="board_Phone" property="boardPhone"/>
+      <result column="board_image" property="boardImage"/>
     </resultMap>
 	
 	<select id="selectUserList" resultMap="userMap">
@@ -73,7 +74,8 @@
         #{boardDetail}, 
         TO_CHAR(SYSDATE + INTERVAL '9' HOUR, 'YYYY-MM-DD HH24:MI:SS'), 
         #{boardBreak}, 
-        #{boardPhone}
+        #{boardPhone},
+        #{boardImage}
     )
 	</insert>
 	
@@ -81,7 +83,7 @@
    	select * from board_info where type_seq = 2
 	</select>
 	
-	<select id="selectDetailBoard"  resultMap="boardMap" > 
+	<select id="selectDetailBoard"  resultMap="boardMap"> 
    	select * from board_info where board_seq = #{boardSeq}
 	</select>
 	
@@ -111,7 +113,8 @@
 		board_Open = #{boardOpen},
 		board_Phone = #{boardPhone},
 		board_Detail = #{boardDetail},
-		board_RegDate = #{boardRegDate}
+		board_RegDate = #{boardRegDate},
+		board_image = #{boardImage}
 		where
 		board_seq = #{boardSeq}
 		</update>

@@ -208,47 +208,66 @@ public class MainController {
 		return "redirect:/getUser";
 	}
 	
+	//맛집 등록 접속
 	@RequestMapping("/addEat")
 	public String addEat() {
 		return "admin_eat_new";
 	}
 	
+//	@RequestMapping("/eatResultGo")
+//	public String eatResultGo(Model model, HttpServletRequest request) {
+//		int pageNum = 1;
+//		int countPerPage = 10;
+//		
+//		String info_pageNum = request.getParameter("info_pageNum");
+//		if(info_pageNum != null) {
+//			try {
+//				
+//				pageNum = Integer.parseInt(info_pageNum);
+//			
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		String info_countPerPage = request.getParameter("info_countPerPage");
+//		if(info_countPerPage != null) {
+//			try { 
+//
+//				countPerPage = Integer.parseInt(info_countPerPage);
+//			
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		//db에서 
+//		//목록을 가지고 오고 
+//		//어디엔가 담아서 
+//		//jsp로 보낸다
+//		//jsp에서 꺼내서 표시한다
+//		//List list = mainService.getBoardInfoList();
+//		List list = mainService.getBoardInfoList(pageNum, countPerPage);
+//		//이건 모든걸 가져오는거라 안씀
+//		model.addAttribute("list", list);
+//		return "admin_eat_management";
+//	}
+	
+	//맛집 리스트
 	@RequestMapping("/eatResultGo")
-	public String eatResultGo(Model model, HttpServletRequest request) {
-		int pageNum = 1;
-		int countPerPage = 10;
-		
-		String info_pageNum = request.getParameter("pageNum");
-		if(info_pageNum != null) {
-			try {
-				
-				pageNum = Integer.parseInt(info_pageNum);
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		String info_countPerPage = request.getParameter("countPerPage");
-		if(info_countPerPage != null) {
-			try { 
-				
-				countPerPage = Integer.parseInt(info_countPerPage);
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public String eatResultGo(Model model) {
 		//db에서 
 		//목록을 가지고 오고 
 		//어디엔가 담아서 
 		//jsp로 보낸다
 		//jsp에서 꺼내서 표시한다
+		//List list = mainService.getBoardInfoList();
 		List list = mainService.getBoardInfoList();
+		//이건 모든걸 가져오는거라 안씀
 		model.addAttribute("list", list);
 		return "admin_eat_management";
 	}
 	
+	//insert 맛집 등록
 	@RequestMapping(value= "/eatResult", method=RequestMethod.POST)
 	public String eatResult(
 			@RequestParam ("regionSeq") int regionSeq,
@@ -256,9 +275,11 @@ public class MainController {
 			) {	
 				mainService.insertBoardDTO(dto);
 				// 결과를 jsp로 보낸다
+				////등록에서 입력한 값을 목록으로 보냄
 				return "forward:/eatResultGo";
 	}
 	
+	//select 맛집 상세페이지
 	@RequestMapping(value="/adminEatDetail")
 	public String admin_eat_detail(@ModelAttribute BoardDTO dto,
 			Model model) {
@@ -268,17 +289,17 @@ public class MainController {
 		return "admin_eat_update";
 	}
 	
-	
+	//update 맛집 상세 페이지 수정
 	@RequestMapping(value="/adminEatUpdate" , method=RequestMethod.POST)
 	public String admin_eat_update(@ModelAttribute BoardDTO dto
 			) {
-		System.out.println("dto" + dto. toString());
+		//System.out.println("dto" + dto. toString());
 		mainService.updateBoardDTO(dto);
 		return "forward:/adminEatDetail";
 	}
 	
-	//
 	
+	//delete 맛집 삭제
 	@RequestMapping(value="/adminEatDelete")
 	public String admin_eat_delete(
 			//@RequestParam ("ck") int[] ck

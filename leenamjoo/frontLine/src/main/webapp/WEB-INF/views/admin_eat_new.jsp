@@ -36,6 +36,15 @@
 	})
 </script>
 <style>
+ input[type="button"], input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
 </style>
 </head>
 <body>
@@ -54,7 +63,7 @@
 			private int typeSeq = -1; 게시물 카테고리 --> 
 			
 				<!--<input type="hidden" name="userSeq" value="${dto.userSeq }">  -->
-				<input type="hidden" name="typeSeq" value="2">
+				
 				지역: <select name="regionSeq">
 					<option value="0">천안</option>
 					<option value="1">아산</option>
@@ -71,12 +80,15 @@
 					<option value="12">논산</option>
 					<option value="13">계룡</option>
 					<option value="14">금산</option>
-				</select>	
+				</select>
+				<input type="hidden" name="typeSeq" value="2">
+				<input type="hidden" name="userSeq" value="${userDTO.userSeq }">
 				주소: <input type="text" name="boardAddress">
 				전화번호: <input type="text" name="boardPhone">
 				오픈시간: <input type="text" name="boardOpen"><br>
 				상호명: <input type="text" name="boardTitle">
-				상세 내용: <input type="textarea" name="boardDetail"><br>
+				상세 내용: <input type="textarea" name="boardDetail">
+				이미지: <input type="textarea" name="boardImage"><br>
 				<input type="submit" value="등록">
 			</form>
 		</section>

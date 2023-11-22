@@ -14,7 +14,7 @@ public interface MainService {
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
 	void insertBoardDTO(BoardDTO dto);
-	List getBoardInfoList(int pageNum, int countPerPage);
+	List getBoardInfoList();
 	BoardDTO detailBoardDTO(BoardDTO dto);
 	void updateBoardDTO(BoardDTO dto);
 	void deleteBoardDTO(List list);

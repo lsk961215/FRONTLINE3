@@ -53,7 +53,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List getBoardInfoList(int pageNum, int countPerPage) {
+	public List getBoardInfoList() {
 		
 		 return mainDAO.getBoardInfoList();
 	}

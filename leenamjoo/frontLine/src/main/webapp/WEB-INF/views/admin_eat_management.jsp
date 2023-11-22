@@ -36,6 +36,42 @@
 </script>
 <style>
 
+ input[type="text"], textarea {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 14px;
+      padding: 5px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 100%;
+      border-collapse: collapse;
+    }
+
+    td, th {
+      padding: 8px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    input[type="button"], input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    td img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover; 
+    }
 </style>
 </head>
 <body>
@@ -46,43 +82,45 @@
 			<div class="section_title">
 				<h1>맛집 관리</h1>
 			</div>
-<form action="adminEatDelete">
-<table border=1>
-	<thead>
-		<tr>
-			<th>선택</th>
-			<th>사용자 번호</th>
-			<th>지역명</th>
-			<th>상호명</th>
-			<th>주소</th>
-			<th>전화번호</th>
-			<th>오픈시간</th>
-			<th>상세 내용</th>
-			<th>등록일</th>
-			  <th>수정</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="dto" items="${list }">
-			<tr>
-				<td><input type="checkbox" name="ck" value="${dto.boardSeq}"></td>
-				<td>${dto.userSeq}</td>
-				<td>${dto.regionSeq }</td>
-				<td>${dto.boardTitle }</td>
-				<td>${dto.boardAddress }</td>
-				<td>${dto.boardPhone }</td>
-				<td>${dto.boardOpen }</td>
-				<td>${dto.boardDetail }</td>
-				<td>${dto.boardRegDate }</td>
-				<td><a href="adminEatDetail?boardSeq=${dto.boardSeq}">수정하기</a></td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
-				<input type="submit" value="삭제">
-</form>		
+		<form action="adminEatDelete">
+			<table border=1>
+				<thead>
+					<tr>
+						<th>선택</th>
+						<th>사용자 번호</th>
+						<th>지역명</th>
+						<th>상호명</th>
+						<th>주소</th>
+						<th>전화번호</th>
+						<th>오픈시간</th>
+						<th>상세 내용</th>
+						<th>이미지</th>
+						<th>등록일</th>
+						<th>수정</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="dto" items="${list }">
+						<tr>
+							<td><input type="checkbox" name="ck" value="${dto.boardSeq}"></td>
+							<td>${dto.userSeq}</td>
+							<td>${dto.regionSeq }</td>
+							<td>${dto.boardTitle }</td>
+							<td>${dto.boardAddress }</td>
+							<td>${dto.boardPhone }</td>
+							<td>${dto.boardOpen }</td>
+							<td>${dto.boardDetail }</td>
+							<td><img style="width: 200px; height:150px;" src="${dto.boardImage }"></td>
+							<td>${dto.boardRegDate }</td>
+							<td><a href="adminEatDetail?boardSeq=${dto.boardSeq}">수정하기</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<input type="submit" value="삭제">
+		</form>		
 	
-		</section>
-	</main>
+	</section>
+</main>
 </body>
 </html>
