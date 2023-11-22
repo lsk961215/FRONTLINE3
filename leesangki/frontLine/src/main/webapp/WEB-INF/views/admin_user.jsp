@@ -49,6 +49,10 @@
 	})
 </script>
 <style>
+	main {
+		max-width: 1240px;
+    	margin: 0 auto;
+	}
 	.getUser {
 		display:none;
 	}

@@ -20,4 +20,5 @@ public interface MainDAO {
 	boolean checkId(Map map);
 	boolean checkEmail(Map map);
 	boolean checkPhone(Map map);
+	List selectBoardList(Map map);
 }

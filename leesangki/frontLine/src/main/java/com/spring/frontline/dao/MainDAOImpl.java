@@ -106,4 +106,9 @@ public class MainDAOImpl implements MainDAO{
 		}
 	}
 
+	@Override
+	public List selectBoardList(Map map) {
+		return sqlSession.selectList("board.selectBoardList", map);
+	}
+
 }

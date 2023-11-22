@@ -239,7 +239,7 @@ public class MainController {
 		
 		Enumeration params = request.getParameterNames();
 		
-		// �뙆�씪誘명꽣 �꽕�엫�쓣 媛��졇���꽌 �씪移섑븯硫� 媛곴컖 �룞�옉
+		// 파라미터의 키값을 모두 가져와서 각 필드값의 이름과 비교 후 해당하는 그 필드만 수정
 		while (params.hasMoreElements()){
 		    String name = (String)params.nextElement();
 		    
@@ -261,10 +261,18 @@ public class MainController {
 			model.addAttribute("url", "goInfo");
 			
 			return "alert";
+		} finally {
+			Map map = new HashMap();
+			
+			map.put("id", updateDTO.getUserId());
+			map.put("pw", updateDTO.getUserPw());
+			
+			UserDTO dto = mainService.doLogin(map);
+			
+			session.setAttribute("userDTO", dto);
 		}
 		
-		
-		return "info";
+		return "redirect:/goInfo";
 	}
 	
 	@RequestMapping("/deleteUser")
@@ -372,6 +380,18 @@ public class MainController {
 		session.setAttribute("joinMap", map);
 		
 		return "join_2";
+	}
+	
+	@RequestMapping("/getBoardList")
+	public String getBoardList(HttpServletRequest request, Model model, @RequestParam("regionSeq") String regionSeq) {
+		
+		Map resultMap = mainService.getBoardList(regionSeq);
+		
+		
+		// 맵안에 "typeSeq"+i 형식으로 집어넣음
+		model.addAttribute("boardListMap", resultMap);
+		
+		return "local_main";
 	}
 	
 }

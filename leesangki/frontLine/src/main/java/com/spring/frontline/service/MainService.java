@@ -3,6 +3,7 @@ package com.spring.frontline.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 public interface MainService {
@@ -17,4 +18,5 @@ public interface MainService {
 	UserDTO findId(UserDTO userDTO);
 	UserDTO findPw(UserDTO userDTO);
 	boolean checkJoin(Map map);
+	Map getBoardList(String regionSeq);
 }

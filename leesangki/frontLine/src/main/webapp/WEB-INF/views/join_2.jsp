@@ -159,7 +159,7 @@
     		}
     		// 전화번호 체크
     		else if(!phone.test($("input[name=userPhone]").val())){
-    			alert("전화번호는 숫자 11자리로 입력해주세요")
+    			alert("전화번호는 숫자 11자리로 입력해주세요.")
     			count += 1;
     		}
     		// 생년월일 체크

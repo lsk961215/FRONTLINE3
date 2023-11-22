@@ -3,30 +3,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-	
 	<!-- 헤더 자바스크립트 -->
     <script src="resources/js/header.js"></script>
     <!-- 헤더 스타일 -->
     <link rel="stylesheet" href="resources/css/header.css">
+    <!-- 푸터 스타일 -->
+    <link rel="stylesheet" href="resources/css/footer.css">
+    <!-- 글꼴 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@600&family=Roboto&display=swap"
+        rel="stylesheet">
     <!-- 지역 메인 css -->
-    <link rel="stylesheet" href="resources/css/cheonAn_main.css">
+    <link rel="stylesheet" href="resources/css/local_main.css">
 	<!-- 지역 메인 js -->
-    <script src="resources/js/cheonAn_main.js"></script>
+    <script src="resources/js/local_main.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
-
 </head>
+<script>
+</script>
 <style>
-.room_wrap {
+.board_wrap {
 	display: flex;
 	justify-content: space-evenly;
 }
-.room_section {
+.board_section {
 	border: 1px solid black;
 	border-radius: 10px;
 	display: flex;
@@ -36,19 +42,17 @@
 	width: 200px;
 	height: 200px;
 }
-.room_section img {
+.board_section img {
 	width: 100%;
 	height: 170px;
 	
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
-.room_page {
+.board_page {
 	display: none;
 }
 </style>
-<script>
-</script>
 <body>
 	<jsp:include page="header.jsp"/>
     
@@ -95,14 +99,14 @@
         </div>
 
 
-		<div class="room_wrap">
-           <c:forEach var="item" items="<%=EatDB.getEatList()%>" varStatus="i">
-           		<div class="room_section">
-           			<a class="room_view">
-           				<img class="room_image" src="${item.getImage()}"><br>
-           				<span class="room_title">${item.getTitle()}</span>
+		<div class="board_wrap">
+           <c:forEach var="item" items="${boardListMap.typeSeq2}" varStatus="i">
+           		<div class="board_section">
+           			<a class="board_view">
+           				<img class="board_image" src="${item.boardImage}"><br>
+           				<span class="board_title">${item.boardTitle}</span>
            			</a>
-           			<form class="room_page" action="/frontLine/EatPage">
+           			<form class="board_page" action="/frontLine/EatPage">
            				<input type="text" name="page" value="${i.index}">
            				<input type="submit" value="move">
            			</form>
@@ -124,14 +128,14 @@
             </a><br><br>
         </div>
 
-		<div class="room_wrap">
-           <c:forEach var="item" items="<%=TravelDB.getTravelList()%>" varStatus="i">
-           		<div class="room_section">
-           			<a class="room_view">
-           				<img class="room_image" src="${item.getImage()}"><br>
-           				<span class="room_title">${item.getTitle()}</span>
+		<div class="board_wrap">
+           <c:forEach var="item" items="${boardListMap.typeSeq0}" varStatus="i">
+           		<div class="board_section">
+           			<a class="board_view">
+           				<img class="board_image" src="${item.boardImage}"><br>
+           				<span class="board_title">${item.boardTitle}</span>
            			</a>
-           			<form class="room_page" action="/frontLine/TravelPage">
+           			<form class="board_page" action="/frontLine/TravelPage">
            				<input type="text" name="page" value="${i.index}">
            				<input type="submit" value="move">
            			</form>
@@ -157,14 +161,14 @@
 
 
 
-       <div class="room_wrap">
-           <c:forEach var="item" items="<%=PlayDB.getPlayList()%>" varStatus="i">
-           		<div class="room_section">
-           			<a class="room_view">
-           				<img class="room_image" src="${item.getImage()}"><br>
-           				<span class="room_title">${item.getTitle()}</span>
+       <div class="board_wrap">
+           <c:forEach var="item" items="${boardListMap.typeSeq1}" varStatus="i">
+           		<div class="board_section">
+           			<a class="board_view">
+           				<img class="board_image" src="${item.boardImage}"><br>
+           				<span class="board_title">${item.boardTitle}</span>
            			</a>
-           			<form class="room_page" action="/frontLine/PlayPage">
+           			<form class="board_page" action="/frontLine/PlayPage">
            				<input type="text" name="page" value="${i.index}">
            				<input type="submit" value="move">
            			</form>
@@ -196,14 +200,14 @@
             </a><br><br>
         </div>
 		<%-- 숙소 리스트 --%>
-        <div class="room_wrap">
-           <c:forEach var="item" items="<%=RoomDB.getRoomList()%>" varStatus="i">
-           		<div class="room_section">
-           			<a class="room_view">
-           				<img class="room_image" src="${item.getRoomImage()}"><br>
-           				<span class="room_title">${item.getRoomTitle()}</span>
+        <div class="board_wrap">
+           <c:forEach var="item" items="${boardListMap.typeSeq3}" varStatus="i">
+           		<div class="board_section">
+           			<a class="board_view">
+           				<img class="board_image" src="${item.boardImage}"><br>
+           				<span class="board_title">${item.boardTitle}</span>
            			</a>
-           			<form class="room_page" action="/frontLine/RoomPage">
+           			<form class="board_page" action="/frontLine/boardPage">
            				<input type="text" name="page" value="${i.index}">
            				<input type="submit" value="move">
            			</form>
@@ -213,57 +217,6 @@
         <%--------------------%>
 
 
-
-
-
-
-
-
-
-        <div class="select_place_list">
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(1).png?raw=true"
-                    id="sp_1">
-
-            </div>
-
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(2).png?raw=true"
-                    id="sp_2">
-
-            </div>
-
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(3).png?raw=true"
-                    id="sp_3">
-
-            </div>
-
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(4).png?raw=true"
-                    id="sp_4">
-
-            </div>
-
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(5).png?raw=true"
-                    id="sp_5">
-
-            </div>
-
-            <div class="select_place_img">
-                <img src="https://github.com/Jominsang1/FrontLine_Project/blob/main/%EC%88%99%EC%86%8C%EB%A9%94%EC%9D%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%A7%80%EC%97%AD%EC%84%A0%ED%83%9D_%EC%9B%90%EB%B3%B8%20(6).png?raw=true"
-                    id="sp_6">
-
-            </div>
-        </div>
-
-        <div class="chungnam_city">
-            
-        </div>
-        <div>
-
-        </div>
 
         <footer>
             <div class="footer_div footer_wrap">

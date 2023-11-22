@@ -1,5 +1,7 @@
 package com.spring.frontline.dto;
 
+import java.util.List;
+
 public class BoardDTO {
 	private int boardSeq = -1;
 	private int userSeq = -1;
@@ -10,6 +12,9 @@ public class BoardDTO {
 	private String boardOpen;
 	private String boardDetail;
 	private String boardRegDate;
+	private String boardBreak;
+	private String boardPhone;
+	private String boardImage;
 	
 	public int getBoardSeq() {
 		return boardSeq;
@@ -65,12 +70,31 @@ public class BoardDTO {
 	public void setBoardRegDate(String boardRegDate) {
 		this.boardRegDate = boardRegDate;
 	}
+	public String getBoardBreak() {
+		return boardBreak;
+	}
+	public void setBoardBreak(String boardBreak) {
+		this.boardBreak = boardBreak;
+	}
+	public String getBoardPhone() {
+		return boardPhone;
+	}
+	public void setBoardPhone(String boardPhone) {
+		this.boardPhone = boardPhone;
+	}
+	public String getBoardImage() {
+		return boardImage;
+	}
+	public void setBoardImage(String boardImage) {
+		this.boardImage = boardImage;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
-				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + "]";
+				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + ", boardBreak=" + boardBreak
+				+ ", boardPhone=" + boardPhone + ", boardImage=" + boardImage + "]";
 	}
 	
 }

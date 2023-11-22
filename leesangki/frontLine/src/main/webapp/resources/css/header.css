@@ -3,11 +3,13 @@ div {
 }
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     
     height: 120px;
-    width: 1280px;
+    
+	max-width: 1240px;
+    margin: 0 auto;
 }
 
 header ul {

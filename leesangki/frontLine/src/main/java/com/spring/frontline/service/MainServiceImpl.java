@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.frontline.dao.MainDAO;
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Service
@@ -126,5 +127,25 @@ public class MainServiceImpl implements MainService {
 			System.out.println("service phone 실행");
 			return mainDAO.checkPhone(map);
 		}
+	}
+
+	@Override
+	public Map getBoardList(String regionSeq) {
+		
+		Map selectMap = new HashMap();
+		
+		Map resultMap = new HashMap();
+		
+		selectMap.put("regionSeq", regionSeq);
+		
+		for(int i = 0; i<4; i++) {
+			selectMap.put("typeSeq", i);
+			
+			List list = mainDAO.selectBoardList(selectMap);
+			
+			resultMap.put("typeSeq"+i, list);
+		}
+		
+		return resultMap;
 	}
 }
