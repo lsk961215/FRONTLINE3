@@ -169,7 +169,8 @@
 				<a href="getUser?pageNum=${map.get('endPaging')+1}">다음</a>
 			</c:if>
 			</div>
-				
+			
+			<%-- getUser 컨트롤러로 이동한 후 userSeq 값이 있는지 판단한 후 리스트로 뽑을지 dto 하나만 돌려줄지 판단 --%>
 			<form action="getUser" class="getUser">
 				<input type="text" name="userSeq">
 				<input type="submit" id="getUser">

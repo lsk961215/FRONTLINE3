@@ -3,6 +3,7 @@ package com.spring.frontline.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.UserDTO;
 
 public interface MainDAO {
@@ -21,4 +22,8 @@ public interface MainDAO {
 	boolean checkEmail(Map map);
 	boolean checkPhone(Map map);
 	List selectBoardList(Map map);
+	List selectBoardPage(Map map);
+	int selectBoardTotal(Map map);
+	List selectRegionNames();
+	BoardDTO selectBoard(BoardDTO boardDTO);
 }

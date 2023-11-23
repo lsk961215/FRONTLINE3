@@ -148,4 +148,57 @@ public class MainServiceImpl implements MainService {
 		
 		return resultMap;
 	}
+	
+	@Override
+	public Map getBoardPage(Map map) {
+		
+		int startNum = 0;
+		int endNum = 0;
+		
+		int pageNum = (Integer) map.get("pageNum");
+		int countPerPage = (Integer) map.get("countPerPage");
+		
+		startNum = (pageNum-1)*countPerPage+1;
+		endNum = pageNum*countPerPage;
+		
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("pageNum", pageNum);
+		map.put("countPerPage", countPerPage);
+		
+		List list = mainDAO.selectBoardPage(map);
+		int total = mainDAO.selectBoardTotal(map);
+		
+		int groupCount = 5;
+		
+		int totalPaging = (int) Math.ceil((double)total / countPerPage);
+		
+		int position = (int) Math.ceil((double)pageNum / groupCount);
+		
+		int beginPaging = (position-1) * groupCount + 1;
+		int endPaging = position * groupCount;
+		
+		if(endPaging > totalPaging) {
+			endPaging = totalPaging;
+		}
+		
+		Map pageMap = new HashMap();
+		
+		pageMap.put("beginPaging", beginPaging);
+		pageMap.put("endPaging", endPaging);
+		pageMap.put("totalPaging", totalPaging);
+		pageMap.put("list", list);
+		
+		return pageMap;
+	}
+
+	@Override
+	public List getRegionNames() {
+		return mainDAO.selectRegionNames();
+	}
+
+	@Override
+	public BoardDTO getBoard(BoardDTO boardDTO) {
+		return mainDAO.selectBoard(boardDTO);
+	}
 }

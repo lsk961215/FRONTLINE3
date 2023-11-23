@@ -19,4 +19,7 @@ public interface MainService {
 	UserDTO findPw(UserDTO userDTO);
 	boolean checkJoin(Map map);
 	Map getBoardList(String regionSeq);
+	Map getBoardPage(Map map);
+	List getRegionNames();
+	BoardDTO getBoard(BoardDTO boardDTO);
 }
