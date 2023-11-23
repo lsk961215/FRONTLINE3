@@ -198,4 +198,9 @@
 			popup_number = #{POPUP_NUMBER}
 	</update>
 	
+	<!-- 비밀번호 찾기 -->
+	<select id="sameId" resultMap="userMap" parameterType="com.spring.frontline.dto.UserDTO">
+		select * from user_info 
+		where user_id = #{userId}
+	</select>
 </mapper>

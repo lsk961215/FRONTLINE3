@@ -376,6 +376,23 @@ public class MainController {
 		return "redirect:/adminPopup";
 	}
 	
+/////// 비밀번호 찾기 페이지 ///////
+	@RequestMapping("/findPw")
+	public String findPw() {
+		return "/find/find_password";
+	}
+	
+	
+	@RequestMapping("/sameId")
+	public String sameId(UserDTO dto, Model model) {
+		System.out.println("/sameId 실행 -> dto.getUserId()값 : " + dto.getUserId());
+		UserDTO findId = mainService.sameId(dto);
+		System.out.println("controller -> sql에서 받아온 값 : " + findId);
+		
+		model.addAttribute("idDto", findId);
+		return "/find/find_password_way";
+	}
+	
 //	@RequestMapping("/BoardList")
 //	public String getBoardList() {
 //		return "/detail/ch_main";

@@ -129,6 +129,17 @@ public class MainDAOImpl implements MainDAO{
 		System.out.println("popupUpdate에서 받은 결과 : " + popupUpdate);
 	}
 
+	// 비밀번호 찾기
+	@Override
+	public UserDTO sameId(UserDTO userDTO) {
+		System.out.println("mainDAO에서 sameId 실행 > dto 값 : " + userDTO);
+		UserDTO findId = sqlSession.selectOne("user.sameId", userDTO);
+		System.out.println("mainDAO에서 sameId() 실행 -> findId의 값 : " + findId);
+		
+		return findId;
+				
+	}
+
 
 	
 

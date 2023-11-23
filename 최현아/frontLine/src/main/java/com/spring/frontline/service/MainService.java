@@ -29,4 +29,7 @@ public interface MainService {
 	List popup1();
 	Map popupReadyUpdate(Map map);
 	void popupUpdate(Map map);
+	
+	// 비밀번호 찾기
+	UserDTO sameId(UserDTO userDTO);
 }

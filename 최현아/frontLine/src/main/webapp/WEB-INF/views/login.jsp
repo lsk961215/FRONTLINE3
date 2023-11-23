@@ -350,7 +350,7 @@
                 	</div>
                 	<div class="find">
                     	<div><a href="./find_id.html">아이디 찾기</a></div>
-                    	<div><a href="./find_password.html">비밀번호 찾기</a></div>
+                    	<div><a href="findPw">비밀번호 찾기</a></div>
                 	</div>
                 	<input class="main_login" type="submit" value="로그인">
                 </form>

@@ -31,5 +31,6 @@ public interface MainDAO {
 	List popup1();
 	Map popupReadyUpdate(Map map);
 	void popupUpdate(Map map);
+	UserDTO sameId(UserDTO userDTO);
 	
 }

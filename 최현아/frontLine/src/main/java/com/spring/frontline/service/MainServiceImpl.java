@@ -134,6 +134,12 @@ public class MainServiceImpl implements MainService {
 		System.out.println("Service에서 popupUpdate 실행 -> 받은 값 : " +  map);
 		mainDAO.popupUpdate(map);
 	}
+
+	@Override
+	public UserDTO sameId(UserDTO userDTO) {
+		System.out.println("mainService에서 sameId실행 > dto값 : " + userDTO);
+		return mainDAO.sameId(userDTO);
+	}
 	
 
 	
