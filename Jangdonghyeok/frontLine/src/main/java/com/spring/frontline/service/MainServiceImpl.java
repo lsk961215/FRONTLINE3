@@ -107,7 +107,7 @@ public class MainServiceImpl implements MainService {
 		
 		//≥Ó∞≈∏Æ ¥ı∫∏±‚ ∆‰¿Ã¬°
 		@Override
-		public Map getMorePage(int regiSeq ,int pageNum, int countPerPage) {
+		public Map getMorePage(int regiSeq ,int typeSeq ,int pageNum, int countPerPage) {
 			
 			int startNum = 0, endNum = 0;
 			
@@ -119,6 +119,7 @@ public class MainServiceImpl implements MainService {
 			
 			BoardDTO dto = new BoardDTO();
 			dto.setRegionSeq(regiSeq);
+			dto.setTypeSeq(typeSeq);
 			dto.setStartNum(startNum);
 			dto.setEndNum(endNum);
 		

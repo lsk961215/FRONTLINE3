@@ -77,21 +77,25 @@
 					if (beginPaging == 1) {
 						out.println("[이 전]");
 					} else {				//out.println("<a href='playView?pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
-						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
+						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +
+								"&typeSeq="+request.getParameter("typeSeq")+"&pageNum=" + (beginPaging - 1) + "'>[이 전]</a>");
 					}
 
 					for (int i = beginPaging; i <= endPaging; i++) {
 						if (i == pageNum) {
-							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + i + "'><strong>[" + i + "]</strong></a>");
+							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +
+									"&typeSeq="+request.getParameter("typeSeq")+"&pageNum=" + i + "'><strong>[" + i + "]</strong></a>");
 						} else {
-							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + i + "'>[" + i + "]</a>");
+							out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +
+									"&typeSeq="+request.getParameter("typeSeq")+"&pageNum=" + i + "'>[" + i + "]</a>");
 						}
 					}
 
 					if (endPaging == totalPaging) {
 						out.println("[다 음]");
 					} else {
-						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +"&pageNum=" + (endPaging + 1) + "'>[다 음]</a>");
+						out.println("<a href='playMoreView?regionSeq="+request.getParameter("regionSeq") +
+								"&typeSeq="+request.getParameter("typeSeq")+"&pageNum=" + (endPaging + 1) + "'>[다 음]</a>");
 					}
 					%>
 

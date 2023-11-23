@@ -113,7 +113,7 @@
 		from(
 			select board_info.*
 			from board_info
-			where type_seq = 1 and region_seq = ${regionSeq}
+			where type_seq = 1 and region_seq = ${regionSeq} and type_seq = ${typeSeq}
 			order by board_regdate desc
 		) tmp
 	)
@@ -124,7 +124,7 @@
 	<select id="playTotal" resultType="int" parameterType="com.spring.frontline.dto.BoardDTO">
 		select count(*)
 		from board_info
-		where type_seq = 1 and region_seq = ${regionSeq}
+		where type_seq = 1 and region_seq = ${regionSeq} and type_seq = ${typeSeq}
 	</select>
 		
 </mapper>
