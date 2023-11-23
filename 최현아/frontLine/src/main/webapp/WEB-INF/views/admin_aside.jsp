@@ -38,7 +38,7 @@
 		<a href="admin_play_management.jsp">
 			<h3>愁芭府 包府</h3>
 		</a>
-		<a href="admin_popup.jsp">
+		<a href="adminPopup">
 			<h3>扑诀 包府</h3>
 		</a>
 		<a>

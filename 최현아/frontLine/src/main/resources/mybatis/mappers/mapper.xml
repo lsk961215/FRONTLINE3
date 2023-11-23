@@ -181,7 +181,21 @@
 <!-- 	<select id="chMain2" resultMap="boardMap"> -->
 <!-- 		select * from board_info  -->
 <!-- 	</select> -->
-	<select id="popup" >
+
+	<!--  팝업 -->
+	<select id="popup1" resultType="hashmap">
+		select * from popup
 	</select>
+	<select id="popupReadyUpdate" resultType="hashmap" parameterType="hashmap">
+		select * from popup where popup_number = #{POPUP_NUMBER}  
+	</select>
+	<update id="popupUpdate" parameterType="hashmap">
+		update 
+			popup
+		set
+			popup_image = #{POPUP_IMAGE} 
+		where
+			popup_number = #{POPUP_NUMBER}
+	</update>
 	
 </mapper>

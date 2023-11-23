@@ -27,5 +27,9 @@ public interface MainDAO {
 	
 	// ÆäÀÌÂ¡
 	int insertDummy(BoardDTO dto);
+	// ÆË¾÷
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
 	
 }

@@ -24,4 +24,9 @@ public interface MainService {
 	List boardPick4(BoardDTO dto);
 	// ÆäÀÌÂ¡ Àç·á
 	void insertDummy(int loop);
+	
+	// ÆË¾÷
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
 }
