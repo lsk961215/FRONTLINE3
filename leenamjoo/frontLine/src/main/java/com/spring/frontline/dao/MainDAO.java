@@ -18,4 +18,5 @@ public interface MainDAO {
 	BoardDTO detailBoardDTO(BoardDTO dto);
 	void updateBoardDTO(BoardDTO dto);
 	void deleteBoardDTO(List list);
+	UserDTO findUser(UserDTO dto);
 }

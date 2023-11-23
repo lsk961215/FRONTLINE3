@@ -323,4 +323,23 @@ public class MainController {
 		return "forward:/eatResultGo";
 	}
 	
+	//아이디 찾기 페이지 접속
+	@RequestMapping("/goFindId")
+	public String goFindId() {
+		return "find_id";
+	}
+	
+	//아이디 조회
+	@RequestMapping("/FindId")
+	public String select_id(@ModelAttribute UserDTO dto, Model model) {
+		//dto 받아서 아이디 결과 페이지에 반환
+		//jsp에서 출력
+		//System.out.println(dto.toString());
+		UserDTO data = mainService.findUser(dto);
+		model.addAttribute("dto", data);
+		
+		return "find_id_2";
+	}
+	
+	
 }
