@@ -335,10 +335,19 @@ public class MainController {
 		//dto 받아서 아이디 결과 페이지에 반환
 		//jsp에서 출력
 		//System.out.println(dto.toString());
+		//null일때는 아이디 찾기 페이지로 돌아옴
 		UserDTO data = mainService.findUser(dto);
-		model.addAttribute("dto", data);
-		
-		return "find_id_2";
+		if(data == null) {
+			model.addAttribute("msg", "유효한 값을 입력해주세요");
+			model.addAttribute("url", "goFindId");
+
+			return "alert";
+		}else {
+			model.addAttribute("dto", data);
+			
+			return "find_id_2";
+		}
+
 	}
 	
 	

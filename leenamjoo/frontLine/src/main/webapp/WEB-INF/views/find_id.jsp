@@ -13,6 +13,26 @@
     <!-- 푸터 스타일 -->
     <link rel="stylesheet" href="resources/css/footer.css">
 </head>
+<script>
+  
+  function characterCheck(obj){
+	  var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; 
+	  // 허용할 특수문자는 여기서 삭제하면 됨
+	  // 지금은 띄어쓰기도 특수문자 처리됨
+	  if( regExp.test(obj.value) ){
+	  	alert("특수문자는 입력할 수 없습니다.");
+	  	obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
+	  	}
+	  }
+  
+  function inputNumberOnly(el) {
+	    var regExp = /[^0-9]/g;
+	    if (regExp.test(el.value)) {
+	        alert("숫자만 입력해주세요.");
+	        el.value = el.value.replace(regExp, ''); 
+	    }
+	}
+</script>
 <style>
 
 
@@ -80,8 +100,8 @@ margin-right:50px;
 <span id="title">아이디 찾기</span>
 <div>회원 정보에 등록된 정보로 아이디를 찾을수 있습니다.</div>
 <form action="FindId">
-	<div>이름 &nbsp<input type="text" name="userName"></div>
-	<div id="phonenum">휴대폰 번호 &nbsp<input type="text" name="userPhone" placeholder="숫자만 입력"></div>
+	<div>이름 &nbsp<input type="text" oninput="characterCheck(this)" name="userName"></div>
+	<div id="phonenum">휴대폰 번호 &nbsp<input type="text" oninput="inputNumberOnly(this)" name="userPhone" placeholder="숫자만 입력"></div>
 	<input type="submit" id="goid" value="아이디 찾기">
 </form>
 </div>
