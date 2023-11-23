@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 import com.spring.frontline.service.MainService;
 
@@ -221,7 +222,7 @@ public class MainController {
 		    	updateUserDTO.setGradeSeq(Integer.parseInt(request.getParameter(name)));
 		    } else if(name.equals("genderSeq")) {
 		    	updateUserDTO.setGenderSeq(Integer.parseInt(request.getParameter(name)));
-		    } else if(name.equals("userbirth")) {
+		    } else if(name.equals("userBirth")) {
 		    	updateUserDTO.setUserBirth(request.getParameter(name));
 		    }
 		}
@@ -445,7 +446,19 @@ public class MainController {
 		
 		BoardDTO dto = mainService.getBoard(boardDTO);
 		
+		List list = mainService.getComment(boardDTO);
+		
 		model.addAttribute("boardDTO", dto);
+		model.addAttribute("commentList", list);
+		
+		return "local_detail";
+	}
+	
+	@RequestMapping("/addComment")
+	public String addComment(HttpServletRequest request, Model model, CommentDTO commentDTO) {
+		
+		mainService.addComment(commentDTO);
+		
 		return "local_detail";
 	}
 }

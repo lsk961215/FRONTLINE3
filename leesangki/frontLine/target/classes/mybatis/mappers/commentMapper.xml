@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+	<resultMap id="commentMap" type="com.spring.frontline.dto.CommentDTO">
+	  <result column="comment_seq" property="commentSeq"/>
+	  <result column="board_seq" property="boardSeq"/>
+	  <result column="user_seq" property="userSeq"/>
+	  <result column="parent_seq" property="parentSeq"/>
+	  <result column="comment_text" property="commentText"/>
+	  <result column="comment_regdate" property="commentRegDate"/>
+	  <result column="lv" property="depth"/>
+	</resultMap>
+	
+	<insert id="insertComment" parameterType="com.spring.frontline.dto.CommentDTO">
+		insert into comment_info values ( comment_seq.nextval, #{boardSeq}, #{userSeq}, #{parentSeq}, #{commentText}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'))
+	</insert>
+	
+	<select id="selectComment" parameterType="com.spring.frontline.dto.BoardDTO" resultMap="commentMap"> 
+		with emp_recu (lv, comment_seq, parent_seq, user_seq, comment_regdate, comment_text) as (
+		    select
+		        0 as lv,
+		        comment_seq, parent_seq, user_seq, comment_regdate, comment_text
+		    from comment_info
+		    where parent_seq is null and board_seq = #{boardSeq}
+		    
+		    union all
+		    
+		    select
+		        er.lv + 1 as lv,
+		        e.comment_seq, e.parent_seq, e.user_seq, e.comment_regdate, lpad('ㄴ', (er.lv+1)*10, ' ') || e.comment_text
+		    from 
+		        emp_recu er
+		        left outer join comment_info e on e.parent_seq = er.comment_seq
+		    where e.parent_seq is not null
+		)
+		search depth first by comment_seq set order_depth
+		select * from emp_recu
+		order by order_depth
+	</select>
+</mapper>

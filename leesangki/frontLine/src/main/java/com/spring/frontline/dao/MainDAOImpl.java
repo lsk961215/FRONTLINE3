@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Repository
@@ -134,6 +135,16 @@ public class MainDAOImpl implements MainDAO{
 	@Override
 	public BoardDTO selectBoard(BoardDTO boardDTO) {
 		return sqlSession.selectOne("board.selectBoard", boardDTO);
+	}
+
+	@Override
+	public void addComment(CommentDTO commentDTO) {
+		sqlSession.insert("comment.insertComment", commentDTO);
+	}
+
+	@Override
+	public List getComment(BoardDTO boardDTO) {
+		return sqlSession.selectList("comment.selectComment", boardDTO);
 	}
 
 }

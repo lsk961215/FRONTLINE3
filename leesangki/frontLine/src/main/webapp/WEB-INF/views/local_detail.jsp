@@ -46,6 +46,17 @@
 						})
 	})
 </script>
+<style>
+	.wrap {
+		max-width: 1240px;
+    	margin: 0 auto;
+	}
+	
+	.comments_section {
+		max-width: 1240px;
+    	margin: 0 auto;
+	}
+</style>
 </head>
 
 <body>
@@ -153,9 +164,10 @@
 		</div>
 	</div>
 
-	<hr>
+	
 
 	<div class="comments_section">
+	<hr>
 		<h1>
 			댓글<img class="image_comment" src="resources/images/icon_comment.png">
 		</h1>
@@ -163,75 +175,55 @@
 		<div class="line"></div>
 
 		<div class="comment_write">
-			<form class="comment_write_form" action="Comment">
+			<form class="comment_write_form" action="addComment">
 				<textarea class="comment_write_text" name="commentText"></textarea>
+				<input type="text" name="userSeq" value="${userDTO.userSeq}">
+				<input type="text" name="boardSeq" value="${boardDTO.boardSeq}">
 				<input class="comment_write_submit" type="submit" value="등록">
 			</form>
 		</div>
 
 		<div class="line"></div>
 
-		<!-- 		<div class="comments_list"> -->
-		<%-- 			<c:if test="<%=CommentDB.getCommentList().isEmpty() == false%>"> --%>
-		<%-- 				<c:forEach var="item" items="${CommentDB.getCommentList()}" varStatus="i"> --%>
-		<%-- 				<div class="comment_view" id="${i.index}"> --%>
-		<!-- 					<div> -->
-		<%-- 						<c:if test="${CommentDB.getCommentList().get(i.index).getCommentGrade() == 'user'}"> --%>
-		<!-- 							<img class="image_user" src="resources/images/icon_user.png"> -->
-		<%-- 						</c:if> --%>
-		<%-- 						<c:if test="${CommentDB.getCommentList().get(i.index).getCommentGrade() == 'admin'}"> --%>
-		<!-- 							<img class="image_user" src="resources/images/icon_admin.png"> -->
-		<%-- 						</c:if> --%>
-		<!-- 					</div> -->
-		<!-- 					<div class="comment_view_main"> -->
-		<%-- 						<div class="comment_view_title">${CommentDB.getCommentList().get(i.index).getCommentId()}</div> --%>
-		<%-- 						<div class="comment_view_text">${CommentDB.getCommentList().get(i.index).getCommentText()}</div> --%>
-		<%-- 						<div>작성날짜 : ${CommentDB.getCommentList().get(i.index).getCommentRegDate()}</div> --%>
-		<!-- 					</div> -->
-		<!-- 					<div> -->
-		<!-- 						<input class="comment_view_button" type="submit" value="답글달기"> -->
-		<!-- 					</div> -->
-		<!-- 				</div> -->
+		<div class="comments_list">
+			<c:if test="${not empty commentList}">
+		 				<c:forEach var="item" items="${commentList}" varStatus="i">
+		 				<div class="comment_view" id="${i.index}">
+		 					<div>
+		 						<c:if test="${item.userSeq != userDTO.userSeq}">
+		 							<img class="image_user" src="resources/images/icon_user.png">
+		 						</c:if>
+		 						<c:if test="${item.userSeq == userDTO.userSeq}">
+		 							<img class="image_user" src="resources/images/icon_admin.png">
+		 						</c:if>
+		 					</div>
+		 					<div class="comment_view_main">
+		 						<div class="comment_view_title">${item.userSeq}</div>
+		 						<div class="comment_view_text">${item.commentText}</div>
+		 						<div>작성날짜 : ${item.commentRegDate}</div>
+		 					</div>
+		 					<div>
+		 						<input class="comment_view_button" type="submit" value="답글달기">
+		 					</div>
+		 				</div>
 
-		<!-- 				<hr> -->
+		 				<hr>
 
-		<%-- 				<div class="coComment_write"  id="${i.index}" > --%>
-		<!-- 					<form class="coComment_write_form" action="Comment"> -->
-		<!-- 						<textarea class="coComment_write_text" name="commentText"></textarea> -->
-		<%-- 						<input class="coComment_write_target" type="text" value="${i.index}" name="commentTarget"> --%>
-		<!-- 						<input class="coComment_write_submit" type="submit" value="등록"> -->
-		<!-- 					</form> -->
-		<!-- 					<div class="line"></div> -->
-		<!-- 				</div> -->
+		 				<div class="coComment_write"  id="${i.index}" >
+		 					<form class="coComment_write_form" action="addComment">
+		 						<textarea class="coComment_write_text" name="commentText"></textarea>
+		 						<input class="coComment_write_target" type="text" value="${item.commentSeq}" name="parentSeq">
+		 						<input type="text" name="userSeq" value="${userDTO.userSeq}">
+		 						<input type="text" name="boardSeq" value="${boardDTO.boardSeq}">
+		 						<input class="coComment_write_submit" type="submit" value="등록">
+		 					</form>
+		 					<div class="line"></div>
+		 				</div>
 
-		<%-- 					<c:if test="${item.getCommentList().isEmpty() == false}"> --%>
-		<%-- 						<c:forEach var="item" items="${item.getCommentList()}" varStatus="i"> --%>
-		<!-- 							<div class="coComment_view"> -->
-		<!-- 								<div> -->
-		<!-- 									<img class="image_comment_direction" src="resources/images/icon_comment_direction.png"> -->
-		<!-- 								</div> -->
-		<!-- 								<div> -->
-		<%-- 									<c:if test="${item.getCommentGrade() == 'user'}"> --%>
-		<!-- 										<img class="image_user" src="resources/images/icon_user.png"> -->
-		<%-- 									</c:if> --%>
-		<%-- 									<c:if test="${item.getCommentGrade() == 'admin'}"> --%>
-		<!-- 										<img class="image_user" src="resources/images/icon_admin.png"> -->
-		<%-- 									</c:if> --%>
-		<!-- 								</div> -->
-		<!-- 								<div class="coComment_view_main"> -->
-		<%-- 									<div class="comment_view_title">${item.getCommentId()}</div> --%>
-		<%-- 									<div class="comment_view_text">${item.getCommentText()}</div> --%>
-		<%-- 									<div>작성날짜 : ${item.getCommentRegDate()}</div> --%>
-		<!-- 								</div> -->
-		<!-- 							</div> -->
-		<!-- 							<div class="line"></div> -->
-		<%-- 						</c:forEach> --%>
-
-		<%-- 					</c:if> --%>
-
-		<%-- 				</c:forEach> --%>
-		<%-- 			</c:if> --%>
-		<!-- 		</div> -->
+		 				</c:forEach>
+		 				
+		 			</c:if>
+		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>

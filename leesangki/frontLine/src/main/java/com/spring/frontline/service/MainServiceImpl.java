@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.frontline.dao.MainDAO;
 import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Service
@@ -200,5 +201,15 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public BoardDTO getBoard(BoardDTO boardDTO) {
 		return mainDAO.selectBoard(boardDTO);
+	}
+
+	@Override
+	public void addComment(CommentDTO commentDTO) {
+		mainDAO.addComment(commentDTO);
+	}
+
+	@Override
+	public List getComment(BoardDTO boardDTO) {
+		return mainDAO.getComment(boardDTO);
 	}
 }

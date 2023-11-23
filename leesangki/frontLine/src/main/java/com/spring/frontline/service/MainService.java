@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 public interface MainService {
@@ -22,4 +23,6 @@ public interface MainService {
 	Map getBoardPage(Map map);
 	List getRegionNames();
 	BoardDTO getBoard(BoardDTO boardDTO);
+	void addComment(CommentDTO commentDTO);
+	List getComment(BoardDTO boardDTO);
 }

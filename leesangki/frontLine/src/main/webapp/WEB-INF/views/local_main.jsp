@@ -218,6 +218,14 @@ $(function(){
 .weather_img img {
 	display: none;
 }
+
+.board_title {
+	height: 50px;
+	display: flex;
+	
+	align-items: center;
+	justify-content: center;
+}
 </style>
 <body>
 	<jsp:include page="header.jsp"/>
@@ -269,8 +277,8 @@ $(function(){
            <c:forEach var="item" items="${boardListMap.typeSeq2}" varStatus="i">
            	<a href="getBoardDetail?boardSeq=${item.boardSeq}">
            		<div class="board_section">
-           			<img class="board_image" src="${item.boardImage}"><br>
-           			<span class="board_title">${item.boardTitle}</span>
+           			<div><img class="board_image" src="${item.boardImage}"></div>
+           			<div class="board_title">${item.boardTitle}</div>
            		</div>
            	</a>
            </c:forEach>
@@ -294,10 +302,10 @@ $(function(){
            <c:forEach var="item" items="${boardListMap.typeSeq0}" varStatus="i">
            		<a href="getBoardDetail?boardSeq=${item.boardSeq}">
            		<div class="board_section">
-           			<img class="board_image" src="${item.boardImage}"><br>
-           			<span class="board_title">${item.boardTitle}</span>
+           			<div><img class="board_image" src="${item.boardImage}"></div>
+           			<div class="board_title">${item.boardTitle}</div>
            		</div>
-           		</a>
+           	</a>
            </c:forEach>
         </div><br><br>
 
@@ -317,10 +325,10 @@ $(function(){
            <c:forEach var="item" items="${boardListMap.typeSeq1}" varStatus="i">
            		<a href="getBoardDetail?boardSeq=${item.boardSeq}">
            		<div class="board_section">
-           			<img class="board_image" src="${item.boardImage}"><br>
-           			<span class="board_title">${item.boardTitle}</span>
+           			<div><img class="board_image" src="${item.boardImage}"></div>
+           			<div class="board_title">${item.boardTitle}</div>
            		</div>
-           		</a>
+           	</a>
            </c:forEach>
         </div><br><br>
         
@@ -341,10 +349,10 @@ $(function(){
            <c:forEach var="item" items="${boardListMap.typeSeq3}" varStatus="i">
            		<a href="getBoardDetail?boardSeq=${item.boardSeq}">
            		<div class="board_section">
-           			<img class="board_image" src="${item.boardImage}"><br>
-           			<span class="board_title">${item.boardTitle}</span>
+           			<div><img class="board_image" src="${item.boardImage}"></div>
+           			<div class="board_title">${item.boardTitle}</div>
            		</div>
-           		</a>
+           	</a>
            </c:forEach>
         </div>
         <%--------------------%>

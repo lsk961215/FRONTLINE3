@@ -59,6 +59,17 @@ main{
 	
 	padding: 30px;
 }
+.board_title {
+	height: 50px;
+	display: flex;
+	
+	align-items: center;
+	justify-content: center;
+}
+a {	
+	text-decoration-line: none;
+    color: black;
+}
 </style>
 
 <body>
@@ -74,8 +85,8 @@ main{
 			</c:if>
            		<a href="getBoardDetail?boardSeq=${item.boardSeq}">
            		<div class="board_section">
-           			<img class="board_image" src="${item.boardImage}"><br>
-           			<span class="board_title">${item.boardTitle}</span>
+           			<div><img class="board_image" src="${item.boardImage}"></div>
+           			<div class="board_title">${item.boardTitle}</div>
            		</div>
            		</a>
            	<c:if test="${i%j == j-1 || i == map.list.size()-1}">
