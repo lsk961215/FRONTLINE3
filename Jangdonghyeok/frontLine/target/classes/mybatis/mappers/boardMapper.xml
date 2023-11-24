@@ -71,7 +71,7 @@
 	board_phone = #{boardPhone},
 	board_open = #{boardOpen},
 	board_break = #{boardBreak},
-	board_detail = #{boardDetail}
+	board_detail = #{boardDetail},
 	board_image = #{boardImage}
 	where
 	board_seq = ${boardSeq}
@@ -113,8 +113,8 @@
 		from(
 			select board_info.*
 			from board_info
-			where type_seq = 1 and region_seq = ${regionSeq} and type_seq = ${typeSeq}
-			order by board_regdate desc
+			where region_seq = ${regionSeq} and type_seq = ${typeSeq}
+			order by board_seq asc
 		) tmp
 	)
 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
@@ -124,7 +124,7 @@
 	<select id="playTotal" resultType="int" parameterType="com.spring.frontline.dto.BoardDTO">
 		select count(*)
 		from board_info
-		where type_seq = 1 and region_seq = ${regionSeq} and type_seq = ${typeSeq}
+		where region_seq = ${regionSeq} and type_seq = ${typeSeq}
 	</select>
 		
 </mapper>
