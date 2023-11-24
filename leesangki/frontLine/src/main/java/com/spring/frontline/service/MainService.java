@@ -24,5 +24,9 @@ public interface MainService {
 	List getRegionNames();
 	BoardDTO getBoard(BoardDTO boardDTO);
 	void addComment(CommentDTO commentDTO);
-	List getComment(BoardDTO boardDTO);
+	List getCommentList(BoardDTO boardDTO);
+	Map getCommentPage(int pageNum, int countPerPage);
+	CommentDTO getComment(CommentDTO commentDTO);
+	void updateComment(CommentDTO commentDTO);
+	void deleteComment(List list);
 }

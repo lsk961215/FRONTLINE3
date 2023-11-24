@@ -8,7 +8,7 @@
 		<a href="goAdminUser">
 			<h3>雀盔 包府</h3>
 		</a>
-		<a href="admin_comment.jsp">
+		<a href="goAdminComment">
 			<h3>瘩臂 包府</h3>
 		</a>
 		<a>

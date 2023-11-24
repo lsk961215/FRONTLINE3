@@ -143,8 +143,35 @@ public class MainDAOImpl implements MainDAO{
 	}
 
 	@Override
-	public List getComment(BoardDTO boardDTO) {
-		return sqlSession.selectList("comment.selectComment", boardDTO);
+	public List selectCommentList(BoardDTO boardDTO) {
+		return sqlSession.selectList("comment.selectCommentList", boardDTO);
+	}
+
+	@Override
+	public List selectCommentPage(Map map) {
+		List commentList = sqlSession.selectList("comment.commentPage", map);
+		
+		return commentList;
+	}
+
+	@Override
+	public int selectCommentTotal() {
+		return sqlSession.selectOne("comment.commentTotal");
+	}
+
+	@Override
+	public CommentDTO selectComment(CommentDTO commentDTO) {
+		return sqlSession.selectOne("comment.selectComment", commentDTO);
+	}
+
+	@Override
+	public void updateComment(CommentDTO commentDTO) {
+		sqlSession.update("comment.updateComment", commentDTO);
+	}
+
+	@Override
+	public void deleteComment(List list) {
+		sqlSession.delete("comment.deleteComment", list);
 	}
 
 }

@@ -81,6 +81,11 @@ public class MainController {
 		return "redirect:/getUser";
 	}
 	
+	@RequestMapping("/goAdminComment")
+	public String goAdminComment() {
+		return "redirect:/getComment";
+	}
+	
 	@RequestMapping("/doJoin")
 	public String doJoin(HttpServletRequest request, Model model, @ModelAttribute UserDTO userDTO) {
 		HttpSession session = request.getSession();
@@ -302,13 +307,22 @@ public class MainController {
 		return "완료";
 	}
 	
-	@RequestMapping("/setPerPage")
+	@RequestMapping("/userSetPerPage")
 	public String setPerPage(HttpServletRequest request, String countPerPage) {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
 		return "redirect:/getUser";
+	}
+	
+	@RequestMapping("/commentSetPerPage")
+	public String commentSetPerPage(HttpServletRequest request, String countPerPage) {
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("countPerPage", countPerPage);
+		
+		return "redirect:/getComment";
 	}
 	
 	@RequestMapping("/findId")
@@ -445,8 +459,14 @@ public class MainController {
 	public String getBoardDetail(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		
 		BoardDTO dto = mainService.getBoard(boardDTO);
+		List list = new ArrayList();
 		
-		List list = mainService.getComment(boardDTO);
+		try {
+			list = mainService.getCommentList(boardDTO);
+		} catch (IndexOutOfBoundsException e) {
+			model.addAttribute("boardDTO", dto);
+			return "local_detail";
+		}
 		
 		model.addAttribute("boardDTO", dto);
 		model.addAttribute("commentList", list);
@@ -457,8 +477,98 @@ public class MainController {
 	@RequestMapping("/addComment")
 	public String addComment(HttpServletRequest request, Model model, CommentDTO commentDTO) {
 		
-		mainService.addComment(commentDTO);
+		try {
+			mainService.addComment(commentDTO);
+			model.addAttribute("boardSeq", commentDTO.getBoardSeq());
+			
+			return "redirect:/getBoardDetail#commentSection";
+		} catch (DataIntegrityViolationException e) {
+			model.addAttribute("msg", "댓글을 달려면 로그인이 필요합니다.");
+			model.addAttribute("url", "getBoardDetail?boardSeq="+commentDTO.getBoardSeq());
+			
+			return "alert";
+		}
 		
-		return "local_detail";
+	}
+	
+	@RequestMapping("/getComment")
+	public String getComment(HttpServletRequest request, Model model, CommentDTO commentDTO) {
+		HttpSession session = request.getSession();
+		
+		// commentSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
+		if(commentDTO.getCommentSeq() == -1) {
+			
+			int pageNum = 1;
+			int countPerPage = 5;
+			
+			String tmp_pageNum = request.getParameter("pageNum");
+			
+			if(tmp_pageNum != null) {
+				try { 
+					pageNum = Integer.parseInt(tmp_pageNum);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			// select 5개씩 10개씩 보기 세션에 올려둔 값 판단 (setPerPage)
+			String tmp_countPerPage = (String)session.getAttribute("countPerPage");
+			
+			if(tmp_countPerPage != null) {
+				try { 
+					countPerPage = Integer.parseInt(tmp_countPerPage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			Map map = mainService.getCommentPage(pageNum, countPerPage);
+			
+			model.addAttribute("map", map);
+			
+			return "admin_comment";
+			
+		} 
+		else {
+			commentDTO = mainService.getComment(commentDTO);
+			
+			session.setAttribute("updateCommentDTO", commentDTO);
+			
+			return "admin_updateComment";
+		}
+		
+	}
+	
+	@RequestMapping("/updateAdminComment")
+	public String updateAdminComment(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		CommentDTO updateCommentDTO = (CommentDTO)session.getAttribute("updateCommentDTO");
+		
+		updateCommentDTO.setCommentText(request.getParameter("commentText"));
+		
+		mainService.updateComment(updateCommentDTO);
+		
+		return "redirect:/goAdminComment";
+	}
+	
+	@RequestMapping("/deleteComment")
+	public String deleteComment(HttpServletRequest request, Model model) {
+		
+		Enumeration params = request.getParameterNames();
+		
+		List list = new ArrayList();
+		
+		while (params.hasMoreElements()){
+			int target = Integer.parseInt((String)params.nextElement());
+		    
+			list.add(target);
+		}
+		
+		mainService.deleteComment(list);
+		
+		return "redirect:/getUser";
 	}
 }

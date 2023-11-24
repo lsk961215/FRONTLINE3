@@ -66,6 +66,8 @@ header .header_input {
 
 header .input_wrap {
     width: 100%;
+    
+    position: relative;
 }
 
 header .input_list li {
@@ -113,7 +115,7 @@ header .input {
 
 header .input_list {
     display: none;
-    position: relative;
+    position: absolute;
 
     background-color: white;
     width: 100%;

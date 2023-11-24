@@ -166,7 +166,7 @@
 
 	
 
-	<div class="comments_section">
+	<div class="comments_section" id="commentSection">
 	<hr>
 		<h1>
 			댓글<img class="image_comment" src="resources/images/icon_comment.png">
@@ -177,8 +177,10 @@
 		<div class="comment_write">
 			<form class="comment_write_form" action="addComment">
 				<textarea class="comment_write_text" name="commentText"></textarea>
-				<input type="text" name="userSeq" value="${userDTO.userSeq}">
-				<input type="text" name="boardSeq" value="${boardDTO.boardSeq}">
+				<input type="hidden" name="userSeq" value="${userDTO.userSeq}">
+				<input type="hidden" name="userId" value="${userDTO.userId}">
+				<input type="hidden" name="gradeSeq" value="${userDTO.gradeSeq}">
+				<input type="hidden" name="boardSeq" value="${boardDTO.boardSeq}">
 				<input class="comment_write_submit" type="submit" value="등록">
 			</form>
 		</div>
@@ -188,17 +190,17 @@
 		<div class="comments_list">
 			<c:if test="${not empty commentList}">
 		 				<c:forEach var="item" items="${commentList}" varStatus="i">
-		 				<div class="comment_view" id="${i.index}">
+		 				<div class="comment_view" id="${i.index}" style="padding-left:${item.depth * 50}px">
 		 					<div>
-		 						<c:if test="${item.userSeq != userDTO.userSeq}">
+		 						<c:if test="${item.gradeSeq != 1}">
 		 							<img class="image_user" src="resources/images/icon_user.png">
 		 						</c:if>
-		 						<c:if test="${item.userSeq == userDTO.userSeq}">
+		 						<c:if test="${item.gradeSeq == 1}">
 		 							<img class="image_user" src="resources/images/icon_admin.png">
 		 						</c:if>
 		 					</div>
 		 					<div class="comment_view_main">
-		 						<div class="comment_view_title">${item.userSeq}</div>
+		 						<div class="comment_view_title">${item.userId}</div>
 		 						<div class="comment_view_text">${item.commentText}</div>
 		 						<div>작성날짜 : ${item.commentRegDate}</div>
 		 					</div>
@@ -213,8 +215,10 @@
 		 					<form class="coComment_write_form" action="addComment">
 		 						<textarea class="coComment_write_text" name="commentText"></textarea>
 		 						<input class="coComment_write_target" type="text" value="${item.commentSeq}" name="parentSeq">
-		 						<input type="text" name="userSeq" value="${userDTO.userSeq}">
-		 						<input type="text" name="boardSeq" value="${boardDTO.boardSeq}">
+		 						<input type="hidden" name="userSeq" value="${userDTO.userSeq}">
+		 						<input type="hidden" name="userId" value="${userDTO.userId}">
+								<input type="hidden" name="gradeSeq" value="${userDTO.gradeSeq}">
+		 						<input type="hidden" name="boardSeq" value="${boardDTO.boardSeq}">
 		 						<input class="coComment_write_submit" type="submit" value="등록">
 		 					</form>
 		 					<div class="line"></div>

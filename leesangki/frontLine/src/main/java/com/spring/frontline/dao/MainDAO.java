@@ -28,5 +28,10 @@ public interface MainDAO {
 	List selectRegionNames();
 	BoardDTO selectBoard(BoardDTO boardDTO);
 	void addComment(CommentDTO commentDTO);
-	List getComment(BoardDTO boardDTO);
+	List selectCommentList(BoardDTO boardDTO);
+	List selectCommentPage(Map map);
+	int selectCommentTotal();
+	CommentDTO selectComment(CommentDTO commentDTO);
+	void updateComment(CommentDTO commentDTO);
+	void deleteComment(List list);
 }
