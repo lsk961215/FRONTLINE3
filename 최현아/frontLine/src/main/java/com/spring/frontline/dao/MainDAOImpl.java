@@ -106,6 +106,40 @@ public class MainDAOImpl implements MainDAO{
 		return result;
 	}
 
+	@Override
+	public List popup1() {
+		List popupList = sqlSession.selectList("user.popup1");
+		System.out.println("popupList : " + popupList);
+		return popupList;
+	}
+
+	@Override
+	public Map popupReadyUpdate(Map map) {
+		System.out.println("dao>> PopupReady 실행 : " + map);
+		Map popupSetReady = sqlSession.selectOne("user.popupReadyUpdate", map);
+		System.out.println("DAO update 결과 : " + popupSetReady);
+		
+		return popupSetReady;
+	}
+
+	@Override
+	public void popupUpdate(Map map) {
+		System.out.println("DAO에서 popupUpdate 실행 -> 받은 값 : " + map);
+		int popupUpdate = sqlSession.update("user.popupUpdate", map);
+		System.out.println("popupUpdate에서 받은 결과 : " + popupUpdate);
+	}
+
+	// 비밀번호 찾기
+	@Override
+	public UserDTO sameId(UserDTO userDTO) {
+		System.out.println("mainDAO에서 sameId 실행 > dto 값 : " + userDTO);
+		UserDTO findId = sqlSession.selectOne("user.sameId", userDTO);
+		System.out.println("mainDAO에서 sameId() 실행 -> findId의 값 : " + findId);
+		
+		return findId;
+				
+	}
+
 
 	
 

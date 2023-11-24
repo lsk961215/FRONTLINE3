@@ -114,9 +114,33 @@ public class MainServiceImpl implements MainService {
 			
 			mainDAO.insertDummy(dto);
 		}
-		
-		
 	}
+
+	// 팝업
+	@Override
+	public List popup1() {
+		System.out.println("mainService --> popup1()실행");
+		return mainDAO.popup1();
+	}
+
+	@Override
+	public Map popupReadyUpdate(Map map) {
+		System.out.println("popupService 에서 실행 :" + map);
+		return mainDAO.popupReadyUpdate(map);
+	}
+
+	@Override
+	public void popupUpdate(Map map) {
+		System.out.println("Service에서 popupUpdate 실행 -> 받은 값 : " +  map);
+		mainDAO.popupUpdate(map);
+	}
+
+	@Override
+	public UserDTO sameId(UserDTO userDTO) {
+		System.out.println("mainService에서 sameId실행 > dto값 : " + userDTO);
+		return mainDAO.sameId(userDTO);
+	}
+	
 
 	
 }

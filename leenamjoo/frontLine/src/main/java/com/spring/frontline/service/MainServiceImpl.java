@@ -72,4 +72,9 @@ public class MainServiceImpl implements MainService {
 	public void deleteBoardDTO(List list) {
 		 mainDAO.deleteBoardDTO(list);
 	}
+	
+	@Override
+	public UserDTO findUser(UserDTO dto){
+		return mainDAO.findUser(dto);
+	}
 }

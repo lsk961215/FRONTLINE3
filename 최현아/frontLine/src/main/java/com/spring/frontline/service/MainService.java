@@ -24,4 +24,12 @@ public interface MainService {
 	List boardPick4(BoardDTO dto);
 	// 페이징 재료
 	void insertDummy(int loop);
+	
+	// 팝업
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
+	
+	// 비밀번호 찾기
+	UserDTO sameId(UserDTO userDTO);
 }

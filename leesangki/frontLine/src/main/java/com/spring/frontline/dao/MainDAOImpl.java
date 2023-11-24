@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Repository
@@ -109,6 +111,40 @@ public class MainDAOImpl implements MainDAO{
 	@Override
 	public List selectBoardList(Map map) {
 		return sqlSession.selectList("board.selectBoardList", map);
+	}
+	
+	@Override
+	public List selectBoardPage(Map map) {
+		List boardList = sqlSession.selectList("board.selectBoardPage", map);
+
+		return boardList;
+	}
+	
+	@Override
+	public int selectBoardTotal(Map map) {
+		int total = sqlSession.selectOne("board.selectBoardTotal", map);
+
+		return total;
+	}
+
+	@Override
+	public List selectRegionNames() {
+		return sqlSession.selectList("board.selectRegionNames");
+	}
+
+	@Override
+	public BoardDTO selectBoard(BoardDTO boardDTO) {
+		return sqlSession.selectOne("board.selectBoard", boardDTO);
+	}
+
+	@Override
+	public void addComment(CommentDTO commentDTO) {
+		sqlSession.insert("comment.insertComment", commentDTO);
+	}
+
+	@Override
+	public List getComment(BoardDTO boardDTO) {
+		return sqlSession.selectList("comment.selectComment", boardDTO);
 	}
 
 }

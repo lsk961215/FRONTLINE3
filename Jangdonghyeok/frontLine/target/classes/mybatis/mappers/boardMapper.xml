@@ -113,8 +113,10 @@
 		from(
 			select board_info.*
 			from board_info
+
 			where region_seq = ${regionSeq} and type_seq = ${typeSeq}
 			order by board_seq asc
+
 		) tmp
 	)
 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
@@ -124,7 +126,9 @@
 	<select id="playTotal" resultType="int" parameterType="com.spring.frontline.dto.BoardDTO">
 		select count(*)
 		from board_info
+
 		where region_seq = ${regionSeq} and type_seq = ${typeSeq}
+
 	</select>
 		
 </mapper>

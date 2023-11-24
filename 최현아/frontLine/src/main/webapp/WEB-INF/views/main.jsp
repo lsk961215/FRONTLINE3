@@ -1,5 +1,8 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -210,7 +213,8 @@
         		$(".popup_1").css("display", "none")
         		console.log($("#popup_1_checkbox").is(":checked"))
         		if($("#popup_1_checkbox").is(":checked") == true){
-        			$("#popup_1_submit").click()
+        			document.cookie = "popup1=setChecked; max-age=10";
+//         			$(".popup_1").css("display", "none")
         		}
         	})
         	
@@ -218,10 +222,29 @@
         		$(".popup_2").css("display", "none")
         		console.log($("#popup_2_checkbox").is(":checked"))
         		if($("#popup_2_checkbox").is(":checked") == true){
-        			$("#popup_2_submit").click()
+        			document.cookie = "popup2=setChecked; max-age=10";
+//         			$(".popup_1").css("display", "none")
+//         			$("#popup_2_submit").click()
         		}
         	})
         }
+//         function popup_close(){
+//         	$("#popup_1_button").click(function(){
+//         		$(".popup_1").css("display", "none")
+//         		console.log($("#popup_1_checkbox").is(":checked"))
+//         		if($("#popup_1_checkbox").is(":checked") == true){
+//         			$("#popup_1_submit").click()
+//         		}
+//         	})
+        	
+//         	$("#popup_2_button").click(function(){
+//         		$(".popup_2").css("display", "none")
+//         		console.log($("#popup_2_checkbox").is(":checked"))
+//         		if($("#popup_2_checkbox").is(":checked") == true){
+//         			$("#popup_2_submit").click()
+//         		}
+//         	})
+//         }
     </script>
     <style>
     body {
@@ -376,27 +399,32 @@
         </main>
     <jsp:include page="footer.jsp"></jsp:include>
     
-<%--    	<% --%>
-<!-- //    		int popup1_count = 0; -->
-<!-- //    		int popup2_count = 0; -->
+<% 
+   		int popup1_count = 0; 
+   		int popup2_count = 0; 
    		
-<!-- //    		Cookie[] cookies = request.getCookies(); -->
+   		Cookie[] cookies = request.getCookies(); 
    		
-<!-- //    		if(cookies != null){ -->
-<!-- //    			for(Cookie c : cookies){ -->
-<!-- //    	   			if(c.getName().equals("popup1") && c.getValue().equals("no")){ -->
-<!-- //    	   				popup1_count = 1; -->
-<!-- //    	   			} -->
-<!-- //    	   			if(c.getName().equals("popup2") && c.getValue().equals("no")){ -->
-<!-- //    	   				popup2_count = 1; -->
-<!-- //    	   			} -->
-<!-- //    	   		} -->
+   		if(cookies != null){
+   			for(Cookie c : cookies){
+   				System.out.println("c.getNanme :" + c.getName());
+   				
+   	   			if(c.getName().equals("popup1") && c.getValue().equals("setChecked")){
+   	   				popup1_count = 1;
+   	   				
+   	   			}
+   	   			if(c.getName().equals("popup2") && c.getValue().equals("setChecked")){
+   	   				popup2_count = 1;
+   	   			}
+   	   		}
+   		}
    	   		
-<!-- //    	   		if(popup1_count == 0){ -->
-<%--    	   			%> --%>
+   	   		if(popup1_count == 0){ 
+ 	   			%> 
+<%--  	   			<c:forEach var="popupMap" items="${popup}" varStatus="status"> --%>
    	   			<div class="popup_1" id="popup_1">
-   	    			<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(0).getPopupImage()}">
-   	    			<form class="popup_1_form" action="/frontline/popup1">
+   	    			<img width="100%" heigth="100%" src="${popup[0].POPUP_IMAGE}">
+<!--    	    			<form class="popup_1_form" action="/frontline/popup1"> -->
    	    				<div class="popup_1_main">
    	    					<div>
    	    						<input id="popup_1_checkbox" type="checkbox" name="popup1"> 10초동안 보지않기
@@ -404,16 +432,17 @@
    	    					<input class="popup_1_submit" id="popup_1_submit" type="submit">
    	   	    				<input id="popup_1_button" type="button" value="닫기">
    	    				</div>
-   	    			</form>
+<!--    	    			</form> -->
    	    		</div>
-<%--    	   			<% --%>
-<!--    	   		} -->
+<%--    	    		</c:forEach> --%>
+   	   			<%
+    	   		} 
    	   		
-<!--    	   		if(popup2_count == 0){ -->
-<!--    	   			%> -->
+	 	  		if(popup2_count == 0){ 
+		   		%> 
    	   			<div class="popup_2" id="popup_2">
-   	   	    		<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(1).getPopupImage()}">
-   	   	    		<form class="popup_2_form" action="/frontline/popup2">
+<!--    	   	    		<form class="popup_2_form" action="/frontline/popup2"> -->
+   	   	    		<img width="100%" heigth="100%" src="${popup[1].POPUP_IMAGE}">
    	   	    			<div class="popup_2_main">
    	   	    				<div>
    	   	    					<input id="popup_2_checkbox" type="checkbox" name="popup2"> 10초동안 보지않기
@@ -421,12 +450,12 @@
    	   	    				<input class="popup_2_submit" id="popup_2_submit" type="submit">
    	   	    				<input id="popup_2_button" type="button" value="닫기">
    	   	    			</div>
-   	   	    		</form>
+<!--    	   	    		</form> -->
    	   	    	</div>
-<%--    	   	    	<% --%>
+   	   	    	<%
    	   		}
-   		}
    		
-<!--    	%> -->
+   		
+    	%>
 </body>
 </html>

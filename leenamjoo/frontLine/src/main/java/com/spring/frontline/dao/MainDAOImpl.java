@@ -70,4 +70,9 @@ public class MainDAOImpl implements MainDAO{
 	public void deleteBoardDTO(List list) {
 		 sqlSession.delete("user.deleteDetailBoard", list);
 	}
+	
+	@Override
+	public UserDTO findUser(UserDTO dto) {
+		 return sqlSession.selectOne("user.findUser", dto);
+	}
 }

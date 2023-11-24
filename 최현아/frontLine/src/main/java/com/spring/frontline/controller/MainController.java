@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +30,11 @@ public class MainController {
 	
 	// 메인페이지
 	@RequestMapping("/")
-	public String goMain() {
+	public String goMain(Model model) {
+		List popup = mainService.popup1();
+		System.out.println(popup);
+		model.addAttribute("popup", popup);
+		
 		return "main";
 	}
 	// 회원가입 이용약관동의 페이지
@@ -227,7 +230,7 @@ public class MainController {
 		return "travel/admin_travel_new";
 	}
 	
-	// 관리자-여행지관리 페이지(전체조회)
+	// 관리자-여행지관리 페이지(목록)
 	@RequestMapping("/travelList")
 	public String travelList(Model model) {
 		System.out.println("/travelList");
@@ -339,18 +342,72 @@ public class MainController {
 	public String travelPage() {
 		return "/detail/travel_page";
 	}
+/////// 관리자 팝업 페이지 ///////
+	
+	// 관리자 - 팝업관리 페이지(목록)
+	@RequestMapping("/adminPopup")
+	public String adminPopup(Model model) {
+		List popup = mainService.popup1();
+		System.out.println(popup);
+		model.addAttribute("popup", popup);
+		return "/popup/admin_popup";
+	}
+	@RequestMapping("for_check")
+	public String for_check() {
+		return "/popup/admin_popup_update";
+	}
+	
+	// 관리자 - 팝업관리 페이지(수정전 리스트조회)
+	@RequestMapping("/popupReadyUpdate")
+	public String popupReadyUpdate(@RequestParam Map map, Model model) {
+		System.out.println("/popupReadyUpdate Controller 실행");
+		System.out.println("map : " + map);
+		Map popupUpdateList = mainService.popupReadyUpdate(map);
+		model.addAttribute("updateList", popupUpdateList);
+		return "/popup/admin_popup_update";
+	}
+	// 관리자 - 팝업관리 페이지(수정)
+	@RequestMapping("/popupUpdate")
+	public String popupUpdate(@RequestParam Map map, Model model) {
+		System.out.println("popupUpdate(map) Controller 실행 : " + map);
+		
+		mainService.popupUpdate(map);
+		
+		return "redirect:/adminPopup";
+	}
+	
+/////// 비밀번호 찾기 페이지 ///////
+	@RequestMapping("/findPw")
+	public String findPw() {
+		return "/find/find_password";
+	}
+	
+	
+	@RequestMapping("/sameId")
+	public String sameId(UserDTO dto, Model model) {
+		System.out.println("/sameId 실행 -> dto.getUserId()값 : " + dto.getUserId());
+		UserDTO findId = mainService.sameId(dto);
+		System.out.println("controller -> sql에서 받아온 값 : " + findId);
+		
+		model.addAttribute("idDto", findId);
+		return "/find/find_password_way";
+	}
+	
 //	@RequestMapping("/BoardList")
 //	public String getBoardList() {
 //		return "/detail/ch_main";
 //	}
-	@RequestMapping("/popup1")
-	public String popup1() {
-		return "/detail/main";
-	}
-	@RequestMapping("/popup2")
-	public String popup2() {
-		return "/detail/main";
-	}
-	
+//	@RequestMapping("/popup1")
+//	public String popup1(Model model) {
+//		
+//		model.addAttribute(popup);
+//		${List[0].}
+//		return "main";
+//	}
+//	@RequestMapping("/popup2")
+//	public String popup2() {
+//		return "main";
+//	}
+//	
 	
 }

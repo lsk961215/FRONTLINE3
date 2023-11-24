@@ -86,21 +86,6 @@
 	<select id="selectDetailBoard"  resultMap="boardMap"> 
    	select * from board_info where board_seq = #{boardSeq}
 	</select>
-	
-	<!--   board_seq.nextval,
-       <from action="adminEatUpdate" method="post" >
-        	<td><input type="hidden" name="boardSeq" value="${dto.boardSeq }"></td>
-            <td><input type="hidden" name="userSeq" value="${dto.userSeq }">${dto.userSeq }</td>
-            <td><input type="text" name="regionSeq" value="${dto.regionSeq }" readonly></td>
-            <td><input type="text" name="boardTitle" value="${dto.boardTitle }" readonly></td>
-            <td><input type="text" name="boardAddress" value="${dto.boardAddress }" readonly></td>
-            <td><input type="text" name="boardPhone" value="${dto.boardPhone }" readonly></td>
-            <td><input type="text" name="boardOpen" value="${dto.boardOpen }" readonly></td>
-            <td><input type="text" name="boardDetail" value="${dto.boardDetail }" readonly></td>
-            <td><input type="hidden" name="boardRegDate" value="${dto.boardRegDate }">${dto.boardRegDate }</td>
-        -->
-     
-        
   
 		<update id="updateDetailBoard" parameterType="com.spring.frontline.dto.BoardDTO">
 		update
@@ -125,6 +110,23 @@
 			#{item}
 		</foreach>
 	</delete>
+		
+		<!-- <resultMap id="userMap" type="com.spring.frontline.dto.UserDTO">
+	  <result column="user_seq" property="userSeq"/>
+	  <result column="user_id" property="userId"/>
+	  <result column="user_pw" property="userPw"/>
+	  <result column="user_name" property="userName"/>
+	  <result column="grade_seq" property="gradeSeq"/>
+	  <result column="gender_seq" property="genderSeq"/>
+	  <result column="user_birth" property="userBirth"/>
+	  <result column="user_email" property="userEmail"/>
+	  <result column="user_phone" property="userPhone"/>
+	  <result column="user_regdate" property="userRegDate"/>
+	</resultMap> -->
+		
+	<select id="findUser" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">
+		select * from user_info where user_name = #{userName} and user_phone = #{userPhone}
+	</select>
 		
 	
 </mapper>

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.frontline.dto.BoardDTO;
+import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 import com.spring.frontline.service.MainService;
 
@@ -129,6 +130,7 @@ public class MainController {
 				
 			}
 			
+			// select 5개씩 10개씩 보기 세션에 올려둔 값 판단 (setPerPage)
 			String tmp_countPerPage = (String)session.getAttribute("countPerPage");
 			
 			if(tmp_countPerPage != null) {
@@ -220,7 +222,7 @@ public class MainController {
 		    	updateUserDTO.setGradeSeq(Integer.parseInt(request.getParameter(name)));
 		    } else if(name.equals("genderSeq")) {
 		    	updateUserDTO.setGenderSeq(Integer.parseInt(request.getParameter(name)));
-		    } else if(name.equals("userbirth")) {
+		    } else if(name.equals("userBirth")) {
 		    	updateUserDTO.setUserBirth(request.getParameter(name));
 		    }
 		}
@@ -387,11 +389,76 @@ public class MainController {
 		
 		Map resultMap = mainService.getBoardList(regionSeq);
 		
+		List regionNames = mainService.getRegionNames();
+		
+		int selectRegionSeq = Integer.parseInt(regionSeq);
+		
+		String regionName = (String) regionNames.get(Integer.parseInt(regionSeq));
 		
 		// 맵안에 "typeSeq"+i 형식으로 집어넣음
 		model.addAttribute("boardListMap", resultMap);
+		model.addAttribute("regionSeq", regionSeq);
+		model.addAttribute("regionName", regionName);
 		
 		return "local_main";
 	}
 	
+	@RequestMapping("/localMore")
+	public String localMore(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+		
+		HttpSession session = request.getSession();
+		
+		int regionSeq = boardDTO.getRegionSeq();
+		int typeSeq = boardDTO.getTypeSeq();
+		
+		int pageNum = 1;
+		int countPerPage = 20;
+		
+		String tmp_pageNum = request.getParameter("pageNum");
+		
+		if(tmp_pageNum != null) {
+			try { 
+				pageNum = Integer.parseInt(tmp_pageNum);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		Map selectMap = new HashMap();
+		
+		selectMap.put("pageNum", pageNum);
+		selectMap.put("countPerPage", countPerPage);
+		selectMap.put("regionSeq", regionSeq);
+		selectMap.put("typeSeq", typeSeq);
+		
+		Map map = mainService.getBoardPage(selectMap);
+		
+		model.addAttribute("map", map);
+		model.addAttribute("regionSeq", regionSeq);
+		model.addAttribute("typeSeq", typeSeq);
+		
+		return "local_more";
+	}
+	
+	@RequestMapping("/getBoardDetail")
+	public String getBoardDetail(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+		
+		BoardDTO dto = mainService.getBoard(boardDTO);
+		
+		List list = mainService.getComment(boardDTO);
+		
+		model.addAttribute("boardDTO", dto);
+		model.addAttribute("commentList", list);
+		
+		return "local_detail";
+	}
+	
+	@RequestMapping("/addComment")
+	public String addComment(HttpServletRequest request, Model model, CommentDTO commentDTO) {
+		
+		mainService.addComment(commentDTO);
+		
+		return "local_detail";
+	}
 }

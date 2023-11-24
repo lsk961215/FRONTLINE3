@@ -1,0 +1,12 @@
+diff a/Jangdonghyeok/frontLine/src/main/resources/mybatis/mappers/boardMapper.xml b/Jangdonghyeok/frontLine/src/main/resources/mybatis/mappers/boardMapper.xml	(rejected hunks)
+@@ -113,8 +113,8 @@
+ 		from(
+ 			select board_info.*
+ 			from board_info
+-			where type_seq = 1 and region_seq = ${regionSeq} and type_seq = ${typeSeq}
+-			order by board_regdate desc
++			where region_seq = ${regionSeq} and type_seq = ${typeSeq}
++			order by board_seq asc
+ 		) tmp
+ 	)
+ 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
