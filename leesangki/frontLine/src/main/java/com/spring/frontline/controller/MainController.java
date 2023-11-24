@@ -213,6 +213,8 @@ public class MainController {
 		return "alert";
 	}
 	
+	
+	// 관리자 페이지에서 개인정보 수정
 	@RequestMapping("/updateAdminUser")
 	public String updateAdminUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -250,6 +252,7 @@ public class MainController {
 		return "redirect:/goAdminUser";
 	}
 	
+	// 내 정보 에서 개인정보수정
 	@RequestMapping("/updateUser")
 	public String updateUser(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -318,6 +321,7 @@ public class MainController {
 		return "완료";
 	}
 	
+	// 관리자 페이지 유저목록 페이지당 개수
 	@RequestMapping("/userSetPerPage")
 	public String setPerPage(HttpServletRequest request, String countPerPage) {
 		HttpSession session = request.getSession();
@@ -336,8 +340,8 @@ public class MainController {
 		return "redirect:/getComment";
 	}
 	
-	@RequestMapping("/boardSetPerPage")
-	public String boardSetPerPage(HttpServletRequest request, String countPerPage) {
+	@RequestMapping("/setBoardPerPage")
+	public String setBoardPerPage(HttpServletRequest request, String countPerPage) {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("countPerPage", countPerPage);
@@ -345,11 +349,20 @@ public class MainController {
 		return "redirect:/goAdminBoardList";
 	}
 	
-	@RequestMapping("/boardSetType")
-	public String boardSetType(HttpServletRequest request, String typeSeq) {
+	@RequestMapping("/setBaordType")
+	public String setBaordType(HttpServletRequest request, String typeSeq) {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("typeSeq", typeSeq);
+		
+		return "redirect:/goAdminBoardList";
+	}
+	
+	@RequestMapping("/setBoardRegion")
+	public String setBoardRegion(HttpServletRequest request, String regionSeq) {
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("regionSeq", regionSeq);
 		
 		return "redirect:/goAdminBoardList";
 	}
@@ -427,6 +440,7 @@ public class MainController {
 		return "join_2";
 	}
 	
+	// 지역페이지 메인 리스트
 	@RequestMapping("/getBoardList")
 	public String getBoardList(HttpServletRequest request, Model model, @RequestParam("regionSeq") String regionSeq) {
 		
@@ -446,6 +460,7 @@ public class MainController {
 		return "local_main";
 	}
 	
+	// 지역페이지 더보기 리스트
 	@RequestMapping("/localMore")
 	public String localMore(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		
@@ -485,6 +500,7 @@ public class MainController {
 		return "local_more";
 	}
 	
+	// 지역 상세페이지
 	@RequestMapping("/getBoardDetail")
 	public String getBoardDetail(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		
@@ -604,6 +620,7 @@ public class MainController {
 		return "redirect:/getUser";
 	}
 	
+	// 게시물 등록
 	@RequestMapping("/addBoard")
 		public String addBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		
@@ -613,6 +630,8 @@ public class MainController {
 		return "goAdminBoard";
 	}
 	
+	
+	// 관리자 페이지 게시물 리스트출력
 	@RequestMapping("/getAdminBoard")
 	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		HttpSession session = request.getSession();
