@@ -34,4 +34,10 @@ public interface MainDAO {
 	CommentDTO selectComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);
+	void insertBoard(BoardDTO boardDTO);
+	List selectAdminBoardPage(Map map);
+	int selectAdminBoardTotal(Map map);
+	void deleteBoard(List list);
+	BoardDTO getAdminBoard(BoardDTO boardDTO);
+	void updateBoard(BoardDTO boardDTO);
 }

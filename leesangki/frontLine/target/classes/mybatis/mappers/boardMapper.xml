@@ -52,4 +52,29 @@
 	<select id="selectBoard" parameterType="com.spring.frontline.dto.BoardDTO" resultMap="boardMap"> 
 		select * from board_info where board_seq = #{boardSeq}
 	</select>
+	
+	<insert id="insertBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		insert into board_info values ( board_seq.nextval, #{userSeq}, #{regionSeq}, #{typeSeq}, #{boardTitle}, #{boardAddress}, #{boardOpen}, #{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'), #{boardBreak}, #{boardPhone}, #{boardImage})
+	</insert>
+	
+	<select id="adminBoardPage" parameterType="java.util.HashMap" resultMap="boardMap">
+		select * from (select rownum r, b.* from (select * from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} order by board_seq) b) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+	</select>
+	
+	<select id="boardTotal" parameterType="java.util.HashMap" resultType="int">
+		select count(board_seq) from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="java.util.List">
+		delete from board_info where board_seq in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="updateBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		update board_info set region_seq = #{regionSeq}, type_seq = #{typeSeq}, board_title = #{boardTitle},
+		  	   board_address = #{boardAddress}, board_open = #{boardOpen}, board_detail = #{boardDetail},
+		       board_break = #{boardBreak}, board_Phone = #{boardPhone}, board_image = #{boardImage} where board_seq = #{boardSeq}
+	</update>
 </mapper>

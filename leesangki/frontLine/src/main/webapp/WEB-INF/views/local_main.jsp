@@ -98,7 +98,7 @@ $(function(){
 	}
      
      //url 주소에서 regionSeq 값 추출
-     let regionSeq = $(location).attr('search').substr(11, 1);
+     let regionSeq = $(location).attr('search').substr(11, 2);
      
      let select = new Array(6);
      

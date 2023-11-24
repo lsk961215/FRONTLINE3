@@ -86,6 +86,16 @@ public class MainController {
 		return "redirect:/getComment";
 	}
 	
+	@RequestMapping("/goAdminBoard")
+	public String goAdminBoard() {
+		return "admin_addBoard";
+	}
+	
+	@RequestMapping("/goAdminBoardList")
+	public String goAdminBoardList() {
+		return "redirect:/getAdminBoard";
+	}
+	
 	@RequestMapping("/doJoin")
 	public String doJoin(HttpServletRequest request, Model model, @ModelAttribute UserDTO userDTO) {
 		HttpSession session = request.getSession();
@@ -150,6 +160,7 @@ public class MainController {
 			Map map = mainService.getUserPage(pageNum, countPerPage);
 			
 			model.addAttribute("map", map);
+			model.addAttribute("pageNum", pageNum);
 			
 			return "admin_user";
 			
@@ -325,6 +336,24 @@ public class MainController {
 		return "redirect:/getComment";
 	}
 	
+	@RequestMapping("/boardSetPerPage")
+	public String boardSetPerPage(HttpServletRequest request, String countPerPage) {
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("countPerPage", countPerPage);
+		
+		return "redirect:/goAdminBoardList";
+	}
+	
+	@RequestMapping("/boardSetType")
+	public String boardSetType(HttpServletRequest request, String typeSeq) {
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("typeSeq", typeSeq);
+		
+		return "redirect:/goAdminBoardList";
+	}
+	
 	@RequestMapping("/findId")
 	public String findId(HttpServletRequest request, Model model , UserDTO userDTO) {
 		
@@ -449,6 +478,7 @@ public class MainController {
 		Map map = mainService.getBoardPage(selectMap);
 		
 		model.addAttribute("map", map);
+		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("regionSeq", regionSeq);
 		model.addAttribute("typeSeq", typeSeq);
 		
@@ -527,6 +557,8 @@ public class MainController {
 			Map map = mainService.getCommentPage(pageNum, countPerPage);
 			
 			model.addAttribute("map", map);
+			model.addAttribute("pageNum", pageNum);
+			
 			
 			return "admin_comment";
 			
@@ -570,5 +602,151 @@ public class MainController {
 		mainService.deleteComment(list);
 		
 		return "redirect:/getUser";
+	}
+	
+	@RequestMapping("/addBoard")
+		public String addBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+		
+		System.out.println("addBoard Hi");
+		mainService.insertBoard(boardDTO);
+		
+		return "goAdminBoard";
+	}
+	
+	@RequestMapping("/getAdminBoard")
+	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+		HttpSession session = request.getSession();
+		
+		// commentSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
+		if(boardDTO.getBoardSeq() == -1) {
+			
+			int pageNum = 1;
+			int countPerPage = 5;
+			int typeSeq = 0;
+			int regionSeq = 0;
+			
+			String tmp_pageNum = request.getParameter("pageNum");
+			
+			if(tmp_pageNum != null) {
+				try { 
+					pageNum = Integer.parseInt(tmp_pageNum);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			// select 5개씩 10개씩 보기 세션에 올려둔 값 판단 (setPerPage)
+			String tmp_countPerPage = (String)session.getAttribute("countPerPage");
+			
+			if(tmp_countPerPage != null) {
+				try { 
+					countPerPage = Integer.parseInt(tmp_countPerPage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+
+			// select type값 판단한 후 맵에 담아줌
+			String tmp_typeSeq = (String)session.getAttribute("typeSeq");
+			
+			if(tmp_typeSeq != null) {
+				try { 
+					typeSeq = Integer.parseInt(tmp_typeSeq);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			// select region값 판단한 후 맵에 담아줌
+			String tmp_regionSeq = (String)session.getAttribute("regionSeq");
+			
+			if(tmp_regionSeq != null) {
+				try { 
+					regionSeq = Integer.parseInt(tmp_regionSeq);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			Map selectMap = new HashMap();
+			
+			selectMap.put("pageNum", pageNum);
+			selectMap.put("countPerPage", countPerPage);
+			selectMap.put("typeSeq", typeSeq);
+			selectMap.put("regionSeq", regionSeq);
+			
+			Map map = mainService.getAdminBoardPage(selectMap);
+			
+			model.addAttribute("map", map);
+			model.addAttribute("pageNum", pageNum);
+			
+			
+			return "admin_board";
+			
+		} 
+		else {
+			boardDTO = mainService.getAdminBoard(boardDTO);
+			
+			session.setAttribute("updateBoardDTO", boardDTO);
+			
+			return "admin_updateBoard";
+		}
+		
+	}
+	
+	@RequestMapping("/deleteBoard")
+	public String deleteBoard(HttpServletRequest request, Model model) {
+		
+		Enumeration params = request.getParameterNames();
+		
+		List list = new ArrayList();
+		
+		while (params.hasMoreElements()){
+			int target = Integer.parseInt((String)params.nextElement());
+		    
+			list.add(target);
+		}
+		
+		mainService.deleteBoard(list);
+		
+		return "redirect:/getAdminBoard";
+	}
+	
+	@RequestMapping("/updateAdminBoard")
+	public String updateAdminBoard(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		BoardDTO updateBoardDTO = (BoardDTO)session.getAttribute("updateBoardDTO");
+		
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()){
+		    String name = (String)params.nextElement();
+		    
+		    if(name.equals("regionSeq")) {
+		    	updateBoardDTO.setRegionSeq(Integer.parseInt(request.getParameter("regionSeq")));
+		    } else if(name.equals("typeSeq")) {
+		    	updateBoardDTO.setTypeSeq(Integer.parseInt(request.getParameter("typeSeq")));
+		    } else if(name.equals("boardTitle")) {
+		    	updateBoardDTO.setBoardTitle(request.getParameter("boardTitle"));
+		    } else if(name.equals("boardAddress")) {
+		    	updateBoardDTO.setBoardAddress(request.getParameter("boardAddress"));
+		    } else if(name.equals("boardOpen")) {
+		    	updateBoardDTO.setBoardOpen(request.getParameter("boardOpen"));
+		    } else if(name.equals("boardDetail")) {
+		    	updateBoardDTO.setBoardDetail(request.getParameter("boardDetail"));
+		    } else if(name.equals("boardBreak")) {
+		    	updateBoardDTO.setBoardBreak(request.getParameter("boardBreak"));
+		    } else if(name.equals("boardImage")) {
+		    	updateBoardDTO.setBoardImage(request.getParameter("boardImage"));
+		    }
+		}
+		mainService.updateBoard(updateBoardDTO);
+		
+		return "redirect:/goAdminBoardList";
 	}
 }

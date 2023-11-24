@@ -70,6 +70,11 @@ a {
 	text-decoration-line: none;
     color: black;
 }
+
+.board_wrap {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 </style>
 
 <body>
@@ -97,15 +102,20 @@ a {
       	
 		<div class="page">
 			<c:if test = "${map.get('beginPaging') != 1}">
-				<a href="localMore?pageNum=${map.get('beginPaging')-1}">이전</a>
+				<a href="localMore?pageNum=${map.get('beginPaging')-1}&regionSeq=${regionSeq}&typeSeq=${typeSeq}"">이전</a>
 			</c:if>
 			
 			<c:forEach var="page" begin="${map.get('beginPaging')}" end="${map.get('endPaging')}">
-				<a href="localMore?pageNum=${page}&regionSeq=${regionSeq}&typeSeq=${typeSeq}">${page}</a>
+				<c:if test = "${pageNum == page}">
+					<a style="font-size:2em" href="localMore?pageNum=${page}&regionSeq=${regionSeq}&typeSeq=${typeSeq}">${page}</a>
+				</c:if>
+				<c:if test = "${pageNum != page}">
+					<a href="localMore?pageNum=${page}&regionSeq=${regionSeq}&typeSeq=${typeSeq}">${page}</a>
+				</c:if>
 			</c:forEach>
 			
 			<c:if test = "${map.get('endPaging') != map.get('totalPaging')}">
-				<a href="localMore?pageNum=${map.get('endPaging')+1}">다음</a>
+				<a href="localMore?pageNum=${map.get('endPaging')+1}&regionSeq=${regionSeq}&typeSeq=${typeSeq}"">다음</a>
 			</c:if>
 		</div>
 	</main>
