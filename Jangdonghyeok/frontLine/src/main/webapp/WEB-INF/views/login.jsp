@@ -103,7 +103,7 @@
         // 로고클릭시 메인으로 이동
         function logo(){
             document.querySelector(".logo img").addEventListener("click", function(){
-                location.href="./main.html"
+                location.href="/"
             })
         }
 		
