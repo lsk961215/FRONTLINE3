@@ -20,6 +20,12 @@
 <script>
 	
 </script>
+<style>
+	 main {
+	 	max-width: 1240px;
+    	margin: 0 auto;
+	 }
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp"/>

@@ -40,6 +40,10 @@
 	})
 </script>
 <style>
+	main {
+		max-width: 1240px;
+    	margin: 0 auto;
+	}
 	.popup {
 		position: absolute;
 		display: none;

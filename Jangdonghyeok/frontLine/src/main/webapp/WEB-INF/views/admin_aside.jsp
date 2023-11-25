@@ -8,7 +8,7 @@
 		<a href="goAdminUser">
 			<h3>雀盔 包府</h3>
 		</a>
-		<a href="admin_comment.jsp">
+		<a href="goAdminComment">
 			<h3>瘩臂 包府</h3>
 		</a>
 		<a>
@@ -32,10 +32,10 @@
 		<a href="admin_room_management.jsp">
 			<h3>槛家 包府</h3>
 		</a>
-		<a href="goAdminPlayNew">
+		<a href="admin_play_new.jsp">
 			<h3>愁芭府 殿废</h3>
 		</a>
-		<a href="playView">
+		<a href="admin_play_management.jsp">
 			<h3>愁芭府 包府</h3>
 		</a>
 		<a href="admin_popup.jsp">

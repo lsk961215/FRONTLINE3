@@ -1,5 +1,6 @@
 window.addEventListener("load", function () {
     let address = document.querySelector(".address").innerText;
+    console.log("hi  "+document.querySelector(".address").innerText)
 
     let address1 = "휴먼교육센터";
     let title = document.querySelector(".title").innerText
