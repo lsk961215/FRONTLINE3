@@ -1,5 +1,6 @@
 package com.spring.frontline.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -286,8 +287,18 @@ public class MainServiceImpl implements MainService {
 		selectMap.put("startNum", startNum);
 		selectMap.put("endNum", endNum);
 		
-		List list = mainDAO.selectAdminBoardPage(selectMap);
-		int total = mainDAO.selectAdminBoardTotal(selectMap);
+		List list = new ArrayList();
+		
+		int total = 0;
+		
+		if(selectMap.get("searchText") == null) {
+			list = mainDAO.selectAdminBoardPage(selectMap);
+			total = mainDAO.selectAdminBoardTotal(selectMap);
+		} else {
+			list = mainDAO.selectAdminBoardSearchPage(selectMap);
+			total = mainDAO.selectAdminBoardSearchTotal(selectMap);
+		}
+		
 		
 		int groupCount = 5;
 		

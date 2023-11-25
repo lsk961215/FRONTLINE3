@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.frontline.dto.BoardDTO;
 import com.spring.frontline.dto.CommentDTO;
+import com.spring.frontline.dto.SearchDTO;
 import com.spring.frontline.dto.UserDTO;
 import com.spring.frontline.service.MainService;
 
@@ -633,7 +634,7 @@ public class MainController {
 	
 	// 관리자 페이지 게시물 리스트출력
 	@RequestMapping("/getAdminBoard")
-	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO, SearchDTO searchDTO) {
 		HttpSession session = request.getSession();
 		
 		// commentSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
@@ -692,6 +693,21 @@ public class MainController {
 			}
 			
 			Map selectMap = new HashMap();
+			
+			selectMap.put("searchColumn", searchDTO.getSearchColumn());
+			selectMap.put("searchText", searchDTO.getSearchText());
+			
+			// dto가 자동으로 불러오는게 input의 빈값도 불러와서 오류가 나는듯?
+			if(!("".equals(searchDTO.getSearchText()))) {
+				
+				
+				session.setAttribute("searchColumn", searchDTO.getSearchColumn());
+				session.setAttribute("searchText", searchDTO.getSearchText());
+			}
+			
+			
+			System.out.println("dto" + searchDTO.getSearchText());
+			System.out.println("session" + session.getAttribute("searchText"));
 			
 			selectMap.put("pageNum", pageNum);
 			selectMap.put("countPerPage", countPerPage);
