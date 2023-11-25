@@ -5,11 +5,16 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +32,9 @@ public class MainController {
 	
 	@Autowired
 	MainService mainService;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	// 메인페이지
 	@RequestMapping("/")
@@ -381,16 +389,111 @@ public class MainController {
 	public String findPw() {
 		return "/find/find_password";
 	}
+	@RequestMapping("/relayNum")
+	public String relayNum(@RequestParam int num, Model model) {
+		System.out.println("num");
+		model.addAttribute(num);
+		return "/find/find_password_way";
+	}
 	
-	
+	// 1차 검증 - 아이디
 	@RequestMapping("/sameId")
 	public String sameId(UserDTO dto, Model model) {
 		System.out.println("/sameId 실행 -> dto.getUserId()값 : " + dto.getUserId());
 		UserDTO findId = mainService.sameId(dto);
+		System.out.println("=====findId.getUserName()의 값====== : " + findId.getUserId());
 		System.out.println("controller -> sql에서 받아온 값 : " + findId);
 		
 		model.addAttribute("idDto", findId);
+		
 		return "/find/find_password_way";
+	}
+	
+	// 인증번호 받기
+	@RequestMapping("/getNumber")
+	public String getNumber(UserDTO dto, Model model, @RequestParam String receivedEmail, HttpServletRequest request) {
+		System.out.println("/getNumber dto 출력 : " + dto);
+		System.out.println("/getNumber dto.getUserEmail() : " + dto.getUserEmail());
+		System.out.println("receivedEmail :" + receivedEmail);
+		String userEmail = dto.getUserEmail();
+
+		
+		Random r = new Random();
+		int num = r.nextInt(999999);
+	
+		if(dto.getUserEmail().equals(receivedEmail)) {
+			System.out.println("num : " + num);
+			
+			StringBuilder sb = new StringBuilder();
+			String setFrom = "chahh3994@naver.com"; // 수신자
+			String toMail = dto.getUserEmail();	// 발신자
+			String title = "[놀아유] 비밀번호 변경 인증 이메일입니다.";
+			sb.append(String.format("안녕하세요 %s님\n", dto.getUserName()));
+			sb.append(String.format("놀아유 비밀번호 찾기(변경) 인증번호는 %d입니다.", num));
+			
+			String content = sb.toString();
+			System.out.println("content : " + content);
+			
+			try {
+				MimeMessage msg = mailSender.createMimeMessage();
+				MimeMessageHelper msgHelper = new MimeMessageHelper(msg, true, "utf-8");
+				msgHelper.setFrom(setFrom);
+				msgHelper.setTo(toMail);
+				msgHelper.setSubject(title);
+				msgHelper.setText(content);
+				
+				// 메일 전송
+				mailSender.send(msg);
+				System.out.println("메일전송준비");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("에러발생");
+//				System.out.println(e.getMessage());
+			}
+			// 메일 보낸 경우
+			model.addAttribute("msg1","인증번호가 발송되었습니다.");
+			model.addAttribute("url1", "/frontline/pwWay");
+			model.addAttribute("comparison", "1");
+			model.addAttribute("num", num);
+			HttpSession session = request.getSession();
+			session.setAttribute("confirmedNum", num);
+			return "alert";
+		}
+		model.addAttribute("msg2","회원정보 이메일과 불일치합니다.");
+		model.addAttribute("url2","/frontline/pwWay");
+		model.addAttribute("comparison2","2");
+		return "alert";
+	}
+	
+	// 받은 인증번호 체크 (일치/불일치)
+	@RequestMapping("/checkNumber")
+	public String checkNumber(@RequestParam int putKey,HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		int confirmedNum = (Integer) session.getAttribute("confirmedNum");
+		System.out.println("confirmedNum : " + confirmedNum);
+		System.out.println("putKey : " + putKey);
+		
+		if(confirmedNum == putKey) {
+			model.addAttribute("msg3","확인되었습니다.");
+			model.addAttribute("url3", "/frontline/setNewPw");
+			model.addAttribute("comparison3", "3");
+//			model.addAttribute("finalCheck", "7");
+			return "alert";
+		}
+		model.addAttribute("msg4","인증번호가 틀렸습니다.");
+		model.addAttribute("url4", "/frontline/pwWay");
+		model.addAttribute("comparison4", "4");
+		
+		return "alert";
+	}
+	
+	@RequestMapping("/pwWay")
+	public String pwWay() {
+		return "/find/find_password_way";
+	}
+	@RequestMapping("/setNewPw")
+	public String setNewPw() {
+		return "/find/set_new_password";
 	}
 	
 //	@RequestMapping("/BoardList")

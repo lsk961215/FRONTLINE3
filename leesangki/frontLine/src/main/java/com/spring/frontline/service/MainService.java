@@ -29,4 +29,9 @@ public interface MainService {
 	CommentDTO getComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);
+	void insertBoard(BoardDTO boardDTO);
+	Map getAdminBoardPage(Map map);
+	void deleteBoard(List list);
+	BoardDTO getAdminBoard(BoardDTO boardDTO);
+	void updateBoard(BoardDTO boardDTO);
 }

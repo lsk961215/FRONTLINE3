@@ -173,5 +173,37 @@ public class MainDAOImpl implements MainDAO{
 	public void deleteComment(List list) {
 		sqlSession.delete("comment.deleteComment", list);
 	}
+	
+	@Override
+	public void insertBoard(BoardDTO boardDTO) {
+		sqlSession.insert("board.insertBoard", boardDTO);
+	}
+
+	@Override
+	public List selectAdminBoardPage(Map map) {
+		List boardList = sqlSession.selectList("board.adminBoardPage", map);
+		
+		return boardList;
+	}
+
+	@Override
+	public int selectAdminBoardTotal(Map map) {
+		return sqlSession.selectOne("board.boardTotal", map);
+	}
+
+	@Override
+	public void deleteBoard(List list) {
+		sqlSession.delete("board.deleteBoard", list);
+	}
+
+	@Override
+	public BoardDTO getAdminBoard(BoardDTO boardDTO) {
+		return sqlSession.selectOne("board.selectBoard", boardDTO);
+	}
+
+	@Override
+	public void updateBoard(BoardDTO boardDTO) {
+		sqlSession.update("board.updateBoard", boardDTO);
+	}
 
 }
