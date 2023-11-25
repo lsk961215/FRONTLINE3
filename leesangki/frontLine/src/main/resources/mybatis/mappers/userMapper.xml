@@ -46,12 +46,32 @@
 		</foreach>
 	</delete>
 	
-	<select id="userTotal" resultType="int">
-		select count(user_seq) from user_info
+	<select id="userTotal" parameterType="java.util.HashMap" resultType="int">
+		<choose>
+			<when test="searchColumn == 'userId' and searchText != ''">
+				select count(user_seq) from user_info where user_id = #{searchText}
+			</when>
+			<when test="searchColumn == 'userName' and searchText != ''">
+				select count(user_seq) from user_info where user_name = #{searchText}
+			</when>
+			<otherwise>
+				select count(user_seq) from user_info
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="userPage" parameterType="java.util.HashMap" resultMap="userMap">
-		select * from (select rownum r, u.* from (select * from user_info order by user_seq) u) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+		<choose>
+			<when test="searchColumn == 'userId' and searchText != ''">
+				select * from (select rownum r, u.* from (select * from user_info where user_Id = #{ searchText} order by user_seq) u) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+			</when>
+    		<when test=" searchColumn == 'userName' and  searchText != ''">
+				select * from (select rownum r, u.* from (select * from user_info where user_name = #{ searchText} order by user_seq) u) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+			</when>
+			<otherwise>
+			 select * from (select rownum r, u.* from (select * from user_info order by user_seq) u) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+			 </otherwise>
+		</choose>
 	</select>
 	
 	<insert id="insertDummy" parameterType="com.spring.frontline.dto.UserDTO">

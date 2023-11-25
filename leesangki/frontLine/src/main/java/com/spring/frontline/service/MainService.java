@@ -14,7 +14,7 @@ public interface MainService {
 	UserDTO doLogin(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
-	Map getUserPage(int pageNum, int countPerPage);
+	Map getUserPage(Map map);
 	void insertDummy(int loop);
 	UserDTO findId(UserDTO userDTO);
 	UserDTO findPw(UserDTO userDTO);
@@ -25,7 +25,7 @@ public interface MainService {
 	BoardDTO getBoard(BoardDTO boardDTO);
 	void addComment(CommentDTO commentDTO);
 	List getCommentList(BoardDTO boardDTO);
-	Map getCommentPage(int pageNum, int countPerPage);
+	Map getCommentPage(Map map);
 	CommentDTO getComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);

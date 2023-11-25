@@ -14,7 +14,7 @@ public interface MainDAO {
 	UserDTO loginUser(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
-	int selectUserTotal();
+	int selectUserTotal(Map map);
 	List selectUserPage(Map map);
 	void insertDummy(UserDTO userDTO);
 	UserDTO findId(UserDTO userDTO);
@@ -30,7 +30,7 @@ public interface MainDAO {
 	void addComment(CommentDTO commentDTO);
 	List selectCommentList(BoardDTO boardDTO);
 	List selectCommentPage(Map map);
-	int selectCommentTotal();
+	int selectCommentTotal(Map map);
 	CommentDTO selectComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);

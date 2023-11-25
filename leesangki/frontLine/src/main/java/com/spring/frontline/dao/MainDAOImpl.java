@@ -48,14 +48,14 @@ public class MainDAOImpl implements MainDAO{
 	}
 
 	@Override
-	public int selectUserTotal() {
-		return sqlSession.selectOne("user.userTotal");
+	public int selectUserTotal(Map selectMap) {
+		return sqlSession.selectOne("user.userTotal", selectMap);
 	}
 
 	@Override
-	public List selectUserPage(Map map) {
+	public List selectUserPage(Map selectMap) {
 		
-		List userList = sqlSession.selectList("user.userPage", map);
+		List userList = sqlSession.selectList("user.userPage", selectMap);
 		
 		return userList;
 	}
@@ -155,8 +155,8 @@ public class MainDAOImpl implements MainDAO{
 	}
 
 	@Override
-	public int selectCommentTotal() {
-		return sqlSession.selectOne("comment.commentTotal");
+	public int selectCommentTotal(Map selectMap) {
+		return sqlSession.selectOne("comment.commentTotal", selectMap);
 	}
 
 	@Override

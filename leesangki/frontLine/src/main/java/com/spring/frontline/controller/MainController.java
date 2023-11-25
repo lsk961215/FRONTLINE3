@@ -78,12 +78,28 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goAdminUser")
-	public String goAdminUser() {
+	public String goAdminUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getUser";
+	}
+	
+	@RequestMapping("/goAdminUser2")
+	public String goAdminUser2() {
 		return "redirect:/getUser";
 	}
 	
 	@RequestMapping("/goAdminComment")
-	public String goAdminComment() {
+	public String goAdminComment(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getComment";
+	}
+	
+	@RequestMapping("/goAdminComment2")
+	public String goAdminComment2() {
 		return "redirect:/getComment";
 	}
 	
@@ -101,8 +117,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goAdminBoardList2")
-	public String goAdminBoardList2(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String goAdminBoardList2() {
 		return "redirect:/getAdminBoard";
 	}
 	
@@ -167,7 +182,37 @@ public class MainController {
 				
 			}
 			
-			Map map = mainService.getUserPage(pageNum, countPerPage);
+			Map selectMap = new HashMap();
+			
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
+			
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			selectMap.put("pageNum", pageNum);
+			selectMap.put("countPerPage", countPerPage);
+			
+			Map map = mainService.getUserPage(selectMap);
 			
 			model.addAttribute("map", map);
 			model.addAttribute("pageNum", pageNum);
@@ -333,12 +378,12 @@ public class MainController {
 	
 	// 관리자 페이지 유저목록 페이지당 개수
 	@RequestMapping("/userSetPerPage")
-	public String setPerPage(HttpServletRequest request, String countPerPage) {
+	public String userSetPerPage(HttpServletRequest request, String countPerPage) {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/getUser";
+		return "redirect:/goAdminUser2";
 	}
 	
 	@RequestMapping("/commentSetPerPage")
@@ -347,7 +392,7 @@ public class MainController {
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/getComment";
+		return "redirect:/goAdminComment2";
 	}
 	
 	@RequestMapping("/setBoardPerPage")
@@ -584,7 +629,37 @@ public class MainController {
 				
 			}
 			
-			Map map = mainService.getCommentPage(pageNum, countPerPage);
+			Map selectMap = new HashMap();
+			
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
+			
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			selectMap.put("pageNum", pageNum);
+			selectMap.put("countPerPage", countPerPage);
+			
+			Map map = mainService.getCommentPage(selectMap);
 			
 			model.addAttribute("map", map);
 			model.addAttribute("pageNum", pageNum);
@@ -720,8 +795,6 @@ public class MainController {
 			}
 			
 			
-			
-			// dto가 자동으로 불러오는게 input의 빈값도 불러와서 오류가 나는듯?
 			if(!("".equals(searchText))) {
 				
 				selectMap.put("searchColumn", request.getParameter("searchColumn"));
@@ -735,8 +808,6 @@ public class MainController {
 			}
 			
 			
-			System.out.println("request" + searchText);
-			System.out.println("session" + session.getAttribute("searchText"));
 			
 			selectMap.put("pageNum", pageNum);
 			selectMap.put("countPerPage", countPerPage);

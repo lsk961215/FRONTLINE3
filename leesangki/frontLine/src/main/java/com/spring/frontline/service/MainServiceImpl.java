@@ -50,9 +50,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public Map getUserPage(int pageNum, int countPerPage) {
-		
-		Map selectMap = new HashMap();
+	public Map getUserPage(Map selectMap) {
+		int pageNum = (Integer) selectMap.get("pageNum");
+		int countPerPage = (Integer) selectMap.get("countPerPage");
 		
 		int startNum = 0;
 		int endNum = 0;
@@ -64,7 +64,7 @@ public class MainServiceImpl implements MainService {
 		selectMap.put("endNum", endNum);
 		
 		List list = mainDAO.selectUserPage(selectMap);
-		int total = mainDAO.selectUserTotal();
+		int total = mainDAO.selectUserTotal(selectMap);
 		
 		int groupCount = 5;
 		
@@ -215,8 +215,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public Map getCommentPage(int pageNum, int countPerPage) {
-		Map selectMap = new HashMap();
+	public Map getCommentPage(Map selectMap) {
+		int pageNum = (Integer) selectMap.get("pageNum");
+		int countPerPage = (Integer) selectMap.get("countPerPage");
 		
 		int startNum = 0;
 		int endNum = 0;
@@ -228,7 +229,7 @@ public class MainServiceImpl implements MainService {
 		selectMap.put("endNum", endNum);
 		
 		List list = mainDAO.selectCommentPage(selectMap);
-		int total = mainDAO.selectCommentTotal();
+		int total = mainDAO.selectCommentTotal(selectMap);
 		
 		int groupCount = 5;
 		
