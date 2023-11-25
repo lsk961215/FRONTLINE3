@@ -291,7 +291,7 @@ public class MainServiceImpl implements MainService {
 		
 		int total = 0;
 		
-		if(selectMap.get("searchText") == null) {
+		if(selectMap.get("searchText") == null || "".equals(selectMap.get("searchText"))) {
 			list = mainDAO.selectAdminBoardPage(selectMap);
 			total = mainDAO.selectAdminBoardTotal(selectMap);
 		} else {

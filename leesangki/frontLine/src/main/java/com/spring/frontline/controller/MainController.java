@@ -93,7 +93,16 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goAdminBoardList")
-	public String goAdminBoardList() {
+	public String goAdminBoardList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getAdminBoard";
+	}
+	
+	@RequestMapping("/goAdminBoardList2")
+	public String goAdminBoardList2(HttpServletRequest request) {
+		HttpSession session = request.getSession();
 		return "redirect:/getAdminBoard";
 	}
 	
@@ -347,7 +356,7 @@ public class MainController {
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/goAdminBoardList";
+		return "redirect:/goAdminBoardList2";
 	}
 	
 	@RequestMapping("/setBaordType")
@@ -356,6 +365,8 @@ public class MainController {
 		
 		session.setAttribute("typeSeq", typeSeq);
 		
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
 		return "redirect:/goAdminBoardList";
 	}
 	
@@ -364,6 +375,8 @@ public class MainController {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("regionSeq", regionSeq);
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
 		
 		return "redirect:/goAdminBoardList";
 	}
@@ -634,7 +647,7 @@ public class MainController {
 	
 	// 관리자 페이지 게시물 리스트출력
 	@RequestMapping("/getAdminBoard")
-	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO, SearchDTO searchDTO) {
+	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		HttpSession session = request.getSession();
 		
 		// commentSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
@@ -694,19 +707,35 @@ public class MainController {
 			
 			Map selectMap = new HashMap();
 			
-			selectMap.put("searchColumn", searchDTO.getSearchColumn());
-			selectMap.put("searchText", searchDTO.getSearchText());
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
 			
-			// dto가 자동으로 불러오는게 input의 빈값도 불러와서 오류가 나는듯?
-			if(!("".equals(searchDTO.getSearchText()))) {
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				
-				session.setAttribute("searchColumn", searchDTO.getSearchColumn());
-				session.setAttribute("searchText", searchDTO.getSearchText());
 			}
 			
 			
-			System.out.println("dto" + searchDTO.getSearchText());
+			
+			// dto가 자동으로 불러오는게 input의 빈값도 불러와서 오류가 나는듯?
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			
+			System.out.println("request" + searchText);
 			System.out.println("session" + session.getAttribute("searchText"));
 			
 			selectMap.put("pageNum", pageNum);
