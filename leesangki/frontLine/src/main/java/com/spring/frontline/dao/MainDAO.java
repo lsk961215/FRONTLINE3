@@ -37,7 +37,10 @@ public interface MainDAO {
 	void insertBoard(BoardDTO boardDTO);
 	List selectAdminBoardPage(Map map);
 	int selectAdminBoardTotal(Map map);
+	int selectAdminBoardSearchTotal(Map map);
 	void deleteBoard(List list);
 	BoardDTO getAdminBoard(BoardDTO boardDTO);
 	void updateBoard(BoardDTO boardDTO);
+	List selectAdminBoardSearchPage(Map map);
+	
 }

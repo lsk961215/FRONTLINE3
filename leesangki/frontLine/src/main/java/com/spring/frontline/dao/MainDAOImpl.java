@@ -182,13 +182,23 @@ public class MainDAOImpl implements MainDAO{
 	@Override
 	public List selectAdminBoardPage(Map map) {
 		List boardList = sqlSession.selectList("board.adminBoardPage", map);
-		
+		return boardList;
+	}
+	
+	@Override
+	public List selectAdminBoardSearchPage(Map map) {
+		List boardList = sqlSession.selectList("board.adminBoardSearchPage", map);
 		return boardList;
 	}
 
 	@Override
 	public int selectAdminBoardTotal(Map map) {
 		return sqlSession.selectOne("board.boardTotal", map);
+	}
+	
+	@Override
+	public int selectAdminBoardSearchTotal(Map map) {
+		return sqlSession.selectOne("board.boardSearchTotal", map);
 	}
 
 	@Override

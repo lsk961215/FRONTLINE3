@@ -23,7 +23,6 @@
 		select * from (select rownum r, b.* from (select * from board_info where region_seq = #{regionSeq} and type_seq = #{typeSeq} order by board_seq) b) where r <![CDATA[>=]]> 1 and r <![CDATA[<=]]> 5
 	</select>
 	
-	<!-- 놀거리 더보기 페이징 -->
 	<select id="selectBoardPage" parameterType="java.util.HashMap" resultMap="boardMap">
 	select *
 	from(
@@ -38,7 +37,8 @@
 	where rnum <![CDATA[>=]]> #{startNum} and rnum <![CDATA[<=]]> #{endNum}
 	</select>
 	
-	<!-- 놀거리 더보기 개수 토탈 -->
+	
+	
 	<select id="selectBoardTotal" parameterType="java.util.HashMap" resultType="int">
 		select count(*)
 		from board_info
@@ -61,8 +61,26 @@
 		select * from (select rownum r, b.* from (select * from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} order by board_seq) b) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
 	</select>
 	
+	<select id="adminBoardSearchPage" parameterType="java.util.HashMap" resultMap="boardMap">
+		<if test="searchColumn == 'boardTitle'">
+			select * from (select rownum r, b.* from (select * from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} and board_title like '%' || #{searchText} || '%' order by board_seq) b) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+		</if>
+		<if test="searchColumn == 'boardAddress'">
+			select * from (select rownum r, b.* from (select * from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} and board_address like '%' || #{searchText} || '%' order by board_seq) b) where r <![CDATA[>=]]> #{startNum} and r <![CDATA[<=]]> #{endNum} order by r
+		</if>
+	</select>
+	
 	<select id="boardTotal" parameterType="java.util.HashMap" resultType="int">
 		select count(board_seq) from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq}
+	</select>
+	
+	<select id="boardSearchTotal" parameterType="java.util.HashMap" resultType="int">
+		<if test="searchColumn == 'boardTitle'">
+			select count(board_seq) from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} and board_title like '%' || #{searchText} || '%'
+		</if>
+		<if test="searchColumn == 'boardAddress'">
+			select count(board_seq) from board_info where type_seq = #{typeSeq} and region_seq = #{regionSeq} and board_address like '%' || #{searchText} || '%'
+		</if>
 	</select>
 	
 	<delete id="deleteBoard" parameterType="java.util.List">

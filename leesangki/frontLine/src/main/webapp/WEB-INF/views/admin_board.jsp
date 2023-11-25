@@ -201,13 +201,13 @@ a {
 			</table>
 			<input type="submit" value="삭제">
 			</form>
-			<form>
+			<form action="getAdminBoard">
 				<select name="searchColumn">
 					<option value="boardTitle">제목</option>
 					<option value="boardAddress">주소</option>
 				</select>
 				<input type="text" name="searchText">
-				<input type="submit">
+				<input type="submit" value="검색">
 			</form>
 			
 			<div>
