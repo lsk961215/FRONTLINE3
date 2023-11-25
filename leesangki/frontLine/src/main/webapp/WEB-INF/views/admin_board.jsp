@@ -26,14 +26,19 @@
 			$("input[id=getAdminBoard]").click()
 		})
 		
-		// 페이지보기 셀렉트 클릭
+		// 페이지개수선택 셀렉트 클릭
 		$("select[name=countPerPage]").change(function(){
 			$("#setPerPageSubmit").click()
 		})
 		
-		// 타입보기 셀렉트 클릭
+		// 타입선택 셀렉트 클릭
 		$("select[name=typeSeq]").change(function(){
-			$("#boardSetTypeSubmit").click()
+			$("#setBoardTypeSubmit").click()
+		})
+		
+		// 지역선택 셀렉트 클릭
+		$("select[name=regionSeq]").change(function(){
+			$("#setBoardRegionSubmit").click()
 		})
 		
 	})
@@ -47,7 +52,7 @@
 		display:none;
 	}
 	
-	#setPerPageSubmit, #boardSetTypeSubmit {
+	#setPerPageSubmit, #setBoardTypeSubmit, #setBoardRegionSubmit {
 		display:none;
 	}
 	
@@ -77,7 +82,7 @@ a {
 			</div>
 			
 			<div class="section_select">
-				<form action="boardSetPerPage">
+				<form action="setBoardPerPage">
 					<select name="countPerPage">
 					<c:choose>
 						<c:when test="${countPerPage == 5}">
@@ -97,15 +102,9 @@ a {
 					<input id="setPerPageSubmit" type="submit">
 				</form>
 				
-				<form action="boardSetType">
+				<form action="setBaordType">
 					<select name="typeSeq">
 							<c:choose>
-								<c:when test="${typeSeq == 0}">
-									<option value="0" selected="true">여행지</option>
-									<option value="1">놀거리</option>	
-									<option value="2">맛집</option>	
-									<option value="3">숙소</option>	
-								</c:when>
 								<c:when test="${typeSeq == 1}">
 									<option value="0">여행지</option>
 									<option value="1" selected="true">놀거리</option>	
@@ -124,9 +123,36 @@ a {
 									<option value="2">맛집</option>	
 									<option value="3" selected="true">숙소</option>	
 								</c:when>
+								<c:otherwise>
+									<option value="0" selected="true">여행지</option>
+									<option value="1">놀거리</option>	
+									<option value="2">맛집</option>	
+									<option value="3">숙소</option>	
+								</c:otherwise>
 							</c:choose>	
 					</select>
-					<input id="boardSetTypeSubmit" type="submit">
+					<input id="setBoardTypeSubmit" type="submit">
+				</form>
+				<form action="setBoardRegion">
+					<select name="regionSeq">
+						<option>지역선택</option>
+						<option value="0">천안</option>
+			            <option value="1">아산</option>
+			            <option value="2">당진</option>
+			            <option value="3">서산</option>
+			            <option value="4">태안</option>
+			            <option value="5">예산</option>
+			            <option value="6">공주</option>
+			            <option value="7">홍성</option>
+			            <option value="8">보령</option>
+			            <option value="9">청양</option>
+			            <option value="10">부여</option>
+			            <option value="11">서천</option>
+			            <option value="12">논산</option>
+			            <option value="13">계룡</option>
+			            <option value="14">금산</option>
+					</select>
+					<input id="setBoardRegionSubmit" type="submit">
 				</form>
 			</div>
 			
@@ -176,10 +202,12 @@ a {
 			<input type="submit" value="삭제">
 			</form>
 			<form>
-				<select name="column">
+				<select name="searchColumn">
 					<option value="boardTitle">제목</option>
 					<option value="boardAddress">주소</option>
 				</select>
+				<input type="text" name="searchText">
+				<input type="submit">
 			</form>
 			
 			<div>
