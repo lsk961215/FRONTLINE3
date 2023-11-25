@@ -26,10 +26,10 @@
 		<a href="admin_travel_management.jsp">
 			<h3>여행지 관리</h3>
 		</a>
-		<a href="admin_room_new.jsp">
+		<a href="admin_travel_new.jsp">
 			<h3>숙소 등록</h3>
 		</a>
-		<a href="admin_room_management.jsp">
+		<a href="admin_travel_management.jsp">
 			<h3>숙소 관리</h3>
 		</a>
 		<a href="admin_play_new.jsp">
@@ -37,6 +37,12 @@
 		</a>
 		<a href="admin_play_management.jsp">
 			<h3>놀거리 관리</h3>
+		</a>
+		<a href="goAdminBoard">
+			<h3>게시물 등록</h3>
+		</a>
+		<a href="goAdminBoardList">
+			<h3>게시물 관리</h3>
 		</a>
 		<a href="admin_popup.jsp">
 			<h3>팝업 관리</h3>

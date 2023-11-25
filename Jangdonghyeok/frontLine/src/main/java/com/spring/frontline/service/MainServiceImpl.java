@@ -266,4 +266,64 @@ public class MainServiceImpl implements MainService {
 	public void deleteComment(List list) {
 		mainDAO.deleteComment(list);
 	}
+
+	@Override
+	public void insertBoard(BoardDTO boardDTO) {
+		mainDAO.insertBoard(boardDTO);
+	}
+	
+	@Override
+	public Map getAdminBoardPage(Map selectMap) {
+		
+		int countPerPage = (Integer)selectMap.get("countPerPage");
+		int pageNum = (Integer)selectMap.get("pageNum");
+		int startNum = 0;
+		int endNum = 0;
+		
+		startNum = (pageNum-1)*countPerPage+1;
+		endNum = pageNum*countPerPage;
+		
+		selectMap.put("startNum", startNum);
+		selectMap.put("endNum", endNum);
+		
+		List list = mainDAO.selectAdminBoardPage(selectMap);
+		int total = mainDAO.selectAdminBoardTotal(selectMap);
+		
+		int groupCount = 5;
+		
+		int totalPaging = (int) Math.ceil((double)total / countPerPage);
+		
+		int position = (int) Math.ceil((double)pageNum / groupCount);
+		
+		int beginPaging = (position-1) * groupCount + 1;
+		int endPaging = position * groupCount;
+		
+		if(endPaging > totalPaging) {
+			endPaging = totalPaging;
+		}
+		
+		Map pageMap = new HashMap();
+		
+		pageMap.put("beginPaging", beginPaging);
+		pageMap.put("endPaging", endPaging);
+		pageMap.put("totalPaging", totalPaging);
+		pageMap.put("list", list);
+		
+		return pageMap;
+	}
+
+	@Override
+	public void deleteBoard(List list) {
+		mainDAO.deleteBoard(list);
+	}
+
+	@Override
+	public BoardDTO getAdminBoard(BoardDTO boardDTO) {
+		return mainDAO.getAdminBoard(boardDTO);
+	}
+
+	@Override
+	public void updateBoard(BoardDTO boardDTO) {
+		mainDAO.updateBoard(boardDTO);
+	}
 }

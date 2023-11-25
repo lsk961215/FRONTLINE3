@@ -70,6 +70,11 @@
 		
 		justify-content: space-between
 	}
+	
+a {	
+	text-decoration-line: none;
+    color: black;
+}
 </style>
 </head>
 <body>
@@ -162,7 +167,12 @@
 			</c:if>
 			
 			<c:forEach var="page" begin="${map.get('beginPaging')}" end="${map.get('endPaging')}">
-				<a href="getUser?pageNum=${page}">${page}</a>
+				<c:if test = "${pageNum == page}">
+					<a style="font-size:2em" href="getUser?pageNum=${page}">${page}</a>
+				</c:if>
+				<c:if test = "${pageNum != page}">
+					<a href="getUser?pageNum=${page}">${page}</a>
+				</c:if>
 			</c:forEach>
 			
 			<c:if test = "${map.get('endPaging') != map.get('totalPaging')}">

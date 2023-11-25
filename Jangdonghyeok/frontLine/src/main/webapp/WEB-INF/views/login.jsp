@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="resources/css/header.css">
     <!-- 푸터 스타일 -->
     <link rel="stylesheet" href="resources/css/footer.css">
-<!--     fa5483b344d55c65cf540bce3f94d122 -->
     <script>
         window.addEventListener("load", function(){
             join()
