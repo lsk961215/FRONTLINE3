@@ -11,7 +11,9 @@ footer {
             top : 100%;
 
             /* border: 1px solid red; */
-            width: 1280px;
+            max-width: 1240px;
+    		margin: 0 auto;
+    		
             height: 245px;
             background-color: #474747;
             
