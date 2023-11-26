@@ -75,6 +75,7 @@ justify-content: center;
 
 #b1{
 margin-right: 13px;
+margin-top: 0px;
 }
 
 #b2{
@@ -84,12 +85,12 @@ margin-left: 13px;
 <body>
 <jsp:include page="../header.jsp"/>
 <div class="box">
-	<span id="title">비밀번호 찾기</span>
-	<div>회원님의 정보와 일치하느</div>
-	ID:&nbsp${dto.userId}&nbsp&nbsp&nbsp&nbsp가입:&nbsp${dto.userRegDate }
+	<span id="title">비밀번호가<br>변경되었습니다.</span>
+	<br>
+	<div>새 비밀번호로 다시 로그인 해주세요.</div>
+	
 	<span class="line">
 		<a href="goLogin"  id="b1" class="link-button">로그인하기</a>
-		<a href="goLogin"  id="b2" class="link-button">비밀번호 찾기</a>
 	</span>	
 <!--비밀번호 찾기의 a태그 링크에 비밀번호찾기 페이지로 가는 메소드로 연결부탁드려요!-->		
 </div>

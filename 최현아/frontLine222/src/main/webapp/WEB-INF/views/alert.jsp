@@ -25,6 +25,10 @@
 	let url4 = "<c:out value='${url4}'/>";
 	let num4 = "<c:out value='${comparison4}'/>";
 	
+	let msg5= "<c:out value='${msg5}'/>";
+	let url5 = "<c:out value='${url5}'/>";
+	let num5 = "<c:out value='${comparison5}'/>";
+	
 	if(num == 1){	
 	alert(msgSuccess)
 	location.href = urlSuccess;
@@ -37,6 +41,9 @@
 	}else if(num4 == 4) {
 	alert(msg4)
 	location.href = url4;
+	}else if(num5 == 5){
+	alert(msg5)
+	location.href = url5;
 	}else{
 		let msg = "<c:out value='${msg}'/>";
 		let url = "<c:out value='${url}'/>";
