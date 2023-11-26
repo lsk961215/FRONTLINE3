@@ -79,7 +79,7 @@
 	</insert>
 	
 	<select id="findId" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">
-		select * from user_info where user_email = #{userEmail}
+		select * from user_info where user_name = #{userName} and user_phone = #{userPhone}
 	</select>
 	
 	<select id="findPw" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">

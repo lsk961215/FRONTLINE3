@@ -20,7 +20,7 @@
 	</insert>
 	
 	<select id="selectCommentList" parameterType="com.spring.frontline.dto.BoardDTO" resultMap="commentMap"> 
-		with emp_recu (lv, comment_seq, board_seq, parent_seq, user_seq, comment_regdate, comment_text, user_id, grade_seq) as (
+		with comment_recu (lv, comment_seq, board_seq, parent_seq, user_seq, comment_regdate, comment_text, user_id, grade_seq) as (
 		    select
 		        0 as lv,
 		        comment_seq, board_seq, parent_seq, user_seq, comment_regdate, comment_text, user_id, grade_seq
@@ -30,15 +30,15 @@
 		    union all
 		    
 		    select
-		        er.lv + 1 as lv,
-		        e.comment_seq, e.board_seq, e.parent_seq, e.user_seq, e.comment_regdate, lpad('ㄴ', (er.lv+1)*10, ' ') || e.comment_text, e.user_id, e.grade_seq
+		        cr.lv + 1 as lv,
+		        c.comment_seq, c.board_seq, c.parent_seq, c.user_seq, c.comment_regdate, lpad('ㄴ', (cr.lv+1)*10, ' ') || c.comment_text, c.user_id, c.grade_seq
 		    from 
-		        emp_recu er
-		        left outer join comment_info e on e.parent_seq = er.comment_seq
-		    where e.parent_seq is not null
+		        comment_recu cr
+		        left outer join comment_info c on c.parent_seq = cr.comment_seq
+		    where c.parent_seq is not null
 		)
 		search depth first by comment_seq set order_depth
-		select * from emp_recu
+		select * from comment_recu
 		order by order_depth
 	</select>
 	
@@ -56,7 +56,7 @@
 				    
 				    select
 				        er.lv + 1 as lv,
-				        e.comment_seq, e.board_seq, e.parent_seq, e.user_seq, e.comment_regdate, lpad('ㄴ', (er.lv+1)*10, ' ') || e.comment_text, e.user_id, e.grade_seq
+				        e.comment_seq, e.board_seq, e.parent_seq, e.user_seq, e.comment_regdate, lpad('ㄴ', (er.lv+1)*10, ' ') || e.comment_text, e.user_id, c.grade_seq
 				    from 
 				        emp_recu er
 				        left outer join comment_info e on e.parent_seq = er.comment_seq
@@ -135,4 +135,11 @@
 	<update id="updateComment" parameterType="com.spring.frontline.dto.CommentDTO">
 		update comment_info set comment_text = #{commentText} where comment_seq = #{commentSeq}
 	</update>
+	
+	<delete id="deleteComment" parameterType="java.util.List">
+		delete from comment_info where comment_seq in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

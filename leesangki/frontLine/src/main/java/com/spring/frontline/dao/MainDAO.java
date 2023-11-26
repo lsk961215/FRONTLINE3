@@ -42,5 +42,10 @@ public interface MainDAO {
 	BoardDTO getAdminBoard(BoardDTO boardDTO);
 	void updateBoard(BoardDTO boardDTO);
 	List selectAdminBoardSearchPage(Map map);
-	
+	List getBoardInfoList();
+	void deleteBoardDTO(List list);
+	BoardDTO detailBoardDTO(BoardDTO dto);
+	void updateBoardDTO(BoardDTO dto);
+	void travelNew(BoardDTO dto);
+	List travelList();
 }

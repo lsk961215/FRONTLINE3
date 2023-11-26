@@ -34,4 +34,10 @@ public interface MainService {
 	void deleteBoard(List list);
 	BoardDTO getAdminBoard(BoardDTO boardDTO);
 	void updateBoard(BoardDTO boardDTO);
+	List getBoardInfoList();
+	void deleteBoardDTO(List list);
+	BoardDTO detailBoardDTO(BoardDTO dto);
+	void updateBoardDTO(BoardDTO dto);
+	void travelNew(BoardDTO dto);
+	List travelList();
 }

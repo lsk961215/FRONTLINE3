@@ -338,4 +338,36 @@ public class MainServiceImpl implements MainService {
 	public void updateBoard(BoardDTO boardDTO) {
 		mainDAO.updateBoard(boardDTO);
 	}
+
+	@Override
+	public List getBoardInfoList() {
+		
+		 return mainDAO.getBoardInfoList();
+	}
+
+	@Override
+	public void deleteBoardDTO(List list) {
+		 mainDAO.deleteBoardDTO(list);
+	}
+	
+	@Override
+	public BoardDTO detailBoardDTO(BoardDTO dto) {
+		 return mainDAO.detailBoardDTO(dto);
+	}
+	
+	@Override
+	public void updateBoardDTO(BoardDTO dto) {
+		 mainDAO.updateBoardDTO(dto);
+	}
+	
+	@Override
+	public void travelNew(BoardDTO dto) {
+		 mainDAO.travelNew(dto);
+	}
+	
+	@Override
+	public List travelList() {
+		return mainDAO.travelList();
+		
+	}
 }

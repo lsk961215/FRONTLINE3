@@ -216,4 +216,34 @@ public class MainDAOImpl implements MainDAO{
 		sqlSession.update("board.updateBoard", boardDTO);
 	}
 
+	@Override
+	public List getBoardInfoList() {
+		return sqlSession.selectList("board.selectEatBoard");
+	}
+	
+	@Override
+	public void deleteBoardDTO(List list) {
+		 sqlSession.delete("board.deleteDetailBoard", list);
+	}
+	
+	@Override
+	public BoardDTO detailBoardDTO(BoardDTO dto) {
+		return sqlSession.selectOne("board.selectDetailBoard", dto);
+	}
+	
+	@Override
+	public void updateBoardDTO(BoardDTO dto) {
+		 sqlSession.update("board.updateDetailBoard", dto);
+	}
+	
+	@Override
+	public void travelNew(BoardDTO dto) {
+		sqlSession.insert("board.travelNew", dto);
+		
+	}
+
+	@Override
+	public List travelList() {
+		return sqlSession.selectList("board.travelList");
+	}
 }

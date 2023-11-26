@@ -190,7 +190,9 @@
 		<div class="comments_list">
 			<c:if test="${not empty commentList}">
 		 				<c:forEach var="item" items="${commentList}" varStatus="i">
+		 				<!-- depth 값에 따라 padding-left 값 변경하여 댓글 답글 표시 -->
 		 				<div class="comment_view" id="${i.index}" style="padding-left:${item.depth * 50}px">
+		 					<!-- 사용자 등급에 따라 댓글 이미지 변경 -->
 		 					<div>
 		 						<c:if test="${item.gradeSeq != 1}">
 		 							<img class="image_user" src="resources/images/icon_user.png">
