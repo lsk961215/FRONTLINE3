@@ -26,10 +26,10 @@
 		<a href="travelList">
 			<h3>咯青瘤 包府</h3>
 		</a>
-		<a href="admin_travel_new.jsp">
+		<a href="goAdmin_room_new">
 			<h3>槛家 殿废</h3>
 		</a>
-		<a href="admin_travel_management.jsp">
+		<a href="goAdmin_room_management">
 			<h3>槛家 包府</h3>
 		</a>
 		<a href="admin_play_new.jsp">
@@ -44,7 +44,7 @@
 		<a href="goAdminBoardList">
 			<h3>霸矫拱 包府</h3>
 		</a>
-		<a href="admin_popup.jsp">
+		<a href="adminPopup">
 			<h3>扑诀 包府</h3>
 		</a>
 		<a>

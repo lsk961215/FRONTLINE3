@@ -59,27 +59,27 @@
 			
 <div class="nav_warp">
 <div class="nav">
-    <a href="travelList">회원정보관리</a>
+    <a href="goAdminUser">회원정보관리</a>
 </div>
 
 <div class="nav">
-    <a href="#">댓글관리</a>
+    <a href="goAdminComment">댓글관리</a>
 </div>
 
 <div class="nav">
-    <a href="#">여행지 등록 관리</a>
+    <a href="travelList">여행지 등록 관리</a>
 </div>
 
 <div class="nav">
-    <a href="#">숙소 등록 관리</a>
+    <a href="goAdmin_room_management">숙소 등록 관리</a>
 </div>
 
 <div class="nav">
-    <a href="#">맛집 등록 관리</a>
+    <a href="eatResultGo">맛집 등록 관리</a>
 </div>
 
 <div class="nav">
-    <a href="#">놀거리 등록 관리</a>
+    <a href="eatResultGo">놀거리 등록 관리</a>
 </div>
 </div>
 		

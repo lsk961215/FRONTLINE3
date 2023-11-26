@@ -9,7 +9,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Enumeration;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,11 @@ public class MainController {
 	MainService mainService;
 	
 	@RequestMapping("/")
-	public String goMain() {
+	public String goMain(Model model) {
+		List popup = mainService.popup1();
+		System.out.println(popup);
+		model.addAttribute("popup", popup);
+		
 		return "main";
 	}
 	
@@ -990,5 +996,179 @@ public class MainController {
 			model.addAttribute("travelList", travelList);
 			
 			return "/travel/admin_travel_management";
+		}
+		
+		// 관리자-여행지관리 페이지(수정전 리스트조회)
+		@RequestMapping("/travelUpdate")
+		public String travelUpdate(BoardDTO dto, Model model) {
+			System.out.println("/travelUpdate");
+			
+			BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+			model.addAttribute("beforeUpdate", beforeUpdate);
+			return "/travel/admin_travel_update";
+		}
+		
+		// 관리자-여행지관리 페이지(수정)
+		@RequestMapping("/travelBoardUpdate")
+		public String travelBoardUpdate(BoardDTO dto, Model model) {
+			System.out.println("/travelBoardUpdate");
+			System.out.println("dto : " + dto);
+			mainService.setBoard(dto);
+			
+			BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+			model.addAttribute("beforeUpdate", beforeUpdate);
+			
+			return "/travel/admin_travel_update";
+		}
+		
+		// 관리자-여행지관리 페이지(삭제)
+		@RequestMapping("/travelDelete")
+		public String travelDelete(HttpServletRequest request, Model model) {
+			String[] boardDelete = request.getParameterValues("boardDelete");
+			for(int i=0; i<boardDelete.length; i++) {
+				System.out.println("boardDelete[" + i + "] : " + boardDelete[i]);
+			}
+			mainService.travelDelete(boardDelete);
+			List travelList = mainService.travelList();
+			model.addAttribute("travelList", travelList);
+			return "/travel/admin_travel_management";
+		}
+		
+		// 관리자-여행지관리 페이지(검색)
+		@RequestMapping("/boardPick")
+		public String boardPick(BoardDTO dto, Model model) {
+			System.out.println("/boardPick 실행");
+			System.out.println("boardPick() --> dto 실행 : " + dto);
+			List boardPick = null;
+			if(dto.getBoardSearch() != null && dto.getTypeSeq() == 0) {
+				if(dto.getBoardPick() == 0) {
+					boardPick = mainService.boardPick1(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 1) {
+					boardPick = mainService.boardPick2(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 2) {
+					boardPick = mainService.boardPick3(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 3) {
+					boardPick = mainService.boardPick4(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else {
+					boardPick = mainService.travelList();
+				}
+			}
+			
+			model.addAttribute("travelList", boardPick);
+			
+			return "/travel/admin_travel_management";
+		
+		}
+		
+		@RequestMapping("/goAdmin_room_new")
+		public String goAdmin_room_new() throws Exception{
+			return "room/admin_room_new";
+		}
+		
+		@RequestMapping("/goAdmin_room_management")
+		public String pagingAdmin_room(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+			
+//			List<BoardDTO> list = mainService.list(); 
+//			model.addAttribute("just", list);
+			System.out.println("BoardDTO boardDTO 입니다 : " + boardDTO);
+			int pageNum = 1;
+			int countPerPage = 10;
+			
+			String tmp_pageNum = request.getParameter("pageNum");
+			if(tmp_pageNum != null) {
+				try {
+					pageNum = Integer.parseInt(tmp_pageNum);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			String tmp_countPerPage = request.getParameter("countPerPage");
+			
+			if(tmp_countPerPage != null) {
+				try {
+					countPerPage = Integer.parseInt(tmp_countPerPage);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+					
+			Map map = mainService.pageBoard(pageNum, countPerPage);
+			map.put("pageNum", pageNum);
+			map.put("countPerPage", countPerPage);
+			
+			model.addAttribute("data", map);
+			
+//			return map;
+			return "room/admin_room_management";
+		}
+		
+		@RequestMapping("/updatePage")
+		public String updateAdmin_page(BoardDTO boardDTO, Model model) {
+			
+			BoardDTO updatePage = mainService.updatePage(boardDTO);
+			System.out.println("updatePage : " + updatePage);
+			
+			model.addAttribute("updatePage", updatePage);
+			
+			return "room/admin_room_update";
+		}
+		
+		@RequestMapping(value="/delete", method=RequestMethod.POST)
+		@ResponseBody // 리턴값을 그대로 돌려주는 역할 / jsp로 안보냄
+		public int deleteAdmin_room(HttpServletRequest request) {
+			// 스트링을 받을 순 있지만 리턴할때는 인트로 그걸 세서 보내야됨
+			String[] delete = request.getParameterValues("valueArr"); // 체크된 값들을 넣음
+			int size = delete.length;
+			int delreturn = 0;
+			
+			for(int i =0; i<size; i++) {
+				delreturn += mainService.deleteBoard(delete[i]);
+
+			}		
+//				System.out.println("delreturn : " + delreturn);	
+			return delreturn;
+		}
+		
+		
+		// 팝업 쿠키생성 만들어놓음
+		@RequestMapping("/popupCookie")
+		public String popupCookie(HttpServletResponse response, @RequestParam("target") String target) {
+			Cookie cookie = new Cookie(target, "setChecked");
+			cookie.setMaxAge(10); 
+			response.addCookie(cookie);
+			
+			return "redirect:/";
+		}
+		
+		@RequestMapping("/adminPopup")
+		public String adminPopup(Model model) {
+			List popup = mainService.popup1();
+			model.addAttribute("popup", popup);
+			return "/popup/admin_popup";
+		}
+		
+		// 관리자 - 팝업관리 페이지(수정전 리스트조회)
+		@RequestMapping("/popupReadyUpdate")
+		public String popupReadyUpdate(@RequestParam Map map, Model model) {
+			System.out.println("/popupReadyUpdate Controller 실행");
+			System.out.println("map : " + map);
+			Map popupUpdateList = mainService.popupReadyUpdate(map);
+			model.addAttribute("updateList", popupUpdateList);
+			return "/popup/admin_popup_update";
+		}
+		
+		// 관리자 - 팝업관리 페이지(수정)
+		@RequestMapping("/popupUpdate")
+		public String popupUpdate(@RequestParam Map map, Model model) {
+			System.out.println("popupUpdate(map) Controller 실행 : " + map);
+			
+			mainService.popupUpdate(map);
+			
+			return "redirect:/adminPopup";
 		}
 }

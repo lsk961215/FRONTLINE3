@@ -48,4 +48,18 @@ public interface MainDAO {
 	void updateBoardDTO(BoardDTO dto);
 	void travelNew(BoardDTO dto);
 	List travelList();
+	BoardDTO travelUpdate(BoardDTO dto);
+	void setBoard(BoardDTO dto);
+	void travelDelete(String[] boardDelete);
+	List boardPick1(BoardDTO dto);
+	List boardPick2(BoardDTO dto);
+	List boardPick3(BoardDTO dto);
+	List boardPick4(BoardDTO dto);
+	public List pageBoard(BoardDTO boardDTO);
+	public int pageTotal();
+	public BoardDTO updatePage(BoardDTO boardDTO);
+	public int deleteBoard(String delete);
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
 }

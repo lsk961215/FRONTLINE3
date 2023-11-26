@@ -39,28 +39,13 @@
 		})
 	})
 </script> -->
-<!-- <style>
-	.popup {
-		position: absolute;
-		display: none;
-		
- 		top:50%; 
- 		left:50%; 
- 		transform: translate(-50%, -50%);
-		
-		background-color: white;
-		width: 700px;
-		height: 500px;
-		
-		border: 1px solid black;
-		border-radius: 15px;
-		
-		justify-content: center;
-		align-items: center;
-		}
-		
+<style>
+	main {
+	max-width: 1240px;
+    margin: 0 auto;
+}
 </style>
- -->
+
 </head>
 <body>
 	<jsp:include page="../header.jsp"/>

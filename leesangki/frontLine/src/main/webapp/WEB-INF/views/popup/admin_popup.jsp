@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여행지 관리</title>
+<title>Insert title here</title>
 <!-- 헤더 자바스크립트 -->
 <!-- 어드민 헤더만 자바스크립트로 헤더 스타일 변경해줌 -->
 <script src="resources/js/header_admin.js"></script>
@@ -20,11 +20,11 @@
   crossorigin="anonymous"></script>
 
 <style>
-/*셀렉트*/
 main {
 		max-width: 1240px;
     	margin: 0 auto;
 	}
+/*셀렉트*/
 .members {
 /* 	padding-left: 10%; */
 	display: inline-block;
@@ -118,7 +118,7 @@ textarea {
 input{
 	border: none;
 	text-align: center;
-	width: 53px;
+	width: 95px;
 }
 td, th{
 	border: 1px solid #aaa;
@@ -141,39 +141,29 @@ td, th{
 				</div>
 				===================================================================== -->
 <!-- 				<div class="head"> -->
-			<h1>여행지 관리</h1>
-					<div id="hright">
-						<form id="search" method="GET" action="boardPick">
-							<select class="sb" name="boardPick">
-								<option value="-1" selected="selected">전체</option>
-								<option value="0">글번호</option>
-								<option value="1">지역</option>
-								<option value="2">상호명</option>
-								<option value="3">사용자번호</option>
-							</select>
-							<input type="hidden" name="typeSeq" value="0">
-							<input class="sinput" type="text" name="boardSearch" placeholder="검색어를 입력해주세요">
-							<input class="sbtn" type="submit" value="검색">
-						</form>
-					</div>
-				<br>
+			<h1>팝업 관리</h1>
+<!-- 					<div id="hright"> -->
+<!-- 						<form id="search" method="GET" action="boardPick"> -->
+<!-- 							<select class="sb" name="boardPick"> -->
+<!-- 								<option value="-1" selected="selected">전체</option> -->
+<!-- 								<option value="0">글번호</option> -->
+<!-- 								<option value="1">지역</option> -->
+<!-- 								<option value="2">상호명</option> -->
+<!-- 								<option value="3">사용자번호</option> -->
+<!-- 							</select> -->
+<!-- 							<input type="hidden" name="typeSeq" value="0"> -->
+<!-- 							<input class="sinput" type="text" name="boardSearch" placeholder="검색어를 입력해주세요"> -->
+<!-- 							<input class="sbtn" type="submit" value="검색"> -->
+<!-- 						</form> -->
+<!-- 					</div> -->
+<!-- 				<br> -->
 			<form action="travelDelete">
 				<div class="table">
 					<table id="tb" border="1">
 						<thead>
 							<tr>
 								<th>선택</th>
-								<th>글번호</th>
-								<th>카테고리번호</th>
-								<th>지역</th>
-								<th>상호명</th>
-								<th>주소</th>
-								<th>오픈시간</th>
-								<th>상세글</th>
-								<th>작성일</th>
-								<th>브레이크</th>
-								<th>전화번호</th>
-								<th>사용자번호</th>
+								<th>번호</th>
 								<th>이미지</th>
 								<th>수정</th>
 							</tr>
@@ -181,27 +171,17 @@ td, th{
 						<tbody>
 <%-- 									<td>${status.count}</td> --%>
 <!-- 									<td><input type="checkbox"></td> -->
-							<c:forEach var="dto" items="${travelList}" varStatus="status"> 
+							<c:forEach var="popupDto" items="${popup}" varStatus="status"> 
 								<tr>
 									<td><input type="checkbox" name="boardDelete" value="${dto.boardSeq}" ></td>
-									<td><input  class="imageSize" value="${dto.boardSeq}"></td>
-									<td><input  class="imageSize" value="${dto.typeSeq}"></td>
-									<td><input  class="imageSize" value="${dto.regionSeq  }"></td>
-									<td><input  class="imageSize" value="${dto.boardTitle}"></td>
-									<td><input  class="imageSize" value="${dto.boardAddress}"></td>
-									<td><input  class="imageSize" value="${dto.boardOpen }"></td>
-									<td><input  class="imageSize" value="${dto.boardDetail}"></td>
-									<td><input  class="imageSize" value="${dto.boardRegDate}"></td>
-									<td><input  class="imageSize" value="${dto.boardBreak}"></td>
-									<td><input  class="imageSize" value="${dto.boardPhone}"></td>
-									<td><input  class="imageSize" value="${dto.userSeq}"></td>
-									<td><img id="imageSize" src="${dto.boardImage}"></td>
-									<td><a href="travelUpdate?boardSeq=${dto.boardSeq}"	><input type="button" value="수정" name="${dto.boardSeq}"></a></td>
+									<td><input class="imageSize" value="${popupDto.POPUP_NUMBER}"></td>
+									<td><img id="imageSize" src="${popupDto.POPUP_IMAGE}"></td>
+									<td><a href="popupReadyUpdate?POPUP_NUMBER=${popupDto.POPUP_NUMBER}"	><input type="button" value="수정" name="${dto.boardSeq}"></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="submit" value="삭제">
+<!-- 					<input type="submit" value="삭제"> -->
 				</div>
 			</form>
 				<br>
@@ -224,5 +204,6 @@ td, th{
 			</div>
 	</section>
 	</main>	
-</body> 
+
+</body>
 </html>

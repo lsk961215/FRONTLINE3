@@ -246,4 +246,87 @@ public class MainDAOImpl implements MainDAO{
 	public List travelList() {
 		return sqlSession.selectList("board.travelList");
 	}
+	
+	@Override
+	public BoardDTO travelUpdate(BoardDTO dto) {
+		return sqlSession.selectOne("board.travelUpdate", dto);
+	}
+	
+	@Override
+	public void setBoard(BoardDTO dto) {
+		sqlSession.update("board.setBoard", dto);
+		
+	}
+	
+	@Override
+	public void travelDelete(String[] boardDelete) {
+		sqlSession.delete("board.travelDelete", boardDelete);
+	}
+	
+	@Override
+	public List boardPick1(BoardDTO dto) {
+		return sqlSession.selectList("board.boardPick1",dto);
+	}
+
+	@Override
+	public List boardPick2(BoardDTO dto) {
+		return sqlSession.selectList("board.boardPick2",dto);
+	}
+
+	@Override
+	public List boardPick3(BoardDTO dto) {
+		return sqlSession.selectList("board.boardPick3",dto);
+	}
+
+	@Override
+	public List boardPick4(BoardDTO dto) {
+		return sqlSession.selectList("board.boardPick4",dto);
+	}
+
+	@Override
+	public List pageBoard(BoardDTO boardDTO) {
+		
+	    List pageBoard = sqlSession.selectList("board.pageBoard", boardDTO);
+	    
+		return pageBoard;
+	}
+	
+	@Override
+	public int pageTotal() {
+		
+		int total = sqlSession.selectOne("board.pageTotal");
+		return total;
+	}
+	
+	@Override
+	public BoardDTO updatePage(BoardDTO boardDTO) {
+
+		return sqlSession.selectOne("board.updatePage", boardDTO);
+	}
+	
+	@Override
+	public int deleteBoard(String delete) {					
+		int deleteBoard = sqlSession.delete("board.deleteRoomBoard", delete);
+		
+		return deleteBoard;
+		
+	}
+	
+	@Override
+	public List popup1() {
+		List popupList = sqlSession.selectList("user.popup1");
+		return popupList;
+	}
+	
+	@Override
+	public Map popupReadyUpdate(Map map) {
+		Map popupSetReady = sqlSession.selectOne("user.popupReadyUpdate", map);
+		
+		return popupSetReady;
+	}
+	
+	@Override
+	public void popupUpdate(Map map) {
+		int popupUpdate = sqlSession.update("user.popupUpdate", map);
+	}
 }
