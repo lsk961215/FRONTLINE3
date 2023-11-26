@@ -89,12 +89,12 @@ margin-right:50px;
 <span id="title">비밀번호 재설정</span>
 <div>새로운 비밀번호를 입력해 주세요.</div>
 <form action="inputNewPw">
-	<div>새 비밀번호 입력 <input type="text" name="setUserPw" ></div>
-	<div>새 비밀번호 확인 <input type="text" name="userPw" ></div>
-	<c:if test="${comparison5} == 5">
-	<div id="discord">입력한 정보가 일치하지 않습니다.</div>
-	</c:if>
-	<input type="hidden" name="userEmail" value="${userEmail2}">
+	<div>새 비밀번호 입력 <input type="password" name="setUserPw" ></div>
+	<div>새 비밀번호 확인 <input type="password" name="userPw" ></div>
+<%-- 	<c:if test="${comparison5} == 5"> --%>
+<!-- 	<div id="discord">입력한 정보가 일치하지 않습니다.</div> -->
+<%-- 	</c:if> --%>
+	<input type="hidden" name="userEmail" value="${userEmail}">
 	<input type="submit" id="goid" value="확인">
 </form>
 </div>

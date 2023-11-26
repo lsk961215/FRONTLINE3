@@ -398,13 +398,16 @@ public class MainController {
 	
 	// 1차 검증 - 아이디
 	@RequestMapping("/sameId")
-	public String sameId(UserDTO dto, Model model) {
+	public String sameId(UserDTO dto, Model model, HttpServletRequest request) {
 		System.out.println("/sameId 실행 -> dto.getUserId()값 : " + dto.getUserId());
 		UserDTO findId = mainService.sameId(dto);
 		System.out.println("=====findId.getUserName()의 값====== : " + findId.getUserId());
 		System.out.println("controller -> sql에서 받아온 값 : " + findId);
 		
 		model.addAttribute("idDto", findId);
+		HttpSession session = request.getSession();
+		session.setAttribute("userEmail", findId.getUserEmail());
+//		session.setAttribute("confirmedNum", num);
 		
 		return "/find/find_password_way";
 	}
@@ -425,7 +428,7 @@ public class MainController {
 			System.out.println("num : " + num);
 			
 			StringBuilder sb = new StringBuilder();
-			String setFrom = "cha@naver.com"; // 수신자
+			String setFrom = "chahh3994@naver.com"; // 수신자
 			String toMail = dto.getUserEmail();	// 발신자
 			String title = "[놀아유] 비밀번호 변경 인증 이메일입니다.";
 			sb.append(String.format("안녕하세요 %s님\n", dto.getUserName()));
@@ -455,7 +458,7 @@ public class MainController {
 			model.addAttribute("url1", "/frontline/pwWay");
 			model.addAttribute("comparison", "1");
 			model.addAttribute("num", num);
-			model.addAttribute("userEmail2", userEmail);
+//			model.addAttribute("userEmail2", userEmail);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("userEmail", userEmail);
@@ -465,6 +468,8 @@ public class MainController {
 		model.addAttribute("msg2","회원정보 이메일과 불일치합니다.");
 		model.addAttribute("url2","/frontline/pwWay");
 		model.addAttribute("comparison2","2");
+		HttpSession session = request.getSession();
+		session.setAttribute("userEmail", userEmail);
 		return "alert";
 	}
 	
@@ -475,7 +480,6 @@ public class MainController {
 		// 세션에 원래 이메일 정보 저장 하기.
 		System.out.println("인증번호 체크 메소드에서 받은 userEmail : " + userEmail2);
 		String userEmail = dto.getUserEmail();
-		session.setAttribute("userEmail",userEmail);
 //		String ue = (String) session.getAttribute("userEmail");
 //		System.out.println("세션에 담겼는지 확인 : " + ue);
 		
@@ -487,12 +491,13 @@ public class MainController {
 			model.addAttribute("msg3","확인되었습니다.");
 			model.addAttribute("url3", "/frontline/setNewPw");
 			model.addAttribute("comparison3", "3");
-			model.addAttribute("userEmail2",userEmail2);
+//			model.addAttribute("userEmail2",userEmail2);
+//			session.setAttribute("userEmail2",userEmail2);
 //			model.addAttribute("finalCheck", "7");
 			return "alert";
 		}
 		model.addAttribute("msg4","인증번호가 틀렸습니다.");
-		model.addAttribute("url4", "/frontline/pwWay?userEmail");
+		model.addAttribute("url4", "/frontline/pwWay");
 		model.addAttribute("comparison4", "4");
 		
 		return "alert";
@@ -521,6 +526,8 @@ public class MainController {
 		System.out.println("/inputNewPw 실행 > 입력된 새 비밀번호 비교");
 		System.out.println("setUserPw : " + setUserPw);
 		System.out.println("dto.getUserPw() : " + dto.getUserPw());
+		System.out.println("dto.getUserPw() : " + dto.getUserEmail());
+//		System.out.println("userEmail2 : " + userEmail2);
 		
 		if(setUserPw.equals(dto.getUserPw())) {
 			mainService.updateNewPw(dto);
@@ -531,11 +538,11 @@ public class MainController {
 //		String userEmail = (String) session.getAttribute("userEmail");
 //		System.out.println("/setNewPw 에서 userEmail 값: " + userEmail);
 		model.addAttribute("emailDto", dto);
-//		model.addAttribute("msg5","입력한 정보가 일치하지 않습니다.");
-//		model.addAttribute("url5", "/frontline/setNewPw");
+		model.addAttribute("msg5","입력한 정보가 일치하지 않습니다.");
+		model.addAttribute("url5", "/frontline/setNewPw");
 		model.addAttribute("comparison5", "5");
 		
-		return "/find/set_new_password";
+		return "alert";
 	}
 	
 

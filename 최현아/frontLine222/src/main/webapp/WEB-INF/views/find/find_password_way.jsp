@@ -81,6 +81,9 @@ width: 100px;
 margin-top:20px;
 }
 #phonenum{
+position:relative;
+left: 34px;
+bottom: 20px;
 margin-right:90px;
 }
 #findEmailColor{
@@ -92,7 +95,7 @@ font-size:small;
 #emailAddressMargin{
 	position: relative;
     left: 20px;
-    margin-left: 5px;
+	margin-left: 5px; 
 }
 
 </style>
@@ -106,21 +109,22 @@ font-size:small;
 	<form action="getNumber">
 	이메일 주소<input id="emailAddressMargin" type="text" name="receivedEmail">
 	<input id="emailAddressMargin"type="submit" value="인증번호 받기">
-	<input type="hidden" name="userEmail" value="${idDto.userEmail}">
+	<input type="hidden" name="userEmail" value="${userEmail}">
 	<input type="hidden" name="userId" value="${idDto.userId}">
 	<input type="hidden" name="userName" value="${idDto.userName}">
+	
 	</form>
 	</div>
 <form action="checkNumber">
 	<div id="phonenum">인증번호 입력 <input id="emailAddressMargin" type="text" name="putKey" placeholder="숫자만 입력">
 	<input id="emailAddressMargin" type="submit" value="인증번호 확인">
-	<input type="hidden" name="userEmail" value="${idDto.userEmail}">
-	<input type="hidden" name="userEmail2" value="${userEmail2}">
+<%-- 	<input type="hidden" name="userEmail" value="${idDto.userEmail}"> --%>
+	<input type="hidden" name="userEmail2" value="${userEmail}">
 	<input type="hidden" name="num" value="${num}">
 	</div>
 	
 </form>
-	<input type="submit" id="goid" value="다음">
+<!-- 	<input type="submit" id="goid" value="다음"> -->
 </div>
  <jsp:include page="../footer.jsp"/>
 </body>
