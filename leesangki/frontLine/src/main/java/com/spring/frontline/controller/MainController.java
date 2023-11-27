@@ -507,6 +507,7 @@ public class MainController {
 	// 지역페이지 메인 리스트
 	@RequestMapping("/getBoardList")
 	public String getBoardList(HttpServletRequest request, Model model, @RequestParam("regionSeq") String regionSeq) {
+		HttpSession session = request.getSession();
 		
 		Map resultMap = mainService.getBoardList(regionSeq);
 		
@@ -521,7 +522,14 @@ public class MainController {
 		model.addAttribute("regionSeq", regionSeq);
 		model.addAttribute("regionName", regionName);
 		
-		return "local_main";
+		if(session.getAttribute("userDTO") == null) {
+			model.addAttribute("msg", "지역 페이지로 이동하려면 로그인을 해주세요");
+			model.addAttribute("url", "goLogin");
+			
+			return "alert";
+		} else {
+			return "local_main";
+		}
 	}
 	
 	// 지역페이지 더보기 리스트

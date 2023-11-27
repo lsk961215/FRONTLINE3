@@ -81,7 +81,7 @@
 			<p>상세정보 : ${updateBoardDTO.boardDetail} <input type="button" value="수정" id="boardDetail"></p>
 			<p>휴무 : ${updateBoardDTO.boardBreak} <input type="button" value="수정" id="boardBreak"></p>
 			<p>전화번호 : ${updateBoardDTO.boardPhone} <input type="button" value="수정" id="boardPhone"></p>
-			<p>이미지 : <img width="200px" src="${updateBoardDTO.boardImage}"> <input type="button" value="수정" id="boardPhone"></p>
+			<p>이미지 : <img width="200px" src="${updateBoardDTO.boardImage}"> <input type="button" value="수정" id="boardImage"></p>
 			<p>등록일 : ${updateBoardDTO.boardRegDate}</p>
 		</section>
 		<div class="popup">
