@@ -3,13 +3,11 @@ div {
 }
 header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     
     height: 120px;
-    
-	max-width: 1240px;
-    margin: 0 auto;
+    width: 1280px;
 }
 
 header ul {
@@ -66,8 +64,6 @@ header .header_input {
 
 header .input_wrap {
     width: 100%;
-    
-    position: relative;
 }
 
 header .input_list li {
@@ -115,7 +111,7 @@ header .input {
 
 header .input_list {
     display: none;
-    position: absolute;
+    position: relative;
 
     background-color: white;
     width: 100%;

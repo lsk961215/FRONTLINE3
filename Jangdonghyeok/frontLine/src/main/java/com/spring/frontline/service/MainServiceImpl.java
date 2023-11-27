@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.spring.frontline.dao.MainDAO;
 import com.spring.frontline.dto.BoardDTO;
-import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Service
@@ -47,283 +46,94 @@ public class MainServiceImpl implements MainService {
 	public void deleteUser(List list) {
 		mainDAO.deleteUser(list);
 	}
-
+	
+	//≥Ó∞≈∏Æ µÓ∑œ
 	@Override
-	public Map getUserPage(int pageNum, int countPerPage) {
-		
-		Map selectMap = new HashMap();
-		
-		int startNum = 0;
-		int endNum = 0;
-		
-		startNum = (pageNum-1)*countPerPage+1;
-		endNum = pageNum*countPerPage;
-		
-		selectMap.put("startNum", startNum);
-		selectMap.put("endNum", endNum);
-		
-		List list = mainDAO.selectUserPage(selectMap);
-		int total = mainDAO.selectUserTotal();
-		
-		int groupCount = 5;
-		
-		int totalPaging = (int) Math.ceil((double)total / countPerPage);
-		
-		int position = (int) Math.ceil((double)pageNum / groupCount);
-		
-		int beginPaging = (position-1) * groupCount + 1;
-		int endPaging = position * groupCount;
-		
-		if(endPaging > totalPaging) {
-			endPaging = totalPaging;
-		}
-		
-		Map pageMap = new HashMap();
-		
-		pageMap.put("beginPaging", beginPaging);
-		pageMap.put("endPaging", endPaging);
-		pageMap.put("totalPaging", totalPaging);
-		pageMap.put("list", list);
-		
-		return pageMap;
+	public void insertPlay(BoardDTO boardDTO) {
+		mainDAO.insertPlay(boardDTO);
 	}
-
+	//≥Ó∞≈∏Æ ∏ÆΩ∫∆Æ
 	@Override
-	public void insertDummy(int loop) {
-		UserDTO dto = new UserDTO();
+	public List getPlayList() {
+		List playList = mainDAO.getPlayList();
+		return playList;
+	}
+	// ≥Ó∞≈∏Æ º±≈√
+	@Override
+	public BoardDTO getPlaycorr(BoardDTO boardDTO) {
+		BoardDTO playOne = mainDAO.playcorr(boardDTO);
 		
-		for(int i = 0; i<loop; i++) {
-			dto.setUserName("test" + i);
-			dto.setGenderSeq(0);
-			dto.setGradeSeq(0);
-			dto.setUserBirth("12345678");
-			dto.setUserEmail("test" + i + "@frontline.com");
-			dto.setUserId("test" + i);
-			dto.setUserPhone("01012345678"+i);
-			dto.setUserPw("1234");
+		return playOne;
+	}
+	//≥Ó∞≈∏Æ ºˆ¡§
+	@Override
+	public void updatePlay(BoardDTO boardDTO) {
+		mainDAO.updatePlay(boardDTO);
+	}
+	//≥Ó∞≈∏Æ ªË¡¶
+		@Override
+		public int deletePlay(BoardDTO boardDTO) {
+			int delete = mainDAO.deletePlay(boardDTO);
+			return delete;
+		}
+	//≥Ó∞≈∏Æ ∞¸∏Æ ∆‰¿Ã¬°
+		@Override
+		public Map getPage(int pageNum, int countPerPage) {
 			
-			mainDAO.insertDummy(dto);
-		}
-	}
-	
-	@Override
-	public UserDTO findId(UserDTO userDTO) {
-		return mainDAO.findId(userDTO);
-	}
-	
-	@Override
-	public UserDTO findPw(UserDTO userDTO) {
-		return mainDAO.findPw(userDTO);
-	}
-
-	@Override
-	public boolean checkJoin(Map map) {
-		if("checkId".equals(map.get("target"))) {
-			System.out.println("service id Ïã§Ìñâ");
-			return mainDAO.checkId(map);
-		} else if("checkEmail".equals(map.get("target"))) {
-			System.out.println("service email Ïã§Ìñâ");
-			return mainDAO.checkEmail(map);
-		} else {
-			System.out.println("service phone Ïã§Ìñâ");
-			return mainDAO.checkPhone(map);
-		}
-	}
-
-	@Override
-	public Map getBoardList(String regionSeq) {
-		
-		Map selectMap = new HashMap();
-		
-		Map resultMap = new HashMap();
-		
-		selectMap.put("regionSeq", regionSeq);
-		
-		for(int i = 0; i<4; i++) {
-			selectMap.put("typeSeq", i);
+			int startNum = 0, endNum = 0;
 			
-			List list = mainDAO.selectBoardList(selectMap);
+			// ¿Ã¿¸ ∆‰¿Ã¡ˆ¿« ∏∂¡ˆ∏∑ º˝¿⁄ +1
+			startNum = ((pageNum-1)* countPerPage) +1;
+			endNum = pageNum * countPerPage;
+			//9∏¶ ¥ı«œ¥¬ πÊΩƒ
+//			endNum = startNum * countPerPage - 1;
 			
-			resultMap.put("typeSeq"+i, list);
+			BoardDTO dto = new BoardDTO();
+			dto.setStartNum(startNum);
+			dto.setEndNum(endNum);
+			
+			//∫∏ø©¡Ÿ ∏ÆΩ∫∆Æ∏∏ æ¶ ªÃæ“¿Ω
+			List list = mainDAO.Paging(dto);
+			//¿¸√º »∏ø¯ºˆ∏¶ ªÃæ“¿Ω
+			int total = mainDAO.pageTotal();
+			
+			Map map = new HashMap();
+			map.put("list", list);
+			map.put("total", total);
+			
+			return map;
+			
 		}
 		
-		return resultMap;
-	}
-	
-	@Override
-	public Map getBoardPage(Map map) {
+		//≥Ó∞≈∏Æ ¥ı∫∏±‚ ∆‰¿Ã¬°
+		@Override
+		public Map getMorePage(int regiSeq ,int pageNum, int countPerPage, int typeSeq) {
+			
+			int startNum = 0, endNum = 0;
+			
+			// ¿Ã¿¸ ∆‰¿Ã¡ˆ¿« ∏∂¡ˆ∏∑ º˝¿⁄ +1
+			startNum = ((pageNum-1)* countPerPage) +1;
+			endNum = pageNum * countPerPage;
+			//9∏¶ ¥ı«œ¥¬ πÊΩƒ
+//			endNum = startNum * countPerPage - 1;
+			
+			BoardDTO dto = new BoardDTO();
+			dto.setRegionSeq(regiSeq);
+			dto.setTypeSeq(typeSeq);
+			dto.setStartNum(startNum);
+			dto.setEndNum(endNum);
 		
-		int startNum = 0;
-		int endNum = 0;
-		
-		int pageNum = (Integer) map.get("pageNum");
-		int countPerPage = (Integer) map.get("countPerPage");
-		
-		startNum = (pageNum-1)*countPerPage+1;
-		endNum = pageNum*countPerPage;
-		
-		map.put("startNum", startNum);
-		map.put("endNum", endNum);
-		map.put("pageNum", pageNum);
-		map.put("countPerPage", countPerPage);
-		
-		List list = mainDAO.selectBoardPage(map);
-		int total = mainDAO.selectBoardTotal(map);
-		
-		int groupCount = 5;
-		
-		int totalPaging = (int) Math.ceil((double)total / countPerPage);
-		
-		int position = (int) Math.ceil((double)pageNum / groupCount);
-		
-		int beginPaging = (position-1) * groupCount + 1;
-		int endPaging = position * groupCount;
-		
-		if(endPaging > totalPaging) {
-			endPaging = totalPaging;
+			//∫∏ø©¡Ÿ ∏ÆΩ∫∆Æ∏∏ æ¶ ªÃæ“¿Ω
+			List list = mainDAO.morePaging(dto);
+			
+			int total = mainDAO.moreTotal(dto);
+			
+			Map map = new HashMap();
+			map.put("list", list);
+			map.put("total", total);
+			
+			return map;
+			
 		}
 		
-		Map pageMap = new HashMap();
-		
-		pageMap.put("beginPaging", beginPaging);
-		pageMap.put("endPaging", endPaging);
-		pageMap.put("totalPaging", totalPaging);
-		pageMap.put("list", list);
-		
-		return pageMap;
-	}
-
-	@Override
-	public List getRegionNames() {
-		return mainDAO.selectRegionNames();
-	}
-
-	@Override
-	public BoardDTO getBoard(BoardDTO boardDTO) {
-		return mainDAO.selectBoard(boardDTO);
-	}
-
-	@Override
-	public void addComment(CommentDTO commentDTO) {
-		mainDAO.addComment(commentDTO);
-	}
-
-	@Override
-	public List getCommentList(BoardDTO boardDTO) {
-		return mainDAO.selectCommentList(boardDTO);
-	}
-
-	@Override
-	public Map getCommentPage(int pageNum, int countPerPage) {
-		Map selectMap = new HashMap();
-		
-		int startNum = 0;
-		int endNum = 0;
-		
-		startNum = (pageNum-1)*countPerPage+1;
-		endNum = pageNum*countPerPage;
-		
-		selectMap.put("startNum", startNum);
-		selectMap.put("endNum", endNum);
-		
-		List list = mainDAO.selectCommentPage(selectMap);
-		int total = mainDAO.selectCommentTotal();
-		
-		int groupCount = 5;
-		
-		int totalPaging = (int) Math.ceil((double)total / countPerPage);
-		
-		int position = (int) Math.ceil((double)pageNum / groupCount);
-		
-		int beginPaging = (position-1) * groupCount + 1;
-		int endPaging = position * groupCount;
-		
-		if(endPaging > totalPaging) {
-			endPaging = totalPaging;
-		}
-		
-		Map pageMap = new HashMap();
-		
-		pageMap.put("beginPaging", beginPaging);
-		pageMap.put("endPaging", endPaging);
-		pageMap.put("totalPaging", totalPaging);
-		pageMap.put("list", list);
-		
-		return pageMap;
-	}
-
-	@Override
-	public CommentDTO getComment(CommentDTO commentDTO) {
-		return mainDAO.selectComment(commentDTO);
-	}
-
-	@Override
-	public void updateComment(CommentDTO commentDTO) {
-		mainDAO.updateComment(commentDTO);
-	}
-
-	@Override
-	public void deleteComment(List list) {
-		mainDAO.deleteComment(list);
-	}
-
-	@Override
-	public void insertBoard(BoardDTO boardDTO) {
-		mainDAO.insertBoard(boardDTO);
-	}
-	
-	@Override
-	public Map getAdminBoardPage(Map selectMap) {
-		
-		int countPerPage = (Integer)selectMap.get("countPerPage");
-		int pageNum = (Integer)selectMap.get("pageNum");
-		int startNum = 0;
-		int endNum = 0;
-		
-		startNum = (pageNum-1)*countPerPage+1;
-		endNum = pageNum*countPerPage;
-		
-		selectMap.put("startNum", startNum);
-		selectMap.put("endNum", endNum);
-		
-		List list = mainDAO.selectAdminBoardPage(selectMap);
-		int total = mainDAO.selectAdminBoardTotal(selectMap);
-		
-		int groupCount = 5;
-		
-		int totalPaging = (int) Math.ceil((double)total / countPerPage);
-		
-		int position = (int) Math.ceil((double)pageNum / groupCount);
-		
-		int beginPaging = (position-1) * groupCount + 1;
-		int endPaging = position * groupCount;
-		
-		if(endPaging > totalPaging) {
-			endPaging = totalPaging;
-		}
-		
-		Map pageMap = new HashMap();
-		
-		pageMap.put("beginPaging", beginPaging);
-		pageMap.put("endPaging", endPaging);
-		pageMap.put("totalPaging", totalPaging);
-		pageMap.put("list", list);
-		
-		return pageMap;
-	}
-
-	@Override
-	public void deleteBoard(List list) {
-		mainDAO.deleteBoard(list);
-	}
-
-	@Override
-	public BoardDTO getAdminBoard(BoardDTO boardDTO) {
-		return mainDAO.getAdminBoard(boardDTO);
-	}
-
-	@Override
-	public void updateBoard(BoardDTO boardDTO) {
-		mainDAO.updateBoard(boardDTO);
-	}
 }

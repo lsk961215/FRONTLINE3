@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.frontline.dto.BoardDTO;
-import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 public interface MainDAO {
@@ -14,30 +13,22 @@ public interface MainDAO {
 	UserDTO loginUser(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
-	int selectUserTotal();
-	List selectUserPage(Map map);
-	void insertDummy(UserDTO userDTO);
-	UserDTO findId(UserDTO userDTO);
-	UserDTO findPw(UserDTO userDTO);
-	boolean checkId(Map map);
-	boolean checkEmail(Map map);
-	boolean checkPhone(Map map);
-	List selectBoardList(Map map);
-	List selectBoardPage(Map map);
-	int selectBoardTotal(Map map);
-	List selectRegionNames();
-	BoardDTO selectBoard(BoardDTO boardDTO);
-	void addComment(CommentDTO commentDTO);
-	List selectCommentList(BoardDTO boardDTO);
-	List selectCommentPage(Map map);
-	int selectCommentTotal();
-	CommentDTO selectComment(CommentDTO commentDTO);
-	void updateComment(CommentDTO commentDTO);
-	void deleteComment(List list);
-	void insertBoard(BoardDTO boardDTO);
-	List selectAdminBoardPage(Map map);
-	int selectAdminBoardTotal(Map map);
-	void deleteBoard(List list);
-	BoardDTO getAdminBoard(BoardDTO boardDTO);
-	void updateBoard(BoardDTO boardDTO);
+	//≥Ó∞≈∏Æ µÓ∑œ
+	void insertPlay(BoardDTO boardDTO);
+	//≥Ó∞≈∏Æ ¡∂»∏
+	List getPlayList();
+	//≥Ó∞≈∏Æ º±≈√
+	BoardDTO playcorr(BoardDTO boardDTO);
+	//≥Ó∞≈∏Æ ºˆ¡§
+	void updatePlay(BoardDTO boardDTO);
+	//≥Ó∞≈∏ÆªË¡¶
+	int deletePlay(BoardDTO boardDTO);
+	//≥Ó∞≈∏Æ ∆‰¿Ã¬°
+	List Paging(BoardDTO boardDTO);
+	//∆‰¿Ã¡ˆ ≈‰≈ª
+	int pageTotal();
+	//≥Ó∞≈∏Æ ¥ı∫∏±‚ ∆‰¿Ã¬°
+	List morePaging(BoardDTO boardDTO);
+	//¥ı∫∏±‚ ≈‰≈ª
+	int moreTotal(BoardDTO boardDTO);
 }

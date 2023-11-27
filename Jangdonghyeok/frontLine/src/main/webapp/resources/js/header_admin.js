@@ -1,4 +1,5 @@
 window.addEventListener("load", function(){
+    header_image()
     header_menu()
     header_pop()
     header_search()
@@ -6,7 +7,92 @@ window.addEventListener("load", function(){
 	header_info()
 })
 
+function header_image(){
+    // 순서대로 천안부터 금산까지 이미지 불러오기
+    let xhr = new XMLHttpRequest();
+    let url = "./resources/data/ch_data.html"
+    xhr.open("GET", url);
+    xhr.send();
+        
+    xhr.onload = function () {
+        let str = xhr.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
 
+        let ch = data.querySelectorAll(".ch_travel img")[11]
+
+        document.querySelector(".header_ch").prepend(ch)
+    }
+
+    let xhr2 = new XMLHttpRequest();
+    let url2 = "./resources/data/Asan_data.html"
+    xhr2.open("GET", url2);
+    xhr2.send();
+    xhr2.onload = function () {
+        let str = xhr2.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
+        let as = data.querySelectorAll(".asan_travel img")[5]
+
+        document.querySelector(".header_as").prepend(as)
+    }
+
+    //태서당 부터 파일 없어져서 그냥 떼움
+    let xhr3 = new XMLHttpRequest();
+    let url3 = "./resources/data/Asan_data.html"
+    xhr3.open("GET", url3);
+    xhr3.send();
+    xhr3.onload = function () {
+        let str = xhr3.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
+
+        let tsd = data.querySelectorAll(".asan_travel img")[2]
+
+        document.querySelector(".header_tsd").prepend(tsd)
+    }
+
+    let xhr4 = new XMLHttpRequest();
+    let url4 = "./resources/data/Asan_data.html"
+    xhr4.open("GET", url4);
+    xhr4.send();
+    xhr4.onload = function () {
+        let str = xhr4.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
+        let yhc = data.querySelectorAll(".asan_travel img")[3]
+
+        document.querySelector(".header_yhc").prepend(yhc)
+    }
+
+    let xhr5 = new XMLHttpRequest();
+    let url5 = "./resources/data/Asan_data.html"
+    xhr5.open("GET", url5);
+    xhr5.send();
+    xhr5.onload = function () {
+        let str = xhr5.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
+
+        let bbs = data.querySelectorAll(".asan_travel img")[4]
+
+        document.querySelector(".header_bbs").prepend(bbs)
+    }
+
+    let xhr6 = new XMLHttpRequest();
+    let url6 = "./resources/data/ch_data.html"
+    xhr6.open("GET", url6);
+    xhr6.send();
+    xhr6.onload = function () {
+        let str = xhr6.responseText
+        let parser = new DOMParser()
+        let data = parser.parseFromString(str, "text/html")
+
+        let gss = data.querySelectorAll("img")[5]
+
+        document.querySelector(".header_gss").prepend(gss)
+    }
+}
 
 function header_menu(){
     // 카운트값 이용해서 마우스 위치 파악해서 메뉴팝업 메뉴에 마우스가 올라가면 1 아니면 0
