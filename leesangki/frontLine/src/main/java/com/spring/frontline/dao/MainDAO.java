@@ -14,7 +14,7 @@ public interface MainDAO {
 	UserDTO loginUser(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
-	int selectUserTotal();
+	int selectUserTotal(Map map);
 	List selectUserPage(Map map);
 	void insertDummy(UserDTO userDTO);
 	UserDTO findId(UserDTO userDTO);
@@ -30,7 +30,7 @@ public interface MainDAO {
 	void addComment(CommentDTO commentDTO);
 	List selectCommentList(BoardDTO boardDTO);
 	List selectCommentPage(Map map);
-	int selectCommentTotal();
+	int selectCommentTotal(Map map);
 	CommentDTO selectComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);
@@ -42,5 +42,24 @@ public interface MainDAO {
 	BoardDTO getAdminBoard(BoardDTO boardDTO);
 	void updateBoard(BoardDTO boardDTO);
 	List selectAdminBoardSearchPage(Map map);
-	
+	List getBoardInfoList();
+	void deleteBoardDTO(List list);
+	BoardDTO detailBoardDTO(BoardDTO dto);
+	void updateBoardDTO(BoardDTO dto);
+	void travelNew(BoardDTO dto);
+	List travelList();
+	BoardDTO travelUpdate(BoardDTO dto);
+	void setBoard(BoardDTO dto);
+	void travelDelete(String[] boardDelete);
+	List boardPick1(BoardDTO dto);
+	List boardPick2(BoardDTO dto);
+	List boardPick3(BoardDTO dto);
+	List boardPick4(BoardDTO dto);
+	public List pageBoard(BoardDTO boardDTO);
+	public int pageTotal();
+	public BoardDTO updatePage(BoardDTO boardDTO);
+	public int deleteBoard(String delete);
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
 }

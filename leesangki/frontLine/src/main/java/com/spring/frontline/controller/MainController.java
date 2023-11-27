@@ -9,7 +9,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Enumeration;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,7 +37,11 @@ public class MainController {
 	MainService mainService;
 	
 	@RequestMapping("/")
-	public String goMain() {
+	public String goMain(Model model) {
+		List popup = mainService.popup1();
+		System.out.println(popup);
+		model.addAttribute("popup", popup);
+		
 		return "main";
 	}
 	
@@ -78,12 +85,28 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goAdminUser")
-	public String goAdminUser() {
+	public String goAdminUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getUser";
+	}
+	
+	@RequestMapping("/goAdminUser2")
+	public String goAdminUser2() {
 		return "redirect:/getUser";
 	}
 	
 	@RequestMapping("/goAdminComment")
-	public String goAdminComment() {
+	public String goAdminComment(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getComment";
+	}
+	
+	@RequestMapping("/goAdminComment2")
+	public String goAdminComment2() {
 		return "redirect:/getComment";
 	}
 	
@@ -93,7 +116,15 @@ public class MainController {
 	}
 	
 	@RequestMapping("/goAdminBoardList")
-	public String goAdminBoardList() {
+	public String goAdminBoardList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
+		return "redirect:/getAdminBoard";
+	}
+	
+	@RequestMapping("/goAdminBoardList2")
+	public String goAdminBoardList2() {
 		return "redirect:/getAdminBoard";
 	}
 	
@@ -106,10 +137,6 @@ public class MainController {
 		boolean id = (Boolean)map.get("checkId");
 		boolean email = (Boolean)map.get("checkEmail");
 		boolean phone = (Boolean)map.get("checkPhone");
-		
-		System.out.println("id : " + id);
-		System.out.println("email : " + email);
-		System.out.println("phone : " + phone);
 		
 		if(id == true && email == true && phone == true) {
 			mainService.insertUser(userDTO);
@@ -158,7 +185,37 @@ public class MainController {
 				
 			}
 			
-			Map map = mainService.getUserPage(pageNum, countPerPage);
+			Map selectMap = new HashMap();
+			
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
+			
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			selectMap.put("pageNum", pageNum);
+			selectMap.put("countPerPage", countPerPage);
+			
+			Map map = mainService.getUserPage(selectMap);
 			
 			model.addAttribute("map", map);
 			model.addAttribute("pageNum", pageNum);
@@ -324,12 +381,12 @@ public class MainController {
 	
 	// 관리자 페이지 유저목록 페이지당 개수
 	@RequestMapping("/userSetPerPage")
-	public String setPerPage(HttpServletRequest request, String countPerPage) {
+	public String userSetPerPage(HttpServletRequest request, String countPerPage) {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/getUser";
+		return "redirect:/goAdminUser2";
 	}
 	
 	@RequestMapping("/commentSetPerPage")
@@ -338,7 +395,7 @@ public class MainController {
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/getComment";
+		return "redirect:/goAdminComment2";
 	}
 	
 	@RequestMapping("/setBoardPerPage")
@@ -347,7 +404,7 @@ public class MainController {
 		
 		session.setAttribute("countPerPage", countPerPage);
 		
-		return "redirect:/goAdminBoardList";
+		return "redirect:/goAdminBoardList2";
 	}
 	
 	@RequestMapping("/setBaordType")
@@ -356,6 +413,8 @@ public class MainController {
 		
 		session.setAttribute("typeSeq", typeSeq);
 		
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
 		return "redirect:/goAdminBoardList";
 	}
 	
@@ -364,22 +423,31 @@ public class MainController {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("regionSeq", regionSeq);
+		session.removeAttribute("searchColumn");
+		session.removeAttribute("searchText");
 		
 		return "redirect:/goAdminBoardList";
 	}
 	
 	@RequestMapping("/findId")
-	public String findId(HttpServletRequest request, Model model , UserDTO userDTO) {
-		
-		System.out.println(userDTO);
-		
-		UserDTO findUserDTO = mainService.findId(userDTO);
-		
-		System.out.println(findUserDTO);
-		
-		model.addAttribute("findUserDTO", findUserDTO);
-		
-		return "find_id_result";
+	public String findId(@ModelAttribute UserDTO dto, Model model) {
+		//dto 받아서 아이디 결과 페이지에 반환
+		//jsp에서 출력
+		//System.out.println(dto.toString());
+		//null일때는 아이디 찾기 페이지로 돌아옴
+		UserDTO data = mainService.findId(dto);
+		System.out.println(data);
+		if(data == null) {
+			model.addAttribute("msg", "유효한 값을 입력해주세요");
+			model.addAttribute("url", "goFindId");
+
+			return "alert";
+		}else {
+			model.addAttribute("dto", data);
+			
+			return "find_id_2";
+		}
+
 	}
 	
 	@RequestMapping("/findPw")
@@ -411,8 +479,6 @@ public class MainController {
 		
 		String target = request.getParameter("checkTarget");
 		
-		System.out.println(target);
-		
 		Map map = (HashMap)session.getAttribute("joinMap");
 		
 		if(map == null) {
@@ -423,15 +489,12 @@ public class MainController {
 		map.put("joinDTO", joinDTO);
 		
 		if("checkId".equals(map.get("target"))) {
-			System.out.println("controller id 실행");
 			boolean checkId = mainService.checkJoin(map);
 			map.put("checkId", checkId);
 		} else if("checkEmail".equals(map.get("target"))) {
-			System.out.println("controller email 실행");
 			boolean checkEmail = mainService.checkJoin(map);
 			map.put("checkEmail", checkEmail);
 		} else {
-			System.out.println("controller phone 실행");
 			boolean checkPhone = mainService.checkJoin(map);
 			map.put("checkPhone", checkPhone);
 		}
@@ -571,7 +634,37 @@ public class MainController {
 				
 			}
 			
-			Map map = mainService.getCommentPage(pageNum, countPerPage);
+			Map selectMap = new HashMap();
+			
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
+			
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			selectMap.put("pageNum", pageNum);
+			selectMap.put("countPerPage", countPerPage);
+			
+			Map map = mainService.getCommentPage(selectMap);
 			
 			model.addAttribute("map", map);
 			model.addAttribute("pageNum", pageNum);
@@ -618,7 +711,7 @@ public class MainController {
 		
 		mainService.deleteComment(list);
 		
-		return "redirect:/getUser";
+		return "redirect:/goAdminComment";
 	}
 	
 	// 게시물 등록
@@ -634,7 +727,7 @@ public class MainController {
 	
 	// 관리자 페이지 게시물 리스트출력
 	@RequestMapping("/getAdminBoard")
-	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO, SearchDTO searchDTO) {
+	public String getAdminBoard(HttpServletRequest request, Model model, BoardDTO boardDTO) {
 		HttpSession session = request.getSession();
 		
 		// commentSeq 필드값이 -1이면 리스트페이지에서 접속한 것으로 판단해서 전체목록, 아니면 유저정보 수정으로 판단해서 유저 한명의 정보만
@@ -694,20 +787,32 @@ public class MainController {
 			
 			Map selectMap = new HashMap();
 			
-			selectMap.put("searchColumn", searchDTO.getSearchColumn());
-			selectMap.put("searchText", searchDTO.getSearchText());
+			String searchText = "";
+			String tmp_searchText = request.getParameter("searchText");
 			
-			// dto가 자동으로 불러오는게 input의 빈값도 불러와서 오류가 나는듯?
-			if(!("".equals(searchDTO.getSearchText()))) {
+			if(tmp_searchText != null) {
+				try { 
+					searchText = tmp_searchText;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				
-				session.setAttribute("searchColumn", searchDTO.getSearchColumn());
-				session.setAttribute("searchText", searchDTO.getSearchText());
 			}
 			
 			
-			System.out.println("dto" + searchDTO.getSearchText());
-			System.out.println("session" + session.getAttribute("searchText"));
+			if(!("".equals(searchText))) {
+				
+				selectMap.put("searchColumn", request.getParameter("searchColumn"));
+				selectMap.put("searchText", searchText);
+				
+				session.setAttribute("searchColumn", request.getParameter("searchColumn"));
+				session.setAttribute("searchText", searchText);
+			} else {
+				selectMap.put("searchColumn", session.getAttribute("searchColumn"));
+				selectMap.put("searchText", session.getAttribute("searchText"));
+			}
+			
+			
 			
 			selectMap.put("pageNum", pageNum);
 			selectMap.put("countPerPage", countPerPage);
@@ -784,4 +889,286 @@ public class MainController {
 		
 		return "redirect:/goAdminBoardList";
 	}
+	
+	//맛집 등록 접속
+	@RequestMapping("/goAddEat")
+	public String goAddEat() {
+		return "admin_eat_new";
+	}
+	
+	//insert 맛집 등록
+		@RequestMapping(value= "/eatResult", method=RequestMethod.POST)
+		public String eatResult(
+				@RequestParam ("regionSeq") int regionSeq,
+				@ModelAttribute BoardDTO dto
+				) {	
+					mainService.insertBoard(dto);
+					// 결과를 jsp로 보낸다
+					////등록에서 입력한 값을 목록으로 보냄
+					return "forward:/eatResultGo";
+		}
+		
+		//맛집 리스트
+		@RequestMapping("/eatResultGo")
+		public String eatResultGo(Model model) {
+			//db에서 
+			//목록을 가지고 오고 
+			//어디엔가 담아서 
+			//jsp로 보낸다
+			//jsp에서 꺼내서 표시한다
+			//List list = mainService.getBoardInfoList();
+			List list = mainService.getBoardInfoList();
+			//이건 모든걸 가져오는거라 안씀
+			model.addAttribute("list", list);
+			return "admin_eat_management";
+		}
+		
+		//delete 맛집 삭제
+		@RequestMapping(value="/adminEatDelete")
+		public String admin_eat_delete(
+				//@RequestParam ("ck") int[] ck
+				HttpServletRequest request
+				) {
+//			for(int i = 0; i<ck.length; i++) {
+//				System.out.println(ck[i]);
+//			}
+			String[] ck = request.getParameterValues("ck");
+//			for(int i = 0; i<ck.length; i++) {
+//				System.out.println(ck[i]);		
+//			}
+			
+			List list = new ArrayList();
+			
+			for(int i = 0; i<ck.length; i++) {
+				list.add(ck[i]);
+			}
+			
+			mainService.deleteBoardDTO(list);
+			return "forward:/eatResultGo";
+		}
+		
+		//select 맛집 상세페이지
+		@RequestMapping(value="/adminEatDetail")
+		public String admin_eat_detail(@ModelAttribute BoardDTO dto,
+				Model model) {
+			//System.out.println(dto.getBoardSeq());
+			BoardDTO data = mainService.detailBoardDTO(dto);
+			model.addAttribute("dto", data);
+			return "admin_eat_update";
+		}
+		
+		//update 맛집 상세 페이지 수정
+		@RequestMapping(value="/adminEatUpdate" , method=RequestMethod.POST)
+		public String admin_eat_update(@ModelAttribute BoardDTO dto
+				) {
+			//System.out.println("dto" + dto. toString());
+			mainService.updateBoardDTO(dto);
+			return "forward:/adminEatDetail";
+		}
+		
+		// 관리자-여행지등록 페이지
+		@RequestMapping("/admin_travel_new")
+		public String admin_travel_new() {
+			return "travel/admin_travel_new";
+		}
+		
+		// 관리자-여행지등록 페이지(제출 후)
+		@RequestMapping(value="/travelNew", method=RequestMethod.POST)
+		public String travelNew(Model model ,@ModelAttribute BoardDTO dto) {
+			System.out.println("dto : " + dto);
+//			dto.setUserSeq(24);
+			dto.setTypeSeq(0);
+		
+			mainService.travelNew(dto);
+			
+			List travelList = mainService.travelList();
+			
+			model.addAttribute("travelList", travelList);
+			
+			return "/travel/admin_travel_management";
+		}
+		
+		// 관리자-여행지관리 페이지(목록)
+		@RequestMapping("/travelList")
+		public String travelList(Model model) {
+			System.out.println("/travelList");
+			List travelList = mainService.travelList();
+			model.addAttribute("travelList", travelList);
+			
+			return "/travel/admin_travel_management";
+		}
+		
+		// 관리자-여행지관리 페이지(수정전 리스트조회)
+		@RequestMapping("/travelUpdate")
+		public String travelUpdate(BoardDTO dto, Model model) {
+			System.out.println("/travelUpdate");
+			
+			BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+			model.addAttribute("beforeUpdate", beforeUpdate);
+			return "/travel/admin_travel_update";
+		}
+		
+		// 관리자-여행지관리 페이지(수정)
+		@RequestMapping("/travelBoardUpdate")
+		public String travelBoardUpdate(BoardDTO dto, Model model) {
+			System.out.println("/travelBoardUpdate");
+			System.out.println("dto : " + dto);
+			mainService.setBoard(dto);
+			
+			BoardDTO beforeUpdate = mainService.travelUpdate(dto);
+			model.addAttribute("beforeUpdate", beforeUpdate);
+			
+			return "/travel/admin_travel_update";
+		}
+		
+		// 관리자-여행지관리 페이지(삭제)
+		@RequestMapping("/travelDelete")
+		public String travelDelete(HttpServletRequest request, Model model) {
+			String[] boardDelete = request.getParameterValues("boardDelete");
+			for(int i=0; i<boardDelete.length; i++) {
+				System.out.println("boardDelete[" + i + "] : " + boardDelete[i]);
+			}
+			mainService.travelDelete(boardDelete);
+			List travelList = mainService.travelList();
+			model.addAttribute("travelList", travelList);
+			return "/travel/admin_travel_management";
+		}
+		
+		// 관리자-여행지관리 페이지(검색)
+		@RequestMapping("/boardPick")
+		public String boardPick(BoardDTO dto, Model model) {
+			System.out.println("/boardPick 실행");
+			System.out.println("boardPick() --> dto 실행 : " + dto);
+			List boardPick = null;
+			if(dto.getBoardSearch() != null && dto.getTypeSeq() == 0) {
+				if(dto.getBoardPick() == 0) {
+					boardPick = mainService.boardPick1(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 1) {
+					boardPick = mainService.boardPick2(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 2) {
+					boardPick = mainService.boardPick3(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else if(dto.getBoardPick() == 3) {
+					boardPick = mainService.boardPick4(dto);
+					System.out.println("검색셀렉트 출력 : " + boardPick);
+				}else {
+					boardPick = mainService.travelList();
+				}
+			}
+			
+			model.addAttribute("travelList", boardPick);
+			
+			return "/travel/admin_travel_management";
+		
+		}
+		
+		@RequestMapping("/goAdmin_room_new")
+		public String goAdmin_room_new() throws Exception{
+			return "room/admin_room_new";
+		}
+		
+		@RequestMapping("/goAdmin_room_management")
+		public String pagingAdmin_room(HttpServletRequest request, Model model, BoardDTO boardDTO) {
+			
+//			List<BoardDTO> list = mainService.list(); 
+//			model.addAttribute("just", list);
+			System.out.println("BoardDTO boardDTO 입니다 : " + boardDTO);
+			int pageNum = 1;
+			int countPerPage = 10;
+			
+			String tmp_pageNum = request.getParameter("pageNum");
+			if(tmp_pageNum != null) {
+				try {
+					pageNum = Integer.parseInt(tmp_pageNum);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			String tmp_countPerPage = request.getParameter("countPerPage");
+			
+			if(tmp_countPerPage != null) {
+				try {
+					countPerPage = Integer.parseInt(tmp_countPerPage);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+					
+			Map map = mainService.pageBoard(pageNum, countPerPage);
+			map.put("pageNum", pageNum);
+			map.put("countPerPage", countPerPage);
+			
+			model.addAttribute("data", map);
+			
+//			return map;
+			return "room/admin_room_management";
+		}
+		
+		@RequestMapping("/updatePage")
+		public String updateAdmin_page(BoardDTO boardDTO, Model model) {
+			
+			BoardDTO updatePage = mainService.updatePage(boardDTO);
+			System.out.println("updatePage : " + updatePage);
+			
+			model.addAttribute("updatePage", updatePage);
+			
+			return "room/admin_room_update";
+		}
+		
+		@RequestMapping(value="/delete", method=RequestMethod.POST)
+		@ResponseBody // 리턴값을 그대로 돌려주는 역할 / jsp로 안보냄
+		public int deleteAdmin_room(HttpServletRequest request) {
+			// 스트링을 받을 순 있지만 리턴할때는 인트로 그걸 세서 보내야됨
+			String[] delete = request.getParameterValues("valueArr"); // 체크된 값들을 넣음
+			int size = delete.length;
+			int delreturn = 0;
+			
+			for(int i =0; i<size; i++) {
+				delreturn += mainService.deleteBoard(delete[i]);
+
+			}		
+//				System.out.println("delreturn : " + delreturn);	
+			return delreturn;
+		}
+		
+		
+		// 팝업 쿠키생성 만들어놓음
+		@RequestMapping("/popupCookie")
+		public String popupCookie(HttpServletResponse response, @RequestParam("target") String target) {
+			Cookie cookie = new Cookie(target, "setChecked");
+			cookie.setMaxAge(10); 
+			response.addCookie(cookie);
+			
+			return "redirect:/";
+		}
+		
+		@RequestMapping("/adminPopup")
+		public String adminPopup(Model model) {
+			List popup = mainService.popup1();
+			model.addAttribute("popup", popup);
+			return "/popup/admin_popup";
+		}
+		
+		// 관리자 - 팝업관리 페이지(수정전 리스트조회)
+		@RequestMapping("/popupReadyUpdate")
+		public String popupReadyUpdate(@RequestParam Map map, Model model) {
+			System.out.println("/popupReadyUpdate Controller 실행");
+			System.out.println("map : " + map);
+			Map popupUpdateList = mainService.popupReadyUpdate(map);
+			model.addAttribute("updateList", popupUpdateList);
+			return "/popup/admin_popup_update";
+		}
+		
+		// 관리자 - 팝업관리 페이지(수정)
+		@RequestMapping("/popupUpdate")
+		public String popupUpdate(@RequestParam Map map, Model model) {
+			System.out.println("popupUpdate(map) Controller 실행 : " + map);
+			
+			mainService.popupUpdate(map);
+			
+			return "redirect:/adminPopup";
+		}
 }

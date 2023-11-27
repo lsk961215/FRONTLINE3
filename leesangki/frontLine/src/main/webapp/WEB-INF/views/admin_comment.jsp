@@ -135,6 +135,15 @@ a {
 			<input type="submit" value="삭제">
 			</form>
 			
+			<form action="getComment">
+				<select name="searchColumn">
+					<option value="userId">아이디</option>
+					<option value="commentText">내용</option>
+				</select>
+				<input type="text" name="searchText">
+				<input type="submit" value="검색">
+			</form>
+			
 			<div>
 			<c:if test = "${map.get('beginPaging') != 1}">
 				<a href="getComment?pageNum=${map.get('beginPaging')-1}">이전</a>

@@ -14,7 +14,7 @@ public interface MainService {
 	UserDTO doLogin(Map map);
 	void updateUser(UserDTO userDTO);
 	void deleteUser(List list);
-	Map getUserPage(int pageNum, int countPerPage);
+	Map getUserPage(Map map);
 	void insertDummy(int loop);
 	UserDTO findId(UserDTO userDTO);
 	UserDTO findPw(UserDTO userDTO);
@@ -25,7 +25,7 @@ public interface MainService {
 	BoardDTO getBoard(BoardDTO boardDTO);
 	void addComment(CommentDTO commentDTO);
 	List getCommentList(BoardDTO boardDTO);
-	Map getCommentPage(int pageNum, int countPerPage);
+	Map getCommentPage(Map map);
 	CommentDTO getComment(CommentDTO commentDTO);
 	void updateComment(CommentDTO commentDTO);
 	void deleteComment(List list);
@@ -34,4 +34,23 @@ public interface MainService {
 	void deleteBoard(List list);
 	BoardDTO getAdminBoard(BoardDTO boardDTO);
 	void updateBoard(BoardDTO boardDTO);
+	List getBoardInfoList();
+	void deleteBoardDTO(List list);
+	BoardDTO detailBoardDTO(BoardDTO dto);
+	void updateBoardDTO(BoardDTO dto);
+	void travelNew(BoardDTO dto);
+	List travelList();
+	BoardDTO travelUpdate(BoardDTO dto);
+	void setBoard(BoardDTO dto);
+	void travelDelete(String[] boardDelete);
+	List boardPick1(BoardDTO dto);
+	List boardPick2(BoardDTO dto);
+	List boardPick3(BoardDTO dto);
+	List boardPick4(BoardDTO dto);
+	public Map pageBoard(int pageNum, int countPerPage);
+	public BoardDTO updatePage(BoardDTO boardDTO);
+	public int deleteBoard(String delete);
+	List popup1();
+	Map popupReadyUpdate(Map map);
+	void popupUpdate(Map map);
 }

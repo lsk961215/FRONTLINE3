@@ -50,9 +50,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public Map getUserPage(int pageNum, int countPerPage) {
-		
-		Map selectMap = new HashMap();
+	public Map getUserPage(Map selectMap) {
+		int pageNum = (Integer) selectMap.get("pageNum");
+		int countPerPage = (Integer) selectMap.get("countPerPage");
 		
 		int startNum = 0;
 		int endNum = 0;
@@ -64,7 +64,7 @@ public class MainServiceImpl implements MainService {
 		selectMap.put("endNum", endNum);
 		
 		List list = mainDAO.selectUserPage(selectMap);
-		int total = mainDAO.selectUserTotal();
+		int total = mainDAO.selectUserTotal(selectMap);
 		
 		int groupCount = 5;
 		
@@ -215,8 +215,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public Map getCommentPage(int pageNum, int countPerPage) {
-		Map selectMap = new HashMap();
+	public Map getCommentPage(Map selectMap) {
+		int pageNum = (Integer) selectMap.get("pageNum");
+		int countPerPage = (Integer) selectMap.get("countPerPage");
 		
 		int startNum = 0;
 		int endNum = 0;
@@ -228,7 +229,7 @@ public class MainServiceImpl implements MainService {
 		selectMap.put("endNum", endNum);
 		
 		List list = mainDAO.selectCommentPage(selectMap);
-		int total = mainDAO.selectCommentTotal();
+		int total = mainDAO.selectCommentTotal(selectMap);
 		
 		int groupCount = 5;
 		
@@ -291,7 +292,7 @@ public class MainServiceImpl implements MainService {
 		
 		int total = 0;
 		
-		if(selectMap.get("searchText") == null) {
+		if(selectMap.get("searchText") == null || "".equals(selectMap.get("searchText"))) {
 			list = mainDAO.selectAdminBoardPage(selectMap);
 			total = mainDAO.selectAdminBoardTotal(selectMap);
 		} else {
@@ -336,5 +337,138 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void updateBoard(BoardDTO boardDTO) {
 		mainDAO.updateBoard(boardDTO);
+	}
+
+	@Override
+	public List getBoardInfoList() {
+		
+		 return mainDAO.getBoardInfoList();
+	}
+
+	@Override
+	public void deleteBoardDTO(List list) {
+		 mainDAO.deleteBoardDTO(list);
+	}
+	
+	@Override
+	public BoardDTO detailBoardDTO(BoardDTO dto) {
+		 return mainDAO.detailBoardDTO(dto);
+	}
+	
+	@Override
+	public void updateBoardDTO(BoardDTO dto) {
+		 mainDAO.updateBoardDTO(dto);
+	}
+	
+	@Override
+	public void travelNew(BoardDTO dto) {
+		 mainDAO.travelNew(dto);
+	}
+	
+	@Override
+	public List travelList() {
+		return mainDAO.travelList();
+		
+	}
+	
+	@Override
+	public BoardDTO travelUpdate(BoardDTO dto) {
+		return mainDAO.travelUpdate(dto);
+	}
+	
+	@Override
+	public void setBoard(BoardDTO dto) {
+		mainDAO.setBoard(dto);		
+	}
+	
+	@Override
+	public void travelDelete(String[] boardDelete) {
+		mainDAO.travelDelete(boardDelete);
+	}
+	
+	@Override
+	public List boardPick1(BoardDTO dto) {
+		return mainDAO.boardPick1(dto);
+		
+	}
+
+	@Override
+	public List boardPick2(BoardDTO dto) {
+		return mainDAO.boardPick2(dto);
+		
+	}
+
+	@Override
+	public List boardPick3(BoardDTO dto) {
+		return mainDAO.boardPick3(dto);
+		
+	}
+
+	@Override
+	public List boardPick4(BoardDTO dto) {
+		return mainDAO.boardPick4(dto);
+		
+	}
+	
+	@Override
+	public Map pageBoard(int pageNum, int countPerPage) {
+
+		int startNum = 0, endNum = 0;
+
+		// ���� �������� ������ ���� + 1
+		startNum = ((pageNum - 1) * countPerPage) + 1;
+		// pageNum�� 1�϶��� 1 ~ 10 2�϶��� 11 ~ 20�� ������
+		System.out.println("startNum : " + startNum);
+		endNum = pageNum * countPerPage;
+		System.out.println("endNum : " + endNum);
+//				endNum = startNum + countPerPage - 1;
+
+		BoardDTO dto = new BoardDTO();
+		dto.setStartNum(startNum); // 1 , 11, 21
+		dto.setEndNum(endNum); // 10, 20, 30
+
+		// ������ ����Ʈ�� �� �̾���
+		List list = mainDAO.pageBoard(dto); // 1 ~ 10 // 11 ~ 20 ���...
+		System.out.println("list : " + list);
+
+		// ��ü ȸ������ �̾���
+		int total = mainDAO.pageTotal();
+		System.out.println("total : " + total);
+
+		Map map = new HashMap();
+		map.put("list", list);
+		map.put("total", total);
+
+		return map;
+	}
+	
+	@Override
+	public BoardDTO updatePage(BoardDTO boardDTO) {
+
+		return mainDAO.updatePage(boardDTO);
+	}
+	
+	@Override
+	public int deleteBoard(String delete) {
+		
+		
+		int deleteBoard = mainDAO.deleteBoard(delete);
+
+		return deleteBoard;
+	}
+	
+	@Override
+	public List popup1() {
+		return mainDAO.popup1();
+	}
+	
+	@Override
+	public Map popupReadyUpdate(Map map) {
+		return mainDAO.popupReadyUpdate(map);
+	}
+	
+	@Override
+	public void popupUpdate(Map map) {
+		mainDAO.popupUpdate(map);
 	}
 }

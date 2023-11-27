@@ -161,6 +161,15 @@ a {
 			<input type="submit" value="삭제">
 			</form>
 			
+			<form action="getUser">
+				<select name="searchColumn">
+					<option value="userId">아이디</option>
+					<option value="userName">이름</option>
+				</select>
+				<input type="text" name="searchText">
+				<input type="submit" value="검색">
+			</form>
+			
 			<div>
 			<c:if test = "${map.get('beginPaging') != 1}">
 				<a href="getUser?pageNum=${map.get('beginPaging')-1}">이전</a>

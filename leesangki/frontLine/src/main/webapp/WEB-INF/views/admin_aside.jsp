@@ -14,22 +14,22 @@
 		<a>
 			<h1>게시물 페이지</h1>
 		</a>
-		<a href="admin_eat_new.jsp">
+		<a href="goAddEat">
 			<h3>맛집 등록</h3>
 		</a>
-		<a href="admin_eat_management.jsp">
+		<a href="eatResultGo">
 			<h3>맛집 관리</h3>
 		</a>
-		<a href="admin_travel_new.jsp">
+		<a href="admin_travel_new">
 			<h3>여행지 등록</h3>
 		</a>
-		<a href="admin_travel_management.jsp">
+		<a href="travelList">
 			<h3>여행지 관리</h3>
 		</a>
-		<a href="admin_travel_new.jsp">
+		<a href="goAdmin_room_new">
 			<h3>숙소 등록</h3>
 		</a>
-		<a href="admin_travel_management.jsp">
+		<a href="goAdmin_room_management">
 			<h3>숙소 관리</h3>
 		</a>
 		<a href="admin_play_new.jsp">
@@ -44,7 +44,7 @@
 		<a href="goAdminBoardList">
 			<h3>게시물 관리</h3>
 		</a>
-		<a href="admin_popup.jsp">
+		<a href="adminPopup">
 			<h3>팝업 관리</h3>
 		</a>
 		<a>
