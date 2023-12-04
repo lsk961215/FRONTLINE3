@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+	<resultMap id="userMap" type="com.spring.frontline.dto.UserDTO">
+	  <result column="user_seq" property="userSeq"/>
+	  <result column="user_id" property="userId"/>
+	  <result column="user_pw" property="userPw"/>
+	  <result column="user_name" property="userName"/>
+	  <result column="grade_seq" property="gradeSeq"/>
+	  <result column="gender_seq" property="genderSeq"/>
+	  <result column="user_birth" property="userBirth"/>
+	  <result column="user_email" property="userEmail"/>
+	  <result column="user_phone" property="userPhone"/>
+	  <result column="user_regdate" property="userRegDate"/>
+	</resultMap>
+	
+	<resultMap id="boardMap" type="com.spring.frontline.dto.BoardDTO">
+      <result column="board_seq" property="boardSeq"/>
+      <result column="user_seq" property="userSeq"/>
+      <result column="region_seq" property="regionSeq"/>
+      <result column="type_seq" property="typeSeq"/>
+      <result column="board_title" property="boardTitle"/>
+      <result column="board_address" property="boardAddress"/>
+      <result column="board_open" property="boardOpen"/>
+      <result column="board_detail" property="boardDetail"/>
+      <result column="board_regdate" property="boardRegDate"/>
+      <result column="board_break" property="boardBreak"/>
+      <result column="board_phone" property="boardPhone"/>
+      <result column="board_image" property="boardImage"/>
+    </resultMap>
+	
+	<select id="selectUserList" resultMap="userMap">
+		select * from user_info order by user_seq
+	</select>
+	
+	<select id="selectUser" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">
+		select * from user_info where user_seq = #{userSeq}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.spring.frontline.dto.UserDTO">
+		insert into user_info values ( user_seq.nextval, #{userId}, #{userPw}, #{userName}, 0, #{genderSeq}, #{userBirth}, #{userEmail}, #{userPhone}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'))
+	</insert>
+	
+	<select id="loginUser" parameterType="java.util.HashMap" resultMap="userMap">
+		select * from user_info where user_id = #{id} and user_pw = #{pw}
+	</select>
+	
+	<update id="updateUser" parameterType="com.spring.frontline.dto.UserDTO">
+		update user_info set user_id = #{userId}, user_name = #{userName}, user_pw = #{userPw},
+		  	   user_email = #{userEmail}, user_phone = #{userPhone}, grade_seq = #{gradeSeq},
+		       gender_seq = #{genderSeq}, user_birth = #{userBirth} where user_seq = #{userSeq}
+	</update>
+	
+	<delete id="deleteUser" parameterType="java.util.List">
+		delete from user_info where user_seq in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="roomlist" resultMap="boardMap">
+		select board_seq, board_Title, board_Address, board_Open, board_Detail, board_RegDate, board_Image, board_Break, board_Phone from board_info where type_seq = 3
+		<!-- select * from board_info where board_seq = #{board_seq} -->
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		insert into board_info
+		values
+		(board_seq.nextval, #{userSeq}, #{regionSeq}, #{typeSeq}, #{boardTitle}, #{boardAddress}, #{boardOpen}, #{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'), #{boardBreak}, #{boardPhone}, #{boardImage})
+	</insert>
+	
+	<!-- <delete id="deleteBoard" parameterType="hashMap">
+		delete from board_info where board_seq in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+		 #[item]
+		</foreach> 
+	</delete> -->
+	
+	<delete id="deleteBoard" parameterType="hashMap">
+	delete from board_info where board_seq = #{boardSeq}
+	</delete>
+	
+	<select id="updatePage" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select * from board_info where board_seq = #{boardSeq}
+	
+	</select>
+	<update id="updateBoard" parameterType="com.spring.frontline.dto.BoardDTO"> 
+	update board_info 
+		set 
+			board_Title = #{boardTitle}, 
+			board_Address = #{boardAddress},
+			board_Phone = #{boardPhone}, 
+			board_Open = #{boardOpen}, 
+			board_Image = #{boardImage}, 
+			board_Detail = #{boardDetail}
+		where
+			board_seq = #{boardSeq}
+	</update>
+	
+	<select id="pageBoard" parameterType="com.spring.frontline.dto.BoardDTO" resultMap="boardMap">
+	select * from (
+		select rownum as rnum, tmp.* from (
+			select * from board_info where type_Seq = 3 order by board_regdate desc
+		) tmp
+	) where rnum <![CDATA[ >= ]]> #{startNum} and rnum <![CDATA[ <= ]]> #{endNum}
+	</select>
+	
+ 	<select id="pageTotal" resultType="int">
+		select count(*) from board_info where type_Seq = 3
+	</select>
+	
+	<select id="boardPick1" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select * from board_info where board_seq = #{boardSearch} and type_seq = #{typeSeq}
+	</select>
+	
+	<select id="boardPick2" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select 
+			* 
+		from
+			board_info, board_region
+		where
+			board_info.region_seq = board_region.region_seq
+		and
+			board_region.region_name = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	
+</mapper>
+	
