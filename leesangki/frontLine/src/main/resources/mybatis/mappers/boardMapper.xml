@@ -95,4 +95,145 @@
 		  	   board_address = #{boardAddress}, board_open = #{boardOpen}, board_detail = #{boardDetail},
 		       board_break = #{boardBreak}, board_Phone = #{boardPhone}, board_image = #{boardImage} where board_seq = #{boardSeq}
 	</update>
+	
+	<select id="selectEatBoard" resultMap="boardMap"> <!-- 무조건 쓸것 -->
+   	select * from board_info where type_seq = 2
+	</select>
+	
+	<delete id="deleteDetailBoard" parameterType="list">
+		delete from board_info where board_seq in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="selectDetailBoard"  resultMap="boardMap"> 
+   	select * from board_info where board_seq = #{boardSeq}
+	</select>
+	
+	<update id="updateDetailBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		update
+		board_info
+		set
+		user_seq = #{userSeq},
+		region_seq = #{regionSeq},
+		board_Title = #{boardTitle},
+		board_Address = #{boardAddress},
+		board_Open = #{boardOpen},
+		board_Phone = #{boardPhone},
+		board_Detail = #{boardDetail},
+		board_RegDate = #{boardRegDate},
+		board_image = #{boardImage}
+		where
+		board_seq = #{boardSeq}
+		</update>
+		
+		<!-- 최현아 -->
+		
+		<insert id="travelNew" parameterType="com.spring.frontline.dto.BoardDTO">
+		insert into board_info values (
+			board_seq.nextval, #{userSeq}, #{regionSeq}, #{typeSeq}, 
+			#{boardTitle}, #{boardAddress}, #{boardOpen},
+			#{boardDetail}, TO_CHAR(SYSDATE + (interval '9' hour),'YYYY-MM-DD HH24:MI:SS'),
+			#{boardBreak}, #{boardPhone}, #{boardImage}
+		)
+	</insert>
+	
+	<select id="travelList" resultMap="boardMap">
+		select * from board_info where type_seq = 0
+	</select>
+	
+	<select id="travelUpdate" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select * from board_info where board_seq = #{boardSeq}
+	</select>
+	
+	<update id="setBoard" parameterType="com.spring.frontline.dto.BoardDTO">
+		update 
+			board_info 
+		set 
+			board_title = #{boardTitle}, 
+			board_address = #{boardAddress}, 
+			board_open = #{boardOpen},
+			board_detail = #{boardDetail}, 
+			board_break = #{boardBreak}, 
+			board_phone = #{boardPhone},
+			board_image = #{boardImage}
+		where 
+			board_seq = #{boardSeq}
+	</update>
+	
+	<delete id="travelDelete" parameterType="hashmap">
+		delete 
+			from board_info
+		where board_seq in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="boardPick1" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select 
+			* 
+		from
+			board_info
+		where
+			board_seq = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick2" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select 
+			* 
+		from
+			board_info, board_region
+		where
+			board_info.region_seq = board_region.region_seq
+		and
+			board_region.region_name = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick3" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select
+			*
+		from
+			board_info
+		where
+			board_title = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	<select id="boardPick4" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select
+			*
+		from
+			board_info, user_info
+		where
+			board_info.user_seq = user_info.user_seq
+		and
+			user_info.user_seq = #{boardSearch}
+		and 
+			type_seq = #{typeSeq}
+	</select>
+	
+	<select id="pageBoard" parameterType="com.spring.frontline.dto.BoardDTO" resultMap="boardMap">
+	select * from (
+		select rownum as rnum, tmp.* from (
+			select * from board_info where type_Seq = 3 order by board_regdate desc
+		) tmp
+	) where rnum <![CDATA[ >= ]]> #{startNum} and rnum <![CDATA[ <= ]]> #{endNum}
+	</select>
+	
+	<select id="pageTotal" resultType="int">
+		select count(*) from board_info where type_Seq = 3
+	</select>
+	
+	<select id="updatePage" resultMap="boardMap" parameterType="com.spring.frontline.dto.BoardDTO">
+		select * from board_info where board_seq = #{boardSeq}
+	
+	</select>
+	
+	<delete id="deleteRoomBoard" parameterType="hashMap">
+	delete from board_info where board_seq = #{boardSeq}
+	</delete>
 </mapper>

@@ -372,57 +372,63 @@
         </main>
     <jsp:include page="footer.jsp"></jsp:include>
     
-   	<%
-   		int popup1_count = 0;
-   		int popup2_count = 0;
+   	<% 
+   		int popup1_count = 0; 
+   		int popup2_count = 0; 
    		
-   		Cookie[] cookies = request.getCookies();
+   		Cookie[] cookies = request.getCookies(); 
    		
    		if(cookies != null){
    			for(Cookie c : cookies){
-   	   			if(c.getName().equals("popup1") && c.getValue().equals("no")){
+   				System.out.println("c.getNanme :" + c.getName());
+   				
+   	   			if(c.getName().equals("popup1") && c.getValue().equals("setChecked")){
    	   				popup1_count = 1;
+   	   				
    	   			}
-   	   			if(c.getName().equals("popup2") && c.getValue().equals("no")){
+   	   			if(c.getName().equals("popup2") && c.getValue().equals("setChecked")){
    	   				popup2_count = 1;
    	   			}
    	   		}
+   		}
    	   		
-   	   		if(popup1_count == 0){
-   	   			%>
+   	   		if(popup1_count == 0){ 
+ 	   			%> 
+
    	   			<div class="popup_1" id="popup_1">
-   	    			<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(0).getPopupImage()}">
-   	    			<form class="popup_1_form" action="/frontLine/Popup">
+   	    			<img width="100%" heigth="100%" src="${popup[0].POPUP_IMAGE}">
+ 	    			<form class="popup_1_form" action="popupCookie">
    	    				<div class="popup_1_main">
    	    					<div>
-   	    						<input id="popup_1_checkbox" type="checkbox" name="popup1"> 10초동안 보지않기
+   	    						<input id="popup_1_checkbox" type="checkbox" name="target" value="popup1"> 10초동안 보지않기
    	    					</div> 
    	    					<input class="popup_1_submit" id="popup_1_submit" type="submit">
    	   	    				<input id="popup_1_button" type="button" value="닫기">
    	    				</div>
-   	    			</form>
+    	    			</form>
    	    		</div>
+
    	   			<%
-   	   		}
+    	   		} 
    	   		
-   	   		if(popup2_count == 0){
-   	   			%>
+	 	  		if(popup2_count == 0){ 
+		   		%> 
    	   			<div class="popup_2" id="popup_2">
-   	   	    		<img width="100%" heigth="100%" src="${PopupDB.getPopupList().get(1).getPopupImage()}">
-   	   	    		<form class="popup_2_form" action="/frontLine/Popup">
+   	   	    		<form class="popup_2_form" action="popupCookie">
+   	   	    		<img width="100%" heigth="100%" src="${popup[1].POPUP_IMAGE}">
    	   	    			<div class="popup_2_main">
    	   	    				<div>
-   	   	    					<input id="popup_2_checkbox" type="checkbox" name="popup2"> 10초동안 보지않기
+   	   	    					<input id="popup_2_checkbox" type="checkbox" name="target" value="popup2"> 10초동안 보지않기
    	   	    				</div> 
    	   	    				<input class="popup_2_submit" id="popup_2_submit" type="submit">
    	   	    				<input id="popup_2_button" type="button" value="닫기">
    	   	    			</div>
-   	   	    		</form>
+  	    		</form> 
    	   	    	</div>
    	   	    	<%
    	   		}
-   		}
    		
-   	%>
+   		
+    	%>
 </body>
 </html>

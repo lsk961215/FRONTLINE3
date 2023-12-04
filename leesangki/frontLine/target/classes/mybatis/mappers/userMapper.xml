@@ -79,7 +79,7 @@
 	</insert>
 	
 	<select id="findId" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">
-		select * from user_info where user_email = #{userEmail}
+		select * from user_info where user_name = #{userName} and user_phone = #{userPhone}
 	</select>
 	
 	<select id="findPw" parameterType="com.spring.frontline.dto.UserDTO" resultMap="userMap">
@@ -98,4 +98,20 @@
 		select * from user_info where user_phone = #{joinDTO.userPhone}
 	</select>
 	
+	<select id="popup1" resultType="hashmap">
+		select * from popup
+	</select>
+	
+	<select id="popupReadyUpdate" resultType="hashmap" parameterType="hashmap">
+		select * from popup where popup_number = #{POPUP_NUMBER}  
+	</select>
+	
+	<update id="popupUpdate" parameterType="hashmap">
+		update 
+			popup
+		set
+			popup_image = #{POPUP_IMAGE} 
+		where
+			popup_number = #{POPUP_NUMBER}
+	</update>
 </mapper>

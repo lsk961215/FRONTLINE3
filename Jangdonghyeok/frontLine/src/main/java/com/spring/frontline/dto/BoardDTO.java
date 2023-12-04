@@ -1,7 +1,5 @@
 package com.spring.frontline.dto;
 
-import java.util.List;
-
 public class BoardDTO {
 	private int boardSeq = -1;
 	private int userSeq = -1;
@@ -11,11 +9,13 @@ public class BoardDTO {
 	private String boardAddress;
 	private String boardOpen;
 	private String boardDetail;
-	private String boardRegDate;
 	private String boardBreak;
 	private String boardPhone;
+	private String boardRegDate;
 	private String boardImage;
 	
+	private int startNum;
+	private int endNum;
 	public int getBoardSeq() {
 		return boardSeq;
 	}
@@ -64,12 +64,6 @@ public class BoardDTO {
 	public void setBoardDetail(String boardDetail) {
 		this.boardDetail = boardDetail;
 	}
-	public String getBoardRegDate() {
-		return boardRegDate;
-	}
-	public void setBoardRegDate(String boardRegDate) {
-		this.boardRegDate = boardRegDate;
-	}
 	public String getBoardBreak() {
 		return boardBreak;
 	}
@@ -82,19 +76,42 @@ public class BoardDTO {
 	public void setBoardPhone(String boardPhone) {
 		this.boardPhone = boardPhone;
 	}
+	public String getBoardRegDate() {
+		return boardRegDate;
+	}
+	public void setBoardRegDate(String boardRegDate) {
+		this.boardRegDate = boardRegDate;
+	}
 	public String getBoardImage() {
 		return boardImage;
 	}
 	public void setBoardImage(String boardImage) {
 		this.boardImage = boardImage;
 	}
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getEndNum() {
+		return endNum;
+	}
+	public void setEndNum(int endNum) {
+		this.endNum = endNum;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
-				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + ", boardBreak=" + boardBreak
-				+ ", boardPhone=" + boardPhone + ", boardImage=" + boardImage + "]";
+				+ ", boardDetail=" + boardDetail + ", boardBreak=" + boardBreak + ", boardPhone=" + boardPhone
+				+ ", boardRegDate=" + boardRegDate + ", boardImage=" + boardImage + ", startNum=" + startNum
+				+ ", endNum=" + endNum + "]";
 	}
+	
+	
+	
+	
 	
 }

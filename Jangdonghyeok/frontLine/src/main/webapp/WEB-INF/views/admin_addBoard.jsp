@@ -16,29 +16,9 @@
   src="https://code.jquery.com/jquery-3.7.1.js"
   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script>	    
-  	function findAddr() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                var addr = ''; // 주소_결과값이 없을 경우 공백 
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 도로명 주소를 선택했을경우
-	                    addr = data.roadAddress;
-	                } else { // 지번 주소를 선택 선택했을경우
-	                    addr = data.jibunAddress;
-	                }
-	
-	             
-	                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
-	                $("#board_address").val(addr);
-	            }
-	        }).open();
-	    }
-	</script>
+<script>
 
-
+</script>
 <style>
 	main {
 		max-width: 1240px;
@@ -101,9 +81,7 @@ a {
 			            <option value="3">숙소</option>
 					</select><br>
 			상호명 : <input type="text" name="boardTitle"><br>
-			주소 : <input type="text" name="boardAddress" id="board_address">
-			<button type="button" id="addressSearch" onclick="findAddr()">주소검색</button>
-			<br>
+			주소 : <input type="text" name="boardAddress"><br>
 			영업시간 : <input type="text" name="boardOpen"><br>
 			상세설명 : <textarea name="boardDetail"></textarea><br>
 			브레이크타임 : <input type="text" name="boardBreak"><br>
@@ -115,5 +93,4 @@ a {
 		</section>
 	</main>
 </body>
-	
 </html>

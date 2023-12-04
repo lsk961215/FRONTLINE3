@@ -120,7 +120,6 @@
 
 			<div class="div1 place">
 				<h2 class="title">${boardDTO.boardTitle}</h2>
-				
 			</div>
 			<h4 class="address">${boardDTO.boardAddress}</h4>
 			<h5>전화번호 : ${boardDTO.boardPhone}</h5>

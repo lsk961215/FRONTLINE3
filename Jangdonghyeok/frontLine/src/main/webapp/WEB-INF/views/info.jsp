@@ -21,9 +21,13 @@
         })
 
         function bind() {
+            // let tname = document.querySelector(".tname");
+            // let adjust = document.querySelector(".adjust").addEventListener("click", function () {
+            //     tname.innerHTML = tname.value;
+
+            // })
 
             let background = document.querySelector(".popUp_Background")
-            let double_check = document.querySelector(".double_check")
             let adjust = document.querySelectorAll(".adjust")
             let title_h2 = document.querySelector(".title_h2")
             let cancel = document.querySelector(".cancel");
@@ -34,32 +38,47 @@
             let t3 = document.querySelector(".t3")
             let xBox = document.querySelector(".xBox")
             let tbox1 = document.querySelector(".tbox1")
+            // document.querySelector(".")
+            // let name = document.getElementById("이름")
+            // let pw = document.getElementById("비밀번호")
+            // let email = document.getElementById("이메일주소")
+            // let phoneNum = document.getElementById("전화번호")
 	
             let form = document.querySelector(".form")
             for (let i = 0; i < adjust.length; i++) {
                 
                 adjust[i].addEventListener("click", function () {
+                	console.log("adjust click");
                     background.style.display = "block";
                     
+                    // switch(adjust) {
+                        //     case 1: 
+                        //     popUp_title.setAttribute("placeholder", "비밀번호 변경")
+                        
+                        // tbox1 =  tbox1.innerHTML;
+                        // t1.innerHTML = tbox1;
+                        
+                        // }
                     <%-- i==0 : 이름 / i==1 : 비밀번호 / i==2 : 이메일 / i==3 : 휴대폰번호 --%>
                     <%-- 이름변경 팝업엔 t3(두번째인풋) 없음 나머지 팝업에선 t2가 첫번째인풋 t3가 두번째인풋 --%>
                         if(i == 0) {
                             title_h2.innerHTML= "이름 변경"
+                            // t1.innerHTML = tbox1.innerHTML
+                            // t1.setAttribute("value", tbox1.innerHTML)
+                            // t1.setAttribute("disabled")
                             t1.innerHTML = "<c:out value='${sessionScope.userDTO.userName}'/>"
                             t2.setAttribute("placeholder", "새 이름")
-                            t2.setAttribute("maxlength", "6")
                             t2.setAttribute("name", "userName")
                             form.setAttribute("action", "updateUser")
                             t3.style.display="none";
+                            // t3.setAttribute("placeholder", "새 이름 확인")
                         } else if(i == 1){
                             title_h2.innerHTML= "비밀번호 변경"
                             t1.innerHTML = ""
                             t2.setAttribute("placeholder", "새 비밀번호")
-                            t2.setAttribute("maxlength", "16")
                             t2.setAttribute("type", "password")
                             t2.removeAttribute("name");
                             t3.setAttribute("placeholder", "새 비밀번호 확인")
-                            t3.setAttribute("maxlength", "16")
                             t3.setAttribute("name", "userPw")
                             t3.setAttribute("type", "password")
                             form.setAttribute("action", "updateUser")
@@ -77,10 +96,8 @@
                             title_h2.innerHTML= "휴대폰번호 변경"
                             t1.innerHTML = "<c:out value='${sessionScope.userDTO.userPhone}'/>"
                             t2.setAttribute("placeholder", "새 휴대폰번호")
-                            t3.setAttribute("maxlength", "11")
                             t2.removeAttribute("name");
                             t3.setAttribute("placeholder", "새 휴대폰번호 확인")
-                            t3.setAttribute("maxlength", "11")
                             t3.setAttribute("name", "userPhone")
                             form.setAttribute("action", "updateUser")
                             t3.style.display="block";
@@ -91,70 +108,28 @@
                             background.style.display = "none";
                             t2.value=null;
                             t3.value=null;
-                            
                         })
                         
+                        
+                        <%-- apply.addEventListener("click", function () {
+                            if(i == 0){
+
+                                background.style.display = "none";
+                                tbox1.innerHTML = t2.value;
+                                console.log(tbox1)
+                                console.log(1)
+                            }
+                        }) --%>
                         xBox.addEventListener("click", function () {
                             background.style.display = "none";
                             t2.value=null;
                             t3.value=null;
-                            double_check.style.display = "none";
                         })
-                        
-                        apply.addEventListener("click",function(){
-                        	let title_h2 = document.querySelector(".title_h2")
-                        	let t1 = document.querySelector(".t1")
-            				let t2 = document.querySelector(".t2")
-            				let t3 = document.querySelector(".t3")
-            				let submit = document.querySelector("#popUpSubmit")
-                        	
-                        	if(title_h2.textContent == "이름 변경"){
-                        		
-                        		let check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-                        		
-                        		if(!check.test(t2.value)){
-                        			alert("이름은 한글로 입력해주세요.")
-                        		}  else {
-                        			submit.click()
-                        		}
-                        	}
-                        	
-                        	if(title_h2.textContent == "비밀번호 변경"){
-                        		
-                        		let check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-                        		
-                        		if(!check.test(t2.value) || !check.test(t3.value)){
-                        			alert("비밀번호는 영문,숫자,특수기호를 조합하여 8자리 이상 입력해주세요.")
-                        		}  else {
-                        			submit.click()
-                        		}
-                        	}
-                        	
-							if(title_h2.textContent == "이메일주소 변경"){
-                        		
-                        		let check = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-                        		
-                        		if(!check.test(t2.value) || !check.test(t3.value)){
-                        			alert("이메일이 형식에 맞지 않습니다.")
-                        		}  else {
-                        			submit.click()
-                        		}
-                        	}
-							
-							if(title_h2.textContent == "휴대폰번호 변경"){
-                        		
-                        		let check = /^[0-9]{11}$/;
-                        		
-                        		if(!check.test(t2.value) || !check.test(t3.value)){
-                        			alert("전화번호는 숫자 11자리로 입력해주세요.")
-                        		}  else {
-                        			submit.click()
-                        		}
-                        	}
-                        })
-                        
-                        
-                        
+                        // t2.addEventListener("input",function() {
+                        //      t2 = t2.value;
+                        //     tbox.innerHTML = t2;
+                        //     console.log(tbox)
+                        // })
                         
                     })
                 }
@@ -174,11 +149,11 @@
         	
         	input_1.addEventListener("keyup", function(){
         		if(input_1.value != input_2.value && title_h2.textContent != "이름 변경"){
-
+        			console.log(title_h2.textContent);
         			submit.setAttribute("type", "none");
         			double_check.style.display="block";
         		} else {
-        			submit.setAttribute("type", "button");
+        			submit.setAttribute("type", "submit");
         			double_check.style.display="none";
         		}
         	})
@@ -188,7 +163,7 @@
         			submit.setAttribute("type", "none");
         			double_check.style.display="block";
         		} else {
-        			submit.setAttribute("type", "button");
+        			submit.setAttribute("type", "submit");
         			double_check.style.display="none";
         		}
         	})
@@ -462,10 +437,6 @@
         	display: none;
         	color: red;
         }
-        
-        #popUpSubmit {
-        	display: none;
-        }
     </style>
 </head>
 
@@ -505,8 +476,7 @@
                         	</div>
                        		<div class="popUp-set">
                             	<div class="popUp cancel">취소</div>
-                            	<input class="popUp apply" type="button" value="적용">
-                            	<input id="popUpSubmit" type="submit">
+                            	<input class="popUp apply" type="submit" value="적용">
                         	</div>
                         </form>
                         <%------------------------------------%>

@@ -16,6 +16,36 @@ public class BoardDTO {
 	private String boardPhone;
 	private String boardImage;
 	
+	private int startNum;
+	private int endNum;
+	
+	private int boardPick;
+	private String boardSearch;
+	
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getEndNum() {
+		return endNum;
+	}
+	public void setEndNum(int endNum) {
+		this.endNum = endNum;
+	}
+	public int getBoardPick() {
+		return boardPick;
+	}
+	public void setBoardPick(int boardPick) {
+		this.boardPick = boardPick;
+	}
+	public String getBoardSearch() {
+		return boardSearch;
+	}
+	public void setBoardSearch(String boardSearch) {
+		this.boardSearch = boardSearch;
+	}
 	public int getBoardSeq() {
 		return boardSeq;
 	}
@@ -94,7 +124,7 @@ public class BoardDTO {
 		return "BoardDTO [boardSeq=" + boardSeq + ", userSeq=" + userSeq + ", regionSeq=" + regionSeq + ", typeSeq="
 				+ typeSeq + ", boardTitle=" + boardTitle + ", boardAddress=" + boardAddress + ", boardOpen=" + boardOpen
 				+ ", boardDetail=" + boardDetail + ", boardRegDate=" + boardRegDate + ", boardBreak=" + boardBreak
-				+ ", boardPhone=" + boardPhone + ", boardImage=" + boardImage + "]";
+				+ ", boardPhone=" + boardPhone + ", boardImage=" + boardImage + ", startNum=" + startNum + ", endNum="
+				+ endNum + ", boardPick=" + boardPick + ", boardSearch=" + boardSearch + "]";
 	}
-	
 }

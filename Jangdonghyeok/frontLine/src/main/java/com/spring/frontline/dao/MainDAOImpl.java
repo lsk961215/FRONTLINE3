@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.frontline.dto.BoardDTO;
-import com.spring.frontline.dto.CommentDTO;
 import com.spring.frontline.dto.UserDTO;
 
 @Repository
-public class MainDAOImpl implements MainDAO{
-	
+public class MainDAOImpl implements MainDAO {
+
 	@Autowired
 	SqlSession sqlSession;
 
@@ -21,7 +20,7 @@ public class MainDAOImpl implements MainDAO{
 	public List selectUserList() {
 		return sqlSession.selectList("user.selectUserList");
 	}
-	
+
 	@Override
 	public UserDTO selectUser(UserDTO userDTO) {
 		return sqlSession.selectOne("user.selectUser", userDTO);
@@ -47,163 +46,72 @@ public class MainDAOImpl implements MainDAO{
 		sqlSession.delete("user.deleteUser", list);
 	}
 
+	// ³î°Å¸® µî·Ï
 	@Override
-	public int selectUserTotal() {
-		return sqlSession.selectOne("user.userTotal");
-	}
-
-	@Override
-	public List selectUserPage(Map map) {
-		
-		List userList = sqlSession.selectList("user.userPage", map);
-		
-		return userList;
-	}
-
-	@Override
-	public void insertDummy(UserDTO userDTO) {
-		sqlSession.insert("user.insertDummy", userDTO);
-	}
-
-	@Override
-	public UserDTO findId(UserDTO userDTO) {
-		return sqlSession.selectOne("user.findId", userDTO);
-	}
-	
-	@Override
-	public UserDTO findPw(UserDTO userDTO) {
-		return sqlSession.selectOne("user.findPw", userDTO);
-	}
-
-	@Override
-	public boolean checkId(Map map) {
-		UserDTO userDTO = sqlSession.selectOne("user.checkId", map);
-		
-		if(userDTO == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean checkEmail(Map map) {
-		UserDTO userDTO = sqlSession.selectOne("user.checkEmail", map);
-		
-		if(userDTO == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean checkPhone(Map map) {
-		UserDTO userDTO = sqlSession.selectOne("user.checkPhone", map);
-		
-		if(userDTO == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public List selectBoardList(Map map) {
-		return sqlSession.selectList("board.selectBoardList", map);
-	}
-	
-	@Override
-	public List selectBoardPage(Map map) {
-		List boardList = sqlSession.selectList("board.selectBoardPage", map);
-
-		return boardList;
-	}
-	
-	@Override
-	public int selectBoardTotal(Map map) {
-		int total = sqlSession.selectOne("board.selectBoardTotal", map);
-
-		return total;
-	}
-
-	@Override
-	public List selectRegionNames() {
-		return sqlSession.selectList("board.selectRegionNames");
-	}
-
-	@Override
-	public BoardDTO selectBoard(BoardDTO boardDTO) {
-		return sqlSession.selectOne("board.selectBoard", boardDTO);
-	}
-
-	@Override
-	public void addComment(CommentDTO commentDTO) {
-		sqlSession.insert("comment.insertComment", commentDTO);
-	}
-
-	@Override
-	public List selectCommentList(BoardDTO boardDTO) {
-		return sqlSession.selectList("comment.selectCommentList", boardDTO);
-	}
-
-	@Override
-	public List selectCommentPage(Map map) {
-		List commentList = sqlSession.selectList("comment.commentPage", map);
-		
-		return commentList;
-	}
-
-	@Override
-	public int selectCommentTotal() {
-		return sqlSession.selectOne("comment.commentTotal");
-	}
-
-	@Override
-	public CommentDTO selectComment(CommentDTO commentDTO) {
-		return sqlSession.selectOne("comment.selectComment", commentDTO);
-	}
-
-	@Override
-	public void updateComment(CommentDTO commentDTO) {
-		sqlSession.update("comment.updateComment", commentDTO);
-	}
-
-	@Override
-	public void deleteComment(List list) {
-		sqlSession.delete("comment.deleteComment", list);
-	}
-	
-	@Override
-	public void insertBoard(BoardDTO boardDTO) {
+	public void insertPlay(BoardDTO boardDTO) {
 		sqlSession.insert("board.insertBoard", boardDTO);
 	}
 
+	// ³î°Å¸® ¸®½ºÆ® Á¶È¸
 	@Override
-	public List selectAdminBoardPage(Map map) {
-		List boardList = sqlSession.selectList("board.adminBoardPage", map);
+	public List getPlayList() {
+		List PlayList = sqlSession.selectList("board.selectBoardPlay");
+
+		return PlayList;
+	}
+
+	// ³î°Å¸® ¼±ÅÃ
+	@Override
+	public BoardDTO playcorr(BoardDTO boardDTO) {
+		System.out.println("baordDAO" + boardDTO.getBoardSeq());
+		BoardDTO PlayOne = sqlSession.selectOne("board.selectPlayOne", boardDTO);
+		System.out.println("DAOimpl : " + PlayOne);
+		return PlayOne;
+	}
+
+	// ³î°Å¸® ¼öÁ¤
+	@Override
+	public void updatePlay(BoardDTO boardDTO) {
+		sqlSession.update("board.updatePlay", boardDTO);
+	}
+
+	// ³î°Å¸® »èÁ¦
+	@Override
+	public int deletePlay(BoardDTO boardDTO) {
+		int delete = sqlSession.update("board.playDelete", boardDTO);
+		return delete;
+	}
+
+	// ³î°Å¸® °ü¸® ÆäÀÌÂ¡
+	@Override
+	public List Paging(BoardDTO boardDTO) {
+		List playList = sqlSession.selectList("board.playPage",boardDTO );
+
 		
-		return boardList;
+		return playList;
 	}
 
+	// ³î°Å¸® ÃÑ°¹¼ö
 	@Override
-	public int selectAdminBoardTotal(Map map) {
-		return sqlSession.selectOne("board.boardTotal", map);
-	}
+	public int pageTotal() {
+		int total = sqlSession.selectOne("board.boardTotal");
 
+		return total;
+	}
+	// ³î°Å¸® ´õº¸±â ÆäÀÌÂ¡
+		
 	@Override
-	public void deleteBoard(List list) {
-		sqlSession.delete("board.deleteBoard", list);
-	}
+		public List morePaging(BoardDTO boardDTO) {
+			List playList = sqlSession.selectList("board.playMorePage",boardDTO );
 
-	@Override
-	public BoardDTO getAdminBoard(BoardDTO boardDTO) {
-		return sqlSession.selectOne("board.selectBoard", boardDTO);
-	}
+			return playList;
+		}
+	// ³î°Å¸® ´õº¸±â ÃÑ°¹¼ö
+		@Override
+		public int moreTotal(BoardDTO boardDTO) {
+			int total = sqlSession.selectOne("board.playTotal",boardDTO);
 
-	@Override
-	public void updateBoard(BoardDTO boardDTO) {
-		sqlSession.update("board.updateBoard", boardDTO);
-	}
-
+			return total;
+		}
+	
 }
