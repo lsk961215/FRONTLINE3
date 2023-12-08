@@ -216,6 +216,12 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            <!-- Exception java.lang.ExceptionInInitializerError 해결 -->
+            <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-war-plugin</artifactId>
+           <version>3.3.2</version>
+         </plugin>
         </plugins>
     </build>
 </project>
